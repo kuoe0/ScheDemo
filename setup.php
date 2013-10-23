@@ -36,7 +36,7 @@ catch (PDOException $e) {
 			<div class="row">
 				<div class="span4 offset4">
 					<h1>Setup</h1>
-					<form method="POST">
+					<form method="POST" enctype="multipart/form-data">
 						<legend>Title</legend>
 						<input type="text" name="title" placeholder="Type the title for this site..." />
 						<legend>Admin Settings</legend>
