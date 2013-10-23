@@ -14,7 +14,7 @@
 
 
 try {
-	$db = new PDO('sqlite:PresentReg.sqlite3');
+	$db = new PDO('sqlite:PresentReg.db');
 	$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 	$db->exec("CREATE TABLE IF NOT EXISTS attributes (
