@@ -36,7 +36,7 @@ catch (PDOException $e) {
 			<div class="row">
 				<div class="span4 offset4">
 					<h1>Setup</h1>
-					<form method="POST" enctype="multipart/form-data">
+					<form action="setup-ing.php" method="POST" enctype="multipart/form-data">
 						<legend>Title</legend>
 						<input type="text" name="title" placeholder="Type the title for this site..." />
 						<legend>Admin Settings</legend>
@@ -51,6 +51,7 @@ catch (PDOException $e) {
 						<input type="file" name="group_list" />
 						<label>Time Slot List (CSV file)</label>
 						<input type="file" name="timeslot_list" />
+						<input type="hidden" name="submit" value="1" />
 						<button class="btn btn-primary" type="submit">Confirm</button>
 					</form>
 				</div>
