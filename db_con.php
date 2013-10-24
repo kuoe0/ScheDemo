@@ -31,7 +31,9 @@ try {
 
 	$db->exec("CREATE TABLE IF NOT EXISTS timeslots (
 		time_id INTEGER PRIMARY KEY,
-		datetime TEXT)");
+		begin TEXT,
+		end TEXT,
+		quota INTEGER)");
 
 	$db->exec("CREATE TABLE IF NOT EXISTS presentations (
 		id INTEGER PRIMARY KEY,
