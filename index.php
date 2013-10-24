@@ -26,6 +26,7 @@ $title = $stmt->fetch()['value'];
 <html>
 	<head>
 		<title><?php echo $title ?></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
 		<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
 	</head>
@@ -59,6 +60,37 @@ while (($data_row = $stmt->fetch()) != FALSE) {
 				</table>
 			</div>
 			<div class="group">
+				<table class="table table-striped">
+					<tr>
+						<th>Group ID</th>
+						<th>Members</th>
+					</tr>
+<?php
+$sql = "SELECT * FROM `groups` ORDER BY `group_id` ASC";
+$stmt = $db->prepare($sql);
+$stmt->execute();
+
+while (($data_row = $stmt->fetch()) != FALSE) {
+	echo '<tr>';
+	echo '<td>' . $data_row['group_id'] . '</td>';
+
+	echo '<td>';
+	$members_id = explode(',', $data_row['members']);
+
+	for ($i = 0; $i < count($members_id); ++$i) {
+		$sql = "SELECT name FROM `students` WHERE `student_id` = :student_id";
+		$stmt2 = $db->prepare($sql);
+		$stmt2->execute(array(':student_id' => $members_id[$i]));
+		$name = $stmt2->fetch()['name'];
+		echo $name . '<br />';
+	}
+
+	echo '</td>';
+	echo '</tr>';
+}
+
+?>
+				</table>
 			</div>
 		</div>
 		<script src="http://code.jquery.com/jquery.js"></script>
