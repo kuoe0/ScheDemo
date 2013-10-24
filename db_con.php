@@ -33,7 +33,7 @@ try {
 		time_id INTEGER PRIMARY KEY,
 		begin TEXT,
 		end TEXT,
-		quota INTEGER)");
+		slice INTEGER)");
 
 	$db->exec("CREATE TABLE IF NOT EXISTS presentations (
 		id INTEGER PRIMARY KEY,

@@ -86,6 +86,31 @@ if (isset($_POST['submit'])) {
 
 	}
 
+	// parse timeslots list
+	if ($_FILES['timeslot_list']['error'] == 0) {
+		$filename = $_FILES['timeslot_list']['name'];
+		$type = $_FILES['timeslot_list']['type'];
+		$tmp_name = $_FILES['timeslot_list']['tmp_name'];
+
+		if (($f = fopen($tmp_name, 'r')) != FALSE) {
+			// for the large csv file
+			set_time_limit(0);
+			$sql = "INSERT INTO `timeslots` (`begin`, `end`, `slice`) VALUES (:begin, :end, :slice)";
+			$stmt = $db->prepare($sql);
+
+			// read line by line in csv file
+			while (($data = fgetcsv($f)) != FALSE) {
+				// insert group info
+				$quota = $data[2];
+
+				for ($i = 0; $i < $quota; ++$i) {
+					$stmt->execute(array(':begin' => $data[0], ':end' => $data[1], ':slice' => ($i + 1)));
+				}
+			}
+
+		}
+
+	}
 	// mark setup process be ready to prevent setup again
 	/* $sql = "INSERT INTO `attributes` (`attr`, `value`) VALUES (:attr, :value)"; */
 	/* $stmt = $db->prepare($sql); */
