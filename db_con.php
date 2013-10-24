@@ -27,7 +27,8 @@ try {
 
 	$db->exec("CREATE TABLE IF NOT EXISTS groups (
 		group_id INTEGER PRIMARY KEY,
-		members TEXT)");
+		members TEXT,
+		registered INTEGER)");
 
 	$db->exec("CREATE TABLE IF NOT EXISTS timeslots (
 		time_id INTEGER PRIMARY KEY,
