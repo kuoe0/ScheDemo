@@ -95,7 +95,7 @@ if (isset($_POST['submit'])) {
 		if (($f = fopen($tmp_name, 'r')) != FALSE) {
 			// for the large csv file
 			set_time_limit(0);
-			$sql = "INSERT INTO `timeslots` (`begin`, `end`, `slice`) VALUES (:begin, :end, :slice)";
+			$sql = "INSERT INTO `timeslots` (`begin`, `end`, `slice`, `occupied`) VALUES (:begin, :end, :slice, 0)";
 			$stmt = $db->prepare($sql);
 
 			// read line by line in csv file
