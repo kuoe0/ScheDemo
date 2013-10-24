@@ -13,6 +13,7 @@
  */
 
 include_once 'db_con.php';
+include_once 'function.php';
 
 $sql = "SELECT `value` FROM `attributes` WHERE `attr` = 'title'";
 $stmt = $db->prepare($sql);
@@ -33,6 +34,50 @@ $title = $stmt->fetch()['value'];
 	<body>
 		<div class="container">
 			<h1><?php echo $title ?></h1>
+			<div class="register">
+				<form>
+					<label>Group</label>
+					<select name="group_id">
+<?php
+$sql = "SELECT `group_id` FROM `groups`";
+$stmt = $db->prepare($sql);
+$stmt->execute();
+
+while (($data_row = $stmt->fetch()) != FALSE) {
+	$id = $data_row['group_id'];
+	$name_list = get_member_names($db, $id);
+	echo '<option value=' . $id . '>' . $id . '. ' . implode('；', $name_list) . '</option>';
+
+}
+
+?>
+					</select>
+
+					<label>Time</label>
+					<select name="timeslot">
+<?php
+$sql = "SELECT * FROM `timeslots` WHERE `occupied` = '0'";
+$stmt = $db->prepare($sql);
+$stmt->execute();
+
+while (($data_row = $stmt->fetch()) != FALSE) {
+	var_dump($data_row);
+	$id = $data_row['time_id'];
+	$time = $data_row['begin'];
+	$order = $data_row['slice'];
+	echo '<option value=' . $id . '>' . $time . ' - ' . $order . '</option>';
+}
+
+?>
+					</select>
+					<label>Presentation Title</label>
+					<input type="text" name="title" />
+					<button class="btn btn-primary" type="submit">Register</button>
+
+
+				</form>
+			</div>
+
 			<div class="timeslot">
 				<table class="table table-striped">
 					<caption>Presentation Order</caption>
