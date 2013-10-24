@@ -20,5 +20,25 @@ function cleanup_db($db) {
 	$db->exec("DELETE FROM `presentations`");
 }
 
+function get_member_names($db, $id) {
+	$sql = "SELECT `members` FROM `groups` WHERE `group_id` = :group_id";
+	$stmt = $db->prepare($sql);
+	$stmt->execute(array(':group_id' => $id));
+
+	$members_id = explode(',', $stmt->fetch()['members']);
+	sort($members_id);
+
+	$ret = array();
+	for ($i = 0; $i < count($members_id); ++$i) {
+		$sql = "SELECT `name` FROM `students` WHERE `student_id` = :student_id";
+		$stmt = $db->prepare($sql);
+		$stmt->execute(array(':student_id' => $members_id[$i]));
+
+		array_push($ret, $stmt->fetch()['name']);
+	}
+
+	return $ret;
+}
+
 ?>
 
