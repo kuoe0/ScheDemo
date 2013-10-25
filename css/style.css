@@ -50,12 +50,18 @@ form {
 	margin: 0;
 }
 
+.timeslot table th,
+.timeslot table td {
+	vertical-align: middle;
+}
+
 .title_col {
 	width: 50%;
 }
 
-.timeslot table th,
-.timeslot table td {
-	text-align: center;
-	vertical-align: middle;
+.order_col,
+.title_col {
+	text-align: left;
 }
+
+

@@ -91,7 +91,7 @@ while (($data_row = $stmt->fetch()) != FALSE) {
 			</div>
 
 			<div class="timeslot">
-				<table class="table table-striped">
+				<table class="table table-hover">
 					<tr>
 						<th class="time_col">Time</th>
 						<th class="order_col">Order</th>
@@ -116,7 +116,7 @@ while (($data_row = $stmt->fetch()) != FALSE) {
 	else {
 		echo '<td class="time_col">' . $data_row['begin'] . '</td>';
 	}
-	echo '<td class="order_col">' . $data_row['slice'] . "</td>";
+	echo '<td class="order_col">No. ' . $data_row['slice'] . "</td>";
 	echo '<td class="group_col">' . implode('<br />', $name_list) . '</td>';
 	echo '<td class="title_col">' . $presentation_info['title'] . '</td>';
 	echo '</tr>';
