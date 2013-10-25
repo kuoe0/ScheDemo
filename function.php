@@ -40,5 +40,14 @@ function get_member_names($db, $id) {
 	return $ret;
 }
 
+function get_presentation_info_by_time_id($db, $time_id) {
+	$sql = "SELECT * FROM `presentations` WHERE `time_id` = :time_id";
+	$stmt = $db->prepare($sql);
+	$stmt->execute(array(':time_id' => $time_id));
+
+	return $stmt->fetch();
+}
+
+	
 ?>
 
