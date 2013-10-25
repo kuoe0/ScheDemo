@@ -122,8 +122,13 @@ while (($data_row = $stmt->fetch()) != FALSE) {
 		echo '<td class="time_col">' . $data_row['begin'] . '</td>';
 	}
 	echo '<td class="order_col">No. ' . $data_row['slice'] . "</td>";
-	echo '<td class="group_col">' . implode('<br />', $name_list) . '</td>';
-	echo '<td class="title_col">' . $presentation_info['title'] . '</td>';
+	if ($data_row['occupied'] == '1') {
+		echo '<td class="group_col"><span class="group_id">Group ' . $presentation_info['group_id']. '</span><br />' . implode('<br />', $name_list) . '</td>';
+		echo '<td class="title_col">' . $presentation_info['title'] . '</td>';
+	}
+	else {
+		echo '<td class="group_col"></td><td class="title_col"></td>';
+	}
 	echo '</tr>';
 
 }
