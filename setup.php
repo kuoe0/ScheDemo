@@ -16,9 +16,20 @@ include_once 'db_con.php';
 
 try {
 
-	$stmt = $db->prepare("SELECT `value` FROM `attributes` WHERE `attr` = 'status'");
+	$sql = "SELECT `value` FROM `attributes` WHERE `attr` = 'setup'";
+	$stmt = $db->prepare($sql);
 	$stmt->execute();
-	$data_row = $stmt->fetch();
+	$setup = $stmt->fetch()['value'];
+
+	if ($setup == 'yes') {
+
+		$sql = "SELECT `value` FROM `attributes` WHERE `attr` = 'url'";
+		$stmt = $db->prepare($sql);
+		$stmt->execute();
+		$url = $stmt->fetch()['value'];
+
+		header("Location: " . $url);
+	}
 
 }
 catch (PDOException $e) {
