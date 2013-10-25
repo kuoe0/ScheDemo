@@ -115,9 +115,9 @@ if (isset($_POST['submit'])) {
 
 	}
 	// mark setup process be ready to prevent setup again
-	/* $sql = "INSERT INTO `attributes` (`attr`, `value`) VALUES (:attr, :value)"; */
-	/* $stmt = $db->prepare($sql); */
-	/* $stmt->execute(array(':attr' => 'setup', ':value' => 'yes')); */
+	$sql = "INSERT INTO `attributes` (`attr`, `value`) VALUES (:attr, :value)";
+	$stmt = $db->prepare($sql);
+	$stmt->execute(array(':attr' => 'setup', ':value' => 'yes'));
 }
 
 header("Location: " . $url);
