@@ -42,7 +42,7 @@ try {
 		title TEXT,
 		group_id INTEGER,
 		time_id INTEGER,
-		reg_datetime TEXT)");
+		reg_time TEXT)");
 
 }
 catch (PDOException $e) {
