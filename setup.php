@@ -23,12 +23,15 @@ try {
 
 	if ($setup == 'yes') {
 
+		echo "<h1>It has already setuped. Direct after 5 sec...</h1>";
+
 		$sql = "SELECT `value` FROM `attributes` WHERE `attr` = 'url'";
 		$stmt = $db->prepare($sql);
 		$stmt->execute();
 		$url = $stmt->fetch()['value'];
 
-		header("Location: " . $url);
+		header("Refresh: 5; URL=" . $url);
+		die;
 	}
 
 }
