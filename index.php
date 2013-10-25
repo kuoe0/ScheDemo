@@ -29,14 +29,16 @@ $title = $stmt->fetch()['value'];
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
 		<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+		<link href="css/style.css" rel="stylesheet">
 	</head>
 	<body>
 		<div class="container">
 			<h1><?php echo $title ?></h1>
 			<div class="register">
 				<form action="register.php" method="POST">
-					<label>Group</label>
-					<select name="group_id">
+					<div class="horizontal_input">
+						<label>Group</label>
+						<select name="group_id">
 <?php
 $sql = "SELECT `group_id` FROM `groups`";
 $stmt = $db->prepare($sql);
@@ -50,10 +52,12 @@ while (($data_row = $stmt->fetch()) != FALSE) {
 }
 
 ?>
-					</select>
+						</select>
+					</div>
 
-					<label>Time</label>
-					<select name="time_id">
+					<div class="horizontal_input">
+						<label>Time</label>
+						<select name="time_id">
 <?php
 $sql = "SELECT * FROM `timeslots` WHERE `occupied` = '0'";
 $stmt = $db->prepare($sql);
@@ -68,10 +72,17 @@ while (($data_row = $stmt->fetch()) != FALSE) {
 }
 
 ?>
-					</select>
-					<label>Presentation Title</label>
-					<input type="text" name="title" />
-					<button class="btn btn-primary" type="submit">Register</button>
+						</select>
+					</div>
+
+					<div class="horizontal_input">
+						<label>Presentation Title</label>
+						<input type="text" name="title" />
+					</div>
+
+					<div class="horizontal_input">
+						<button class="btn btn-primary btn-submit" type="submit">Register</button>
+					</div>
 
 
 				</form>
@@ -81,10 +92,10 @@ while (($data_row = $stmt->fetch()) != FALSE) {
 				<table class="table table-striped">
 					<caption>Presentation Order</caption>
 					<tr>
-						<th>Time</th>
-						<th>Order</th>
-						<th>Presenter</th>
-						<th>Title</th>
+						<th class="time_col">Time</th>
+						<th class="order_col">Order</th>
+						<th class="group_col">Presenter</th>
+						<th class="title_col">Title</th>
 					</tr>
 <?php
 $sql = "SELECT * FROM `timeslots` ORDER BY `begin` ASC, `slice` ASC";
@@ -97,10 +108,16 @@ while (($data_row = $stmt->fetch()) != FALSE) {
 	$name_list = get_member_names($db, $presentation_info['group_id']);
 
 	echo '<tr>';
-	echo '<td>' . $data_row['begin'] . " ~ " . $data_row['end'] . '</td>';
-	echo '<td>' . $data_row['slice'] . "</td>";
-	echo '<td>' . implode('<br />', $name_list) . '</td>';
-	echo '<td>' . $presentation_info['title'] . '</td>';
+	
+	if ($data_row['end'] != '') {
+		echo '<td class="time_col">' . $data_row['begin'] . " ~ " . $data_row['end'] . '</td>';
+	}
+	else {
+		echo '<td class="time_col">' . $data_row['begin'] . '</td>';
+	}
+	echo '<td class="order_col">' . $data_row['slice'] . "</td>";
+	echo '<td class="group_col">' . implode('<br />', $name_list) . '</td>';
+	echo '<td class="title_col">' . $presentation_info['title'] . '</td>';
 	echo '</tr>';
 
 }

@@ -1,0 +1,27 @@
+/*
+ * style.css
+ * Copyright (C) 2013 KuoE0
+ *
+ * Distributed under terms of the MIT license.
+ */
+
+body {
+	background: white;
+	color: black;
+}
+
+input[type="text"] {
+	height: 30px;
+}
+
+.btn-submit {
+	margin-bottom: 10px;
+	border-width: 1px;
+}
+
+.horizontal_input {
+	display: inline-block;
+	margin-right: 10px;
+}
+
+
