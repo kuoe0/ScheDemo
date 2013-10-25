@@ -22,5 +22,13 @@ $sql = "INSERT INTO `presentations` (`title`, `group_id`, `time_id`, `reg_time`)
 $stmt = $db->prepare($sql);
 $stmt->execute(array(':title' => $title, ':group_id' => $group_id, ':time_id' => $time_id));
 
+$sql = "UPDATE `timeslots` SET `occupied` = '1' WHERE `time_id` = :time_id";
+$stmt = $db->prepare($sql);
+$stmt->execute(array(':time_id' => $time_id));
+
+$sql = "UPDATE `groups` SET `registered` = '1' WHERE `group_id` = :group_id";
+$stmt = $db->prepare($sql);
+$stmt->execute(array(':group_id' => $group_id));
+
 ?>
 
