@@ -30,6 +30,7 @@ catch (PDOException $e) {
 <html>
 	<head>
 		<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+		<link href="css/style.css" rel="stylesheet">
 	</head>
 	<body>
 		<div class="container">
