@@ -40,15 +40,16 @@ $title = $stmt->fetch()['value'];
 						<label><i class="icon-user"></i> Group</label>
 						<select name="group_id">
 <?php
-$sql = "SELECT `group_id` FROM `groups`";
+$sql = "SELECT `group_id`, `registered` FROM `groups`";
 $stmt = $db->prepare($sql);
 $stmt->execute();
 
 while (($data_row = $stmt->fetch()) != FALSE) {
-	$id = $data_row['group_id'];
-	$name_list = get_member_names($db, $id);
-	echo '<option value=' . $id . '>' . $id . '. ' . implode('；', $name_list) . '</option>';
-
+	if ($data_row['registered'] == '0') {
+		$id = $data_row['group_id'];
+		$name_list = get_member_names($db, $id);
+		echo '<option value=' . $id . '>' . $id . '. ' . implode('；', $name_list) . '</option>';
+	}
 }
 
 ?>
@@ -64,11 +65,12 @@ $stmt = $db->prepare($sql);
 $stmt->execute();
 
 while (($data_row = $stmt->fetch()) != FALSE) {
-	var_dump($data_row);
-	$id = $data_row['time_id'];
-	$time = $data_row['begin'];
-	$order = $data_row['slice'];
-	echo '<option value=' . $id . '>' . $time . ' - No. ' . $order . '</option>';
+	if ($data_row['occupied'] == '0') {
+		$id = $data_row['time_id'];
+		$time = $data_row['begin'];
+		$order = $data_row['slice'];
+		echo '<option value=' . $id . '>' . $time . ' - No. ' . $order . '</option>';
+	}
 }
 
 ?>
