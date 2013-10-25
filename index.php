@@ -21,7 +21,6 @@ $stmt->execute();
 
 $title = $stmt->fetch()['value'];
 
-
 ?>
 
 <html>
@@ -35,7 +34,7 @@ $title = $stmt->fetch()['value'];
 		<div class="container">
 			<h1><?php echo $title ?></h1>
 			<div class="register">
-				<form>
+				<form action="register.php" method="POST">
 					<label>Group</label>
 					<select name="group_id">
 <?php
@@ -54,7 +53,7 @@ while (($data_row = $stmt->fetch()) != FALSE) {
 					</select>
 
 					<label>Time</label>
-					<select name="timeslot">
+					<select name="time_id">
 <?php
 $sql = "SELECT * FROM `timeslots` WHERE `occupied` = '0'";
 $stmt = $db->prepare($sql);
@@ -93,9 +92,15 @@ $stmt = $db->prepare($sql);
 $stmt->execute();
 
 while (($data_row = $stmt->fetch()) != FALSE) {
+	$time_id = $data_row['time_id'];
+	$presentation_info = get_presentation_info_by_time_id($db, $time_id);
+	$name_list = get_member_names($db, $presentation_info['group_id']);
+
 	echo '<tr>';
 	echo '<td>' . $data_row['begin'] . " ~ " . $data_row['end'] . '</td>';
 	echo '<td>' . $data_row['slice'] . "</td>";
+	echo '<td>' . implode('<br />', $name_list) . '</td>';
+	echo '<td>' . $presentation_info['title'] . '</td>';
 	echo '</tr>';
 
 }
