@@ -60,6 +60,10 @@ form {
 	width: 50%;
 }
 
+.time_col {
+	width: 35%;
+}
+
 .order_col,
 .title_col {
 	text-align: left;
