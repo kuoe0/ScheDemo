@@ -10,7 +10,8 @@ body {
 	color: black;
 }
 
-input[type="text"] {
+input[type="text"],
+input[type="password"] {
 	height: 30px;
 }
 
@@ -22,6 +23,31 @@ input[type="text"] {
 .horizontal_input {
 	display: inline-block;
 	margin-right: 10px;
+}
+
+.register {
+
+	background: white;
+
+	border-width: 1px;
+	border-style: solid;
+	border-color: rgba(0, 0, 0, 0.2);
+	border-radius: 10px;
+
+	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+
+	margin: 10px 0 10px -37.5%;
+	padding: 10px;
+
+	width: 75%;
+
+	position: fixed;
+	bottom: 100px;
+	left: 50%;
+}
+
+form {
+	margin: 0;
 }
 
 
