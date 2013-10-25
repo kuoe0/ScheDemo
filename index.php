@@ -109,7 +109,7 @@ while (($data_row = $stmt->fetch()) != FALSE) {
 	$name_list = get_member_names($db, $presentation_info['group_id']);
 
 	if ($data_row['occupied'] == '1') {
-		echo '<tr class="warning">';
+		echo '<tr class="success">';
 	}
 	else {
 		echo '<tr>';

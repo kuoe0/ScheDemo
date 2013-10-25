@@ -28,7 +28,7 @@ input[type="password"] {
 
 .register {
 
-	background: #F5FFFA;
+	background: #A7CC6A;
 
 	border-width: 1px;
 	border-style: solid;
@@ -65,7 +65,7 @@ form {
 }
 
 .group_id {
-	color: #996515;
+	color: #468966;
 	display: inline-block;
 	text-decoration: underline;
 	margin-bottom: 5px;
