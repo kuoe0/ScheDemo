@@ -120,5 +120,7 @@ if (isset($_POST['submit'])) {
 	/* $stmt->execute(array(':attr' => 'setup', ':value' => 'yes')); */
 }
 
+header("Location: " . $url);
+
 ?>
 

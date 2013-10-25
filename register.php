@@ -30,5 +30,12 @@ $sql = "UPDATE `groups` SET `registered` = '1' WHERE `group_id` = :group_id";
 $stmt = $db->prepare($sql);
 $stmt->execute(array(':group_id' => $group_id));
 
+$sql = "SELECT `value` FROM `attributes` WHERE `attr` = 'url'";
+$stmt = $db->prepare($sql);
+$stmt->execute();
+$url = $stmt->fetch()['url'];
+
+header("Location: " . $url);
+
 ?>
 
