@@ -68,7 +68,7 @@ while (($data_row = $stmt->fetch()) != FALSE) {
 	$id = $data_row['time_id'];
 	$time = $data_row['begin'];
 	$order = $data_row['slice'];
-	echo '<option value=' . $id . '>' . $time . ' - ' . $order . '</option>';
+	echo '<option value=' . $id . '>' . $time . ' - No. ' . $order . '</option>';
 }
 
 ?>
