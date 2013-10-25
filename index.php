@@ -108,7 +108,12 @@ while (($data_row = $stmt->fetch()) != FALSE) {
 	$presentation_info = get_presentation_info_by_time_id($db, $time_id);
 	$name_list = get_member_names($db, $presentation_info['group_id']);
 
-	echo '<tr>';
+	if ($data_row['occupied'] == '1') {
+		echo '<tr class="warning">';
+	}
+	else {
+		echo '<tr>';
+	}
 	
 	if ($data_row['end'] != '') {
 		echo '<td class="time_col">' . $data_row['begin'] . " ~ " . $data_row['end'] . '</td>';
