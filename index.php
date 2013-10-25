@@ -139,6 +139,9 @@ while (($data_row = $stmt->fetch()) != FALSE) {
 			</div>
 
 		</div>
+		<div id="footer" class="container">
+			<p class="muted">Powered by <a href="http://kuoe0.tw/">KuoE0</a>.</p>
+		</div>
 		<script src="http://code.jquery.com/jquery.js"></script>
 		<script src="bootstrap/js/bootstrap.min.js"></script>
 	</body>

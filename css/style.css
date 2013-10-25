@@ -70,3 +70,13 @@ form {
 	text-decoration: underline;
 	margin-bottom: 5px;
 }
+
+#footer {
+	background: #DFF0D8;
+	height: 50px;
+	text-align: center;
+}
+
+#footer p {
+	margin: 10px auto;
+}
