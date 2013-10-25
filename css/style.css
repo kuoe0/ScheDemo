@@ -64,11 +64,6 @@ form {
 	width: 35%;
 }
 
-.order_col,
-.title_col {
-	text-align: left;
-}
-
 .group_id {
 	color: #996515;
 	display: inline-block;
