@@ -11,6 +11,7 @@ body {
 }
 
 input[type="text"],
+input[type="url"],
 input[type="password"] {
 	height: 30px;
 }

@@ -38,8 +38,11 @@ catch (PDOException $e) {
 				<div class="span4 offset4">
 					<h1>Setup</h1>
 					<form action="setup-ing.php" method="POST" enctype="multipart/form-data">
-						<legend>Title</legend>
+						<legend>Basic Info</legend>
+						<label>Site Name</label>
 						<input type="text" name="title" placeholder="Type the title for this site..." />
+						<label>URL</label>
+						<input type="url" name="url" placeholder="URL for this site..." />
 						<legend>Admin Settings</legend>
 						<label>Username</label>
 						<input type="text" name="username" placeholder="username" />

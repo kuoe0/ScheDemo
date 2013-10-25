@@ -18,6 +18,7 @@ include_once 'function.php';
 if (isset($_POST['submit'])) {
 
 	$title = $_POST['title'];
+	$url = $_POST['url'];
 	$username = $_POST['username'];
 	$passwd = sha1($_POST['username'] . $_POST['password']);
 
@@ -33,6 +34,8 @@ if (isset($_POST['submit'])) {
 	$stmt = $db->prepare($sql);
 	// insert title
 	$stmt->execute(array(':attr' => 'title', ':value' => $title));
+	// insert url
+	$stmt->execute(array(':attr' => 'url', ':value' => $url));
 	// insert username
 	$stmt->execute(array(':attr' => 'username', ':value' => $username));
 	// insert password
