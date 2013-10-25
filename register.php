@@ -33,7 +33,7 @@ $stmt->execute(array(':group_id' => $group_id));
 $sql = "SELECT `value` FROM `attributes` WHERE `attr` = 'url'";
 $stmt = $db->prepare($sql);
 $stmt->execute();
-$url = $stmt->fetch()['url'];
+$url = $stmt->fetch()['value'];
 
 header("Location: " . $url);
 
