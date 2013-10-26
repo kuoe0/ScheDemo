@@ -82,7 +82,7 @@ while (($data_row = $stmt->fetch()) != FALSE) {
 						<label><i class="glyphicon glyphicon-time"></i> Time</label>
 						<select class="form-control" name="time_id">
 <?php
-$sql = "SELECT * FROM `timeslots` WHERE `occupied` = '0'";
+$sql = "SELECT * FROM `timeslots` WHERE `occupied` = '0' ORDER BY datetime(`begin`) ASC, `slice` ASC";
 $stmt = $db->prepare($sql);
 $stmt->execute();
 
