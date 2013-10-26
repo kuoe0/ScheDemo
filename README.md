@@ -6,6 +6,7 @@ PresentReg is a web-based application for presentation scheduling.
 Requirement
 -----------
 
+- A Computer as Server
 - Apache Web Server with Rewrite Module Enabled
 - PHP5 with PDO-sqlite Driver
 
