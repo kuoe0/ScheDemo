@@ -1,7 +1,7 @@
 PresentReg
 ==========
 
-Presentreg is a web-based application for presentation scheduling.
+PresentReg is a web-based application for presentation scheduling.
 
 Requirement
 -----------
@@ -16,7 +16,17 @@ Server Settings
 
 Ubuntu 13.04:
 
-1. install apache by this command `apt-get install apache`
+First, install apache web server.
+
+	apt-get install apache
+
+And then, enable the rewrite module.
+
+	a2enmod rewrite
+
+Finally, restart the apache web service.
+
+	service apache restart
 
 OS X 10.9:
 
@@ -30,13 +40,13 @@ Ubuntu 13.04:
 
 OS X 10.9:
 
+**Directory Permission**
 
+First, download the source code.
+	
+	git clone http://github.com/KuoE0/PresentReg
 
-PDO supported for sqlite
+Second, set the group of this directory to `www-data` or the group of apache.
+	
+	chgrp www-data PresentReg
 
-ubuntu :
-
-apt-get install php5-sqlite
-download 3-party
-
-please enable rewrite module and AllowOverride All
