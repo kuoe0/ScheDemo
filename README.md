@@ -46,7 +46,7 @@ First, download the source code.
 	
 	git clone http://github.com/KuoE0/PresentReg
 
-Second, set the group of this directory to `www-data` or the group of apache.
+And then, set the group of this directory to `www-data` or the group of apache.
 	
 	chgrp www-data PresentReg
 
