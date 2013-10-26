@@ -50,29 +50,44 @@ catch (PDOException $e) {
 	<body>
 		<div class="container">
 			<div class="row">
-				<div class="span4 offset4">
+				<div class="col-md-4 col-md-offset-4">
 					<h1>Setup</h1>
 					<form action="setup-ing.php" method="POST" enctype="multipart/form-data">
 						<legend>Basic Info</legend>
-						<label>Site Name</label>
-						<input type="text" name="title" placeholder="Type the title for this site..." />
-						<label>URL</label>
-						<input type="url" name="url" value=<?php echo '"' . dirname(getURL()) . '"'; ?> />
-						<span class="help-block">If you don't have some special reason, you don't need to modify this column.</span>
+						<div class="form-group">
+							<label>Site Name</label>
+							<input class="form-control" type="text" name="title" placeholder="Type the title for this site..." />
+						</div>
+						<div class="form-group">
+							<label>URL</label>
+							<input class="form-control" type="url" name="url" value=<?php echo '"' . dirname(getURL()) . '"'; ?> />
+							<span class="help-block">If you don't have some special reason, you don't need to modify this column.</span>
+						</div>
 						<legend>Admin Settings</legend>
-						<label>Username</label>
-						<input type="text" name="username" placeholder="username" />
+						<div class="form-group">
+							<label>Username</label>
+							<input class="form-control" type="text" name="username" placeholder="username" />
+						</div>
+						<div class="form-group">
 						<label>Password</label>
-						<input type="password" name="password" placeholder="password" />
-						<legend>Data Upload</legend>
-						<label>Student List (CSV file)</label>
-						<input type="file" name="student_list" />
-						<label>Group List (CSV file)</label>
-						<input type="file" name="group_list" />
-						<label>Time Slot List (CSV file)</label>
-						<input type="file" name="timeslot_list" />
+							<input class="form-control" type="password" name="password" placeholder="password" />
+							<legend>Data Upload</legend>
+						<div class="form-group">
+							<label>Student List (CSV file)</label>
+							<input class="form-control" type="file" name="student_list" />
+						</div>
+						<div class="form-group">
+							<label>Group List (CSV file)</label>
+							<input class="form-control" type="file" name="group_list" />
+						</div>
+						<div class="form-group">
+							<label>Time Slot List (CSV file)</label>
+							<input class="form-control" type="file" name="timeslot_list" />
+						</div>
 						<input type="hidden" name="submit" value="1" />
-						<button class="btn btn-primary" type="submit">Confirm</button>
+						<div class="form-group">
+							<button class="btn btn-primary" type="submit">Confirm</button>
+						</div>
 					</form>
 				</div>
 			</div>

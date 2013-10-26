@@ -36,9 +36,9 @@ $title = $stmt->fetch()['value'];
 			<h1><?php echo $title ?></h1>
 			<div class="register">
 				<form action="register.php" method="POST">
-					<div class="horizontal_input">
-						<label><i class="icon-user"></i> Group</label>
-						<select name="group_id">
+					<div class="form-group horizontal_input">
+						<label><i class="glyphicon glyphicon-user"></i> Group</label>
+						<select class="form-control" name="group_id">
 <?php
 $sql = "SELECT `group_id`, `registered` FROM `groups`";
 $stmt = $db->prepare($sql);
@@ -56,9 +56,9 @@ while (($data_row = $stmt->fetch()) != FALSE) {
 						</select>
 					</div>
 
-					<div class="horizontal_input">
-						<label><i class="icon-time"></i> Time</label>
-						<select name="time_id">
+					<div class="form-group horizontal_input">
+						<label><i class="glyphicon glyphicon-time"></i> Time</label>
+						<select class="form-control" name="time_id">
 <?php
 $sql = "SELECT * FROM `timeslots` WHERE `occupied` = '0'";
 $stmt = $db->prepare($sql);
@@ -77,9 +77,9 @@ while (($data_row = $stmt->fetch()) != FALSE) {
 						</select>
 					</div>
 
-					<div class="horizontal_input">
-						<label><i class="icon-bookmark"></i> Presentation Title</label>
-						<input type="text" name="title" />
+					<div class="form-group horizontal_input">
+						<label><i class="glyphicon glyphicon-bookmark"></i> Presentation Title</label>
+						<input class="form-control" type="text" name="title" />
 					</div>
 
 					<div class="horizontal_input">
