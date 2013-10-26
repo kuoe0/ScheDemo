@@ -67,11 +67,9 @@ $stmt = $db->prepare($sql);
 $stmt->execute();
 
 while (($data_row = $stmt->fetch()) != FALSE) {
-	if ($data_row['registered'] == '0') {
-		$group_id = $data_row['group_id'];
-		$name_list = get_member_names($db, $group_id);
-		echo '<option value=' . $group_id . '>' . $group_id . '. ' . implode('；', $name_list) . '</option>';
-	}
+	$group_id = $data_row['group_id'];
+	$name_list = get_member_names($db, $group_id);
+	echo '<option ' . ($data_row['registered'] == '0' ? '' : 'disabled') . ' value=' . $group_id . '>' . $group_id . '. ' . implode('；', $name_list) . '</option>';
 }
 
 ?>
@@ -82,17 +80,15 @@ while (($data_row = $stmt->fetch()) != FALSE) {
 						<label><i class="glyphicon glyphicon-time"></i> Time</label>
 						<select class="form-control" name="time_id">
 <?php
-$sql = "SELECT * FROM `timeslots` WHERE `occupied` = '0' ORDER BY datetime(`begin`) ASC, `slice` ASC";
+$sql = "SELECT * FROM (SELECT * FROM `timeslots` ORDER BY datetime(`begin`)), (SELECT `time_id` AS `time_id_slice`, `slice` FROM `timeslots` ORDER BY `slice`) WHERE `time_id` == `time_id_slice`";
 $stmt = $db->prepare($sql);
 $stmt->execute();
 
 while (($data_row = $stmt->fetch()) != FALSE) {
-	if ($data_row['occupied'] == '0') {
-		$id = $data_row['time_id'];
-		$time = $data_row['begin'];
-		$order = $data_row['slice'];
-		echo '<option value=' . $id . '>' . $time . ' - No. ' . $order . '</option>';
-	}
+	$id = $data_row['time_id'];
+	$time = $data_row['begin'];
+	$order = $data_row['slice'];
+	echo '<option ' . ($data_row['occupied'] == '0' ? '' : 'disabled') . ' value=' . $id . '>' . $time . ' - No. ' . $order . '</option>';
 }
 
 ?>
