@@ -59,7 +59,7 @@ if ($nodata) {
 			<div class="register">
 				<form action="register.php" method="POST">
 					<div class="form-group horizontal_input">
-						<label><i class="glyphicon glyphicon-user"></i> User / Group</label>
+						<label><i class="glyphicon glyphicon-user"></i> Presenter / Group</label>
 						<select class="form-control" name="group_id">
 <?php
 $sql = "SELECT DISTINCT `group_id`, `registered` FROM `presenters` ORDER BY `group_id` ASC";
