@@ -73,12 +73,8 @@ catch (PDOException $e) {
 							<input class="form-control" type="password" name="password" placeholder="password" />
 							<legend>Data Upload</legend>
 						<div class="form-group">
-							<label>Student List (CSV file)</label>
-							<input class="form-control" type="file" name="student_list" />
-						</div>
-						<div class="form-group">
-							<label>Group List (CSV file)</label>
-							<input class="form-control" type="file" name="group_list" />
+							<label>Presenter(s) List (CSV file)</label>
+							<input class="form-control" type="file" name="presenter_list" />
 						</div>
 						<div class="form-group">
 							<label>Time Slot List (CSV file)</label>

@@ -41,48 +41,29 @@ if (isset($_POST['submit'])) {
 	// insert password
 	$stmt->execute(array(':attr' => 'password', ':value' => $passwd));
 
-	// parse student list
-	if ($_FILES['student_list']['error'] == 0) {
-		$filename = $_FILES['student_list']['name'];
-		$type = $_FILES['student_list']['type'];
-		$tmp_name = $_FILES['student_list']['tmp_name'];
+	// parse presenter list
+	if ($_FILES['presenter_list']['error'] == 0) {
+		$filename = $_FILES['presenter_list']['name'];
+		$type = $_FILES['presenter_list']['type'];
+		$tmp_name = $_FILES['presenter_list']['tmp_name'];
 
 
 		if (($f = fopen($tmp_name, 'r')) != FALSE) {
 			// for the large csv file
 			set_time_limit(0);
-			$sql = "INSERT INTO `students` (`student_id`, `name`) VALUES (:student_id, :name)";
+			$sql = "INSERT INTO `presenters` (`presenter_id`, `group_id`, `name`, `registered`) VALUES (:presenter_id, :group_id, :name, 0)";
 			$stmt = $db->prepare($sql);
 
 			// read line by line in csv file
-			while (($data = fgetcsv($f)) != FALSE) {
-				$n = count($data);
-				// insert student info
-				$stmt->execute(array(':student_id' => $data[0], ':name' => $data[1]));
-			}
+			while (($data_row = fgetcsv($f)) != FALSE) {
+				$n = count($data_row);
+				// insert presenter info
+				$data[':presenter_id'] = $data_row[0];
+				$data[':name'] = $data_row[1];
+				$data[':group_id'] = $n == 3 ? $data_row[2] : $data_row[0];
 
-		}
+				$stmt->execute($data);
 
-	}
-
-	// parse group list
-	if ($_FILES['group_list']['error'] == 0) {
-		$filename = $_FILES['group_list']['name'];
-		$type = $_FILES['group_list']['type'];
-		$tmp_name = $_FILES['group_list']['tmp_name'];
-
-
-		if (($f = fopen($tmp_name, 'r')) != FALSE) {
-			// for the large csv file
-			set_time_limit(0);
-			$sql = "INSERT INTO `groups` (`members`, `registered`) VALUES (:members, 0)";
-			$stmt = $db->prepare($sql);
-
-			// read line by line in csv file
-			while (($data = fgetcsv($f)) != FALSE) {
-				sort($data);
-				// insert group info
-				$stmt->execute(array(':members' => implode(',', $data)));
 			}
 
 		}

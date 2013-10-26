@@ -20,29 +20,21 @@ function getURL() {
 
 function cleanup_db($db) {
 	$db->exec("DELETE FROM `attributes`");
-	$db->exec("DELETE FROM `students`");
-	$db->exec("DELETE FROM `groups`");
+	$db->exec("DELETE FROM `presenters`");
 	$db->exec("DELETE FROM `timeslots`");
 	$db->exec("DELETE FROM `presentations`");
 }
 
-function get_member_names($db, $id) {
-	$sql = "SELECT `members` FROM `groups` WHERE `group_id` = :group_id";
+function get_member_names($db, $group_id) {
+	$sql = "SELECT `name` FROM `presenters` WHERE `group_id` = :group_id ORDER BY `presenter_id` ASC";
 	$stmt = $db->prepare($sql);
-	$stmt->execute(array(':group_id' => $id));
-
-	$members_id = explode(',', $stmt->fetch()['members']);
-	sort($members_id);
+	$stmt->execute(array(':group_id' => $group_id));
 
 	$ret = array();
-	for ($i = 0; $i < count($members_id); ++$i) {
-		$sql = "SELECT `name` FROM `students` WHERE `student_id` = :student_id";
-		$stmt = $db->prepare($sql);
-		$stmt->execute(array(':student_id' => $members_id[$i]));
 
-		array_push($ret, $stmt->fetch()['name']);
+	while (($data_row = $stmt->fetch()) != FALSE) {
+		array_push($ret, $data_row['name']);
 	}
-
 	return $ret;
 }
 

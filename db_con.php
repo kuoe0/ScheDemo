@@ -21,12 +21,14 @@ try {
 		attr TEXT,
 		value TEXT)");
 
-	$db->exec("CREATE TABLE IF NOT EXISTS students (
-		student_id TEXT PRIMARY KEY,
-		name TEXT)");
+	$db->exec("CREATE TABLE IF NOT EXISTS presenters (
+		presenter_id TEXT PRIMARY KEY,
+		group_id TEXT,
+		name TEXT,
+		registered INTEGER)");
 
 	$db->exec("CREATE TABLE IF NOT EXISTS groups (
-		group_id INTEGER PRIMARY KEY,
+		group_id TEXT,
 		members TEXT,
 		registered INTEGER)");
 

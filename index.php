@@ -59,18 +59,18 @@ if ($nodata) {
 			<div class="register">
 				<form action="register.php" method="POST">
 					<div class="form-group horizontal_input">
-						<label><i class="glyphicon glyphicon-user"></i> Group</label>
+						<label><i class="glyphicon glyphicon-user"></i> User / Group</label>
 						<select class="form-control" name="group_id">
 <?php
-$sql = "SELECT `group_id`, `registered` FROM `groups`";
+$sql = "SELECT DISTINCT `group_id`, `registered` FROM `presenters`";
 $stmt = $db->prepare($sql);
 $stmt->execute();
 
 while (($data_row = $stmt->fetch()) != FALSE) {
 	if ($data_row['registered'] == '0') {
-		$id = $data_row['group_id'];
-		$name_list = get_member_names($db, $id);
-		echo '<option value=' . $id . '>' . $id . '. ' . implode('；', $name_list) . '</option>';
+		$group_id = $data_row['group_id'];
+		$name_list = get_member_names($db, $group_id);
+		echo '<option value=' . $group_id . '>' . $group_id . '. ' . implode('；', $name_list) . '</option>';
 	}
 }
 
@@ -143,7 +143,7 @@ while (($data_row = $stmt->fetch()) != FALSE) {
 	}
 	echo '<td class="order_col">No. ' . $data_row['slice'] . "</td>";
 	if ($data_row['occupied'] == '1') {
-		echo '<td class="group_col"><span class="group_id">Group ' . $presentation_info['group_id']. '</span><br />' . implode('<br />', $name_list) . '</td>';
+		echo '<td class="group_col">' . implode('<br />', $name_list) . '</td>';
 		echo '<td class="title_col">' . $presentation_info['title'] . '</td>';
 	}
 	else {
