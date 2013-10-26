@@ -15,11 +15,21 @@
 include_once 'db_con.php';
 include_once 'function.php';
 
-$sql = "SELECT `value` FROM `attributes` WHERE `attr` = 'title'";
+$sql = "SELECT `value` FROM `attributes` WHERE `attr` = 'setup'";
 $stmt = $db->prepare($sql);
 $stmt->execute();
+$nodata = !$stmt->fetch();
 
-$title = $stmt->fetch()['value'];
+if (!$nodata) {
+	$sql = "SELECT `value` FROM `attributes` WHERE `attr` = 'title'";
+	$stmt = $db->prepare($sql);
+	$stmt->execute();
+
+	$title = $stmt->fetch()['value'];
+}
+else {
+	$title = 'PresentReg';
+}
 
 ?>
 
@@ -34,6 +44,17 @@ $title = $stmt->fetch()['value'];
 	<body>
 		<div class="container">
 			<h1><?php echo $title ?></h1>
+<?php
+
+if ($nodata) {
+	echo '<div class="jumbotron">';
+	echo '<a class="btn btn-lg btn-success" href="setup.php">Setup & Use »</a>';
+	echo '</div>';
+	echo '<!--';
+}
+
+?>
+
 			<div class="register">
 				<form action="register.php" method="POST">
 					<div class="form-group horizontal_input">
@@ -137,6 +158,12 @@ while (($data_row = $stmt->fetch()) != FALSE) {
 			</div>
 
 		</div>
+<?php
+if ($nodata) {
+	echo '-->';
+}
+?>
+
 		<div id="footer" class="container">
 			<p class="muted">Powered by <a href="http://kuoe0.tw/">KuoE0</a>.</p>
 		</div>
