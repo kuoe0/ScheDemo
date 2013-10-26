@@ -26,7 +26,7 @@ $sql = "UPDATE `timeslots` SET `occupied` = '1' WHERE `time_id` = :time_id";
 $stmt = $db->prepare($sql);
 $stmt->execute(array(':time_id' => $time_id));
 
-$sql = "UPDATE `groups` SET `registered` = '1' WHERE `group_id` = :group_id";
+$sql = "UPDATE `presenters` SET `registered` = '1' WHERE `group_id` = :group_id";
 $stmt = $db->prepare($sql);
 $stmt->execute(array(':group_id' => $group_id));
 
