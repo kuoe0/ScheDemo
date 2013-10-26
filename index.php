@@ -43,18 +43,19 @@ else {
 	</head>
 	<body>
 		<div class="container">
-			<h1><?php echo $title ?></h1>
+			<div class="jumbotron">
+				<h1><?php echo $title ?></h1>
 <?php
 
 if ($nodata) {
-	echo '<div class="jumbotron">';
-	echo '<a class="btn btn-lg btn-success" href="setup.php">Setup & Use »</a>';
+	echo '<p>PresentReg is a service of scheduling. It can be used to arrange the order of presentations or demos.';
+	echo '<p><a class="btn btn-lg btn-success" href="setup.php">Setup & Use »</a></p>';
 	echo '</div>';
 	echo '<!--';
 }
 
 ?>
-
+			</div>
 			<div class="register">
 				<form action="register.php" method="POST">
 					<div class="form-group horizontal_input">

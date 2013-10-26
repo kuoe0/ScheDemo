@@ -76,3 +76,7 @@ form {
 #footer p {
 	margin: 10px auto;
 }
+
+.jumbotron {
+	background: #DFF0D8;
+}
