@@ -13,6 +13,7 @@
  */
 
 include_once 'db_con.php';
+include_once 'function.php';
 
 try {
 
@@ -56,7 +57,8 @@ catch (PDOException $e) {
 						<label>Site Name</label>
 						<input type="text" name="title" placeholder="Type the title for this site..." />
 						<label>URL</label>
-						<input type="url" name="url" placeholder="URL for this site..." />
+						<input type="url" name="url" value=<?php echo '"' . dirname(getURL()) . '"'; ?> />
+						<span class="help-block">If you don't have some special reason, you don't need to modify this column.</span>
 						<legend>Admin Settings</legend>
 						<label>Username</label>
 						<input type="text" name="username" placeholder="username" />
