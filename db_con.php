@@ -23,7 +23,7 @@ try {
 
 	$db->exec("CREATE TABLE IF NOT EXISTS presenters (
 		presenter_id TEXT PRIMARY KEY,
-		group_id TEXT,
+		group_id INTEGER,
 		name TEXT,
 		registered INTEGER)");
 
