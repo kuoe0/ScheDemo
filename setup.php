@@ -50,46 +50,74 @@ catch (PDOException $e) {
 	<body>
 		<div class="container">
 			<div class="row">
-				<div class="col-md-4 col-md-offset-4">
-					<h1>Setup</h1>
-					<form action="setup-ing.php" method="POST" enctype="multipart/form-data">
-						<legend>Basic Info</legend>
-						<div class="form-group">
-							<label>Site Name</label>
-							<input class="form-control" type="text" name="title" placeholder="Type the title for this site..." />
+				<h1>Setup</h1>
+				<form class="setup-form" action="setup-ing.php" method="POST" enctype="multipart/form-data">
+					<legend>Basic Info</legend>
+					<div class="form-group horizontal_input">
+						<label>Site Name</label>
+						<input class="form-control" type="text" name="title" placeholder="Type the title for this site..." />
+						<span class="help-block">The title of this site, e.g. the name of course.</span>
+					</div>
+					<div class="form-group horizontal_input">
+						<label>URL</label>
+						<input class="form-control" type="url" name="url" value=<?php echo '"' . dirname(getURL()) . '"'; ?> />
+						<span class="help-block">If you don't have some special reason, you don't need to modify this column.</span>
+					</div>
+					<legend>Admin Settings</legend>
+					<div class="form-group horizontal_input">
+						<label>Username</label>
+						<input class="form-control" type="text" name="username" placeholder="username" />
+					</div>
+					<div class="form-group horizontal_input">
+					<label>Password</label>
+						<input class="form-control" type="password" name="password" placeholder="password" />
+					</div>
+					<legend>Data Importing</legend>
+					<div class="form-group horizontal_input">
+						<label>Presenter(s) List (CSV file)</label>
+						<input class="form-control" type="file" name="presenter_list" />
+						<span class="help-block">Upload file of presenters list.</span>
+					</div>
+					<div class="form-group horizontal_input">
+						<label>Time Slot List (CSV file)</label>
+						<input class="form-control" type="file" name="timeslot_list" />
+						<span class="help-block">Import the time slots by file.</span>
+					</div>
+					<div class="form-group">
+						<label>Time Slot Rule</label>&nbsp;&nbsp;
+						<button class="btn btn-primary btn-xs" type="button" onclick="add_rule()" href="#">add a rule</button>
+						<div id="timeslot_rules">
 						</div>
-						<div class="form-group">
-							<label>URL</label>
-							<input class="form-control" type="url" name="url" value=<?php echo '"' . dirname(getURL()) . '"'; ?> />
-							<span class="help-block">If you don't have some special reason, you don't need to modify this column.</span>
-						</div>
-						<legend>Admin Settings</legend>
-						<div class="form-group">
-							<label>Username</label>
-							<input class="form-control" type="text" name="username" placeholder="username" />
-						</div>
-						<div class="form-group">
-						<label>Password</label>
-							<input class="form-control" type="password" name="password" placeholder="password" />
-							<legend>Data Upload</legend>
-						<div class="form-group">
-							<label>Presenter(s) List (CSV file)</label>
-							<input class="form-control" type="file" name="presenter_list" />
-						</div>
-						<div class="form-group">
-							<label>Time Slot List (CSV file)</label>
-							<input class="form-control" type="file" name="timeslot_list" />
-						</div>
-						<input type="hidden" name="submit" value="1" />
-						<div class="form-group">
-							<button class="btn btn-primary" type="submit">Confirm</button>
-						</div>
-					</form>
-				</div>
+						<span class="help-block">Setup time slots manually.</span>
+					</div>
+					<input type="hidden" name="submit" value="1" />
+					<div class="form-group">
+						<button class="btn btn-success btn-lg" type="submit">Confirm</button>
+					</div>
+				</form>
 			</div>
 		</div>
+
 		<script src="http://code.jquery.com/jquery.js"></script>
 		<script src="bootstrap/js/bootstrap.min.js"></script>
+		<script>
+			var rule_cnt = 0;
+
+			function add_rule() {
+				datetime_rule = jQuery('<div class="datetime-rule" id="datetime-' + rule_cnt + '">From <input type="date" name="begin-date-' + rule_cnt + '" /><input type="time" name="begin-time-' + rule_cnt + '" /> To <input type="date" name="end-date-' + rule_cnt + '" /><input type="time" name="end-time-' + rule_cnt + '" /> Repeat <select name="repeat-' + rule_cnt + '"><option value="none">none</option><option value="daily">daily</option><option value="weekly">weekly</option><option value="monthly">monthly</option></select> <span class="glyphicon glyphicon-user"></span> <input type="number" name="quota-' + rule_cnt + '" />&nbsp;&nbsp;<span class="glyphicon glyphicon-remove" onclick="remove_rule(' + rule_cnt + ')"></span></div>');
+
+				jQuery('#timeslot_rules').append(datetime_rule);
+				++rule_cnt;
+			};
+
+			function remove_rule(id) {
+				jQuery('#datetime-' + id).remove();
+			}
+			
+			$(document).ready(function() {
+				add_rule();
+			});
+		</script>
 	</body>
 </html>
 
