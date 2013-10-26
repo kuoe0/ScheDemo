@@ -71,6 +71,8 @@ form {
 	background: #DFF0D8;
 	height: 50px;
 	text-align: center;
+	border-bottom-right-radius: 6px;
+	border-bottom-left-radius: 6px;
 }
 
 #footer p {
