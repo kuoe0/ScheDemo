@@ -82,9 +82,7 @@ while (($data_row = $stmt->fetch()) != FALSE) {
 						<input class="form-control" type="text" name="title" />
 					</div>
 
-					<div class="horizontal_input">
-						<button class="btn btn-success" type="submit">Confirm</button>
-					</div>
+					<button class="btn btn-success" type="submit">Confirm</button>
 
 
 				</form>

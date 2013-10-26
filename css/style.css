@@ -19,7 +19,7 @@ input[type="password"] {
 .horizontal_input {
 	display: inline-block;
 	margin-right: 10px;
-	min-width: 20%;
+	min-width: 25%;
 }
 
 .register {
