@@ -25,12 +25,7 @@ input[type="password"] {
 .register {
 
 	background: #A7CC6A;
-
-	border-width: 1px;
-	border-style: solid;
-	border-color: rgba(0, 0, 0, 0.2);
 	border-radius: 10px;
-
 	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
 
 	margin: 10px 0 10px -37.5%;
