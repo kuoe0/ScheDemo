@@ -12,6 +12,12 @@
  * @copyright (C) 2013 KuoE0 <kuoe0.tw@gmail.com>
  */
 
+function getURL() {
+	$protocol = (isset($_SERVER['HTTPS']) ? 'https' : 'http') . '://';
+	$port = $_SERVER['SERVER_PORT'] == '80' ? '' : $_SERVER['SERVER_PORT'];
+	return $protocol . $_SERVER['SERVER_NAME'] . $port . $_SERVER['REQUEST_URI'];
+}
+
 function cleanup_db($db) {
 	$db->exec("DELETE FROM `attributes`");
 	$db->exec("DELETE FROM `students`");
