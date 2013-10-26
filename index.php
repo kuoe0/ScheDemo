@@ -87,6 +87,8 @@ $stmt->execute();
 while (($data_row = $stmt->fetch()) != FALSE) {
 	$id = $data_row['time_id'];
 	$time = $data_row['begin'];
+	if ($data_row['end'] != '')
+		$time .= ' ~ ' . $data_row['end'];
 	$order = $data_row['slice'];
 	echo '<option ' . ($data_row['occupied'] == '0' ? '' : 'disabled') . ' value=' . $id . '>' . $time . ' - No. ' . $order . '</option>';
 }
