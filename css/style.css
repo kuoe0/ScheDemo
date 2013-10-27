@@ -73,14 +73,23 @@ form {
 .timeslot table th,
 .timeslot table td {
 	vertical-align: middle;
+	text-align: center;
 }
 
-.title_col {
-	width: 45%;
+.date_col {
+	width: 100px;
 }
 
 .time_col {
-	width: 35%;
+	width: 150px;
+}
+
+.order_col {
+	width: 50px;
+}
+
+.group_col {
+	width: 100px;
 }
 
 .group_id {

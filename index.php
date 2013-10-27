@@ -80,17 +80,23 @@ while (($data_row = $stmt->fetch()) != FALSE) {
 						<label><i class="glyphicon glyphicon-time"></i> Time</label>
 						<select class="form-control" name="time_id">
 <?php
-$sql = "SELECT * FROM (SELECT * FROM `timeslots` ORDER BY datetime(`begin`)), (SELECT `time_id` AS `time_id_slice`, `slice` FROM `timeslots` ORDER BY `slice`) WHERE `time_id` == `time_id_slice`";
+$sql = "SELECT * FROM (SELECT * FROM `timeslots` ORDER BY date(`date`)), (SELECT `time_id` AS `time_id_slice`, `slice` FROM `timeslots` ORDER BY `slice`) WHERE `time_id` == `time_id_slice`";
 $stmt = $db->prepare($sql);
 $stmt->execute();
 
 while (($data_row = $stmt->fetch()) != FALSE) {
 	$id = $data_row['time_id'];
-	$time = $data_row['begin'];
-	if ($data_row['end'] != '')
-		$time .= ' ~ ' . $data_row['end'];
+	$date = $data_row['date'];
+	$time = '';
+	if ($data_row['begin_time'] != 'NULL') {
+		$time .= $data_row['begin_time'];
+	}
+	if ($data_row['end_time'] != 'NULL') {
+		$time .= ' ~ ' . $data_row['end_time'];
+	}
 	$order = $data_row['slice'];
-	echo '<option ' . ($data_row['occupied'] == '0' ? '' : 'disabled') . ' value=' . $id . '>' . $time . ' - No. ' . $order . '</option>';
+	$format = $date . ($time == '' ? '' : (' ' . $time)) . ' ' . $order;
+	echo '<option ' . ($data_row['occupied'] == '0' ? '' : 'disabled') . ' value=' . $id . '>' . $format . ' - No. ' . $order . '</option>';
 }
 
 ?>
@@ -111,44 +117,43 @@ while (($data_row = $stmt->fetch()) != FALSE) {
 			<div class="timeslot">
 				<table class="table table-hover">
 					<tr>
+						<th class="date_col">Date</th>
 						<th class="time_col">Time</th>
 						<th class="order_col">Order</th>
 						<th class="group_col">Presenter</th>
 						<th class="title_col">Title</th>
 					</tr>
 <?php
-$sql = "SELECT * FROM `timeslots` ORDER BY `begin` ASC, `slice` ASC";
+$sql = "SELECT * FROM `timeslots` ORDER BY `date`, `begin_time`, `slice`";
 $stmt = $db->prepare($sql);
 $stmt->execute();
 
 while (($data_row = $stmt->fetch()) != FALSE) {
+
 	$time_id = $data_row['time_id'];
+	$date = $data_row['date'];
+	$begin_time = $data_row['begin_time'];
+	$end_time = $data_row['end_time'];
+	$order = $data_row['slice'];
+	$occupied = $data_row['occupied'];
+
 	$presentation_info = get_presentation_info_by_time_id($db, $time_id);
 	$name_list = get_member_names($db, $presentation_info['group_id']);
 
-	if ($data_row['occupied'] == '1') {
+	if ($occupied == '1') {
 		echo '<tr class="success">';
 	}
 	else {
 		echo '<tr>';
 	}
-	
-	if ($data_row['end'] != '') {
-		echo '<td class="time_col">' . $data_row['begin'] . " ~ " . $data_row['end'] . '</td>';
-	}
-	else {
-		echo '<td class="time_col">' . $data_row['begin'] . '</td>';
-	}
-	echo '<td class="order_col">No. ' . $data_row['slice'] . "</td>";
-	if ($data_row['occupied'] == '1') {
-		echo '<td class="group_col">' . implode('<br />', $name_list) . '</td>';
-		echo '<td class="title_col">' . $presentation_info['title'] . '</td>';
-	}
-	else {
-		echo '<td class="group_col"></td><td class="title_col"></td>';
-	}
-	echo '</tr>';
 
+	echo '<td class="date_col">' . $date . '</td>';
+	echo '<td class="time_col">' . $begin_time . ($end_time != "NULL" ? (' ~ ' . $end_time) : '') . '</td>';
+	echo '<td class="order_col">' . $order . '</td>';
+	echo '<td class="group_col">' . ($occupied == '1' ? implode('<br />', $name_list) : '') . '</td>';
+	echo '<td class="title_col">' . ($occupied == '1' ? $presentation_info['title'] : '') . '</td>';
+
+	echo '</tr>';
 }
 
 
