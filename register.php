@@ -14,9 +14,45 @@
 
 include_once 'db_con.php';
 
+
 $group_id = $_POST['group_id'];
 $time_id = $_POST['time_id'];
 $title = $_POST['title'];
+
+$current = new DateTime(date('Y-m-d H:i', time()));
+$begin_opening = new DateTime(date('Y-m-d H:i', time()));
+$end_opening = new DateTime(date('Y-m-d H:i', time()));
+
+$sql = "SELECT `value` FROM `attributes` WHERE `attr` = 'begin-opening'";
+$stmt = $db->prepare($sql);
+$stmt->execute();
+$data_row = $stmt->fetch();
+
+if ($data_row) {
+	$begin_opening = new DateTime($data_row['value']);
+}
+
+$sql = "SELECT `value` FROM `attributes` WHERE `attr` = 'end-opening'";
+$stmt = $db->prepare($sql);
+$stmt->execute();
+$data_row = $stmt->fetch();
+
+if ($data_row) {
+	$end_opening = new DateTime($data_row['value']);
+}
+
+$sql = "SELECT `value` FROM `attributes` WHERE `attr` = 'url'";
+$stmt = $db->prepare($sql);
+$stmt->execute();
+$url = $stmt->fetch()['value'];
+
+if ($current < $begin_opening || $current > $end_opening) {
+	echo '<h2>The system will open at ' . $begin_opening->format('Y-m-d H:i') . ' ~ ' . $end_opening->format('Y-m-d H:i') . '.</h2>';
+	echo '<p>Redirect after 5 sec...</p>';
+	header("Refresh: 5; URL=" . $url);
+	die;
+}
+
 
 $sql = "INSERT INTO `presentations` (`title`, `group_id`, `time_id`, `reg_time`) VALUES (:title, :group_id, :time_id, datetime('now'))";
 $stmt = $db->prepare($sql);
@@ -29,11 +65,6 @@ $stmt->execute(array(':time_id' => $time_id));
 $sql = "UPDATE `presenters` SET `registered` = '1' WHERE `group_id` = :group_id";
 $stmt = $db->prepare($sql);
 $stmt->execute(array(':group_id' => $group_id));
-
-$sql = "SELECT `value` FROM `attributes` WHERE `attr` = 'url'";
-$stmt = $db->prepare($sql);
-$stmt->execute();
-$url = $stmt->fetch()['value'];
 
 header("Location: " . $url);
 
