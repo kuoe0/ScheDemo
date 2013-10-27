@@ -34,8 +34,10 @@ try {
 
 	$db->exec("CREATE TABLE IF NOT EXISTS timeslots (
 		time_id INTEGER PRIMARY KEY,
-		begin TEXT,
-		end TEXT,
+		begin_date TEXT,
+		begin_time TEXT,
+		end_date TEXT,
+		end_time TEXT,
 		slice INTEGER,
 		occupied INTEGER)");
 
