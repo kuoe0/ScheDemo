@@ -46,6 +46,14 @@ function get_presentation_info_by_time_id($db, $time_id) {
 	return $stmt->fetch();
 }
 
+function get_quota($db, $date, $begin_time, $end_time) {
+	$sql = "SELECT COUNT(*) FROM `timeslots` WHERE `date` = :date AND `begin_time` = :begin_time AND `end_time` = :end_time";
+	$stmt = $db->prepare($sql);
+	$stmt->execute(array(':date' => $date, ':begin_time' => $begin_time, ':end_time' => $end_time));
+
+	return $stmt->fetch()['COUNT(*)'];
+
+}
 	
 ?>
 
