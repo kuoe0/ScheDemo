@@ -129,7 +129,7 @@ if (isset($_POST['submit'])) {
 			while ($begin_date <= $end_date) {
 
 				for ($j = 0; $j < $quota; ++$j) {
-					$stmt->execute(array(':date' => $begin_date->format('Y-m-d'), ':begin_time' => $begin_time, ':end_time' => $end_time, ':slice' => ($j + 1)));
+					$stmt->execute(array(':date' => $begin_date->format('Y-m-d'), ':begin_time' => $begin_time->format('H:i'), ':end_time' => $end_time->format('H:i'), ':slice' => ($j + 1)));
 				}
 
 				$begin_date->add(new DateInterval($interval));
