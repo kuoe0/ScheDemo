@@ -22,13 +22,20 @@ if (isset($_POST['submit'])) {
 	$username = $_POST['username'];
 	$passwd = sha1($_POST['username'] . $_POST['password']);
 
+	$begin_opening_date = $_POST['begin-opening-date'];
+	$begin_opening_time = $_POST['begin-opening-time'];
+	$end_opening_date = $_POST['end-opening-date'];
+	$end_opening_time = $_POST['end-opening-time'];
+
+	$begin_opening = ($begin_opening_date != '' ? $begin_opening_date : '') . ($begin_opening_time != '' ? (' ' . $begin_opening_time) : '');
+	$end_opening = ($end_opening_date != '' ? $end_opening_date : '') . ($end_opening_time != '' ? (' ' . $end_opening_time) : '');
+
 	$sql = "SELECT * FROM `attributes` WHERE `attr` = 'setup'";
 	$stmt = $db->prepare($sql);
 	$stmt->execute();
 	if (!$stmt->fetch()) {
 		cleanup_db($db);
 	}
-
 
 	$sql = "INSERT INTO `attributes` (`attr`, `value`) VALUES (:attr, :value)";
 	$stmt = $db->prepare($sql);
@@ -40,6 +47,14 @@ if (isset($_POST['submit'])) {
 	$stmt->execute(array(':attr' => 'username', ':value' => $username));
 	// insert password
 	$stmt->execute(array(':attr' => 'password', ':value' => $passwd));
+
+	if ($begin_opening != '') {
+		$stmt->execute(array(':attr' => 'begin-opening', ':value' => $begin_opening));
+	}
+
+	if ($end_opening != '') {
+		$stmt->execute(array(':attr' => 'end-opening', ':value' => $end_opening));
+	}
 
 	// parse presenter list
 	if ($_FILES['presenter_list']['error'] == 0) {
