@@ -71,7 +71,7 @@ if (isset($_POST['submit'])) {
 	}
 
 	// parse timeslots list
-	if ($_FILES['timeslot_list']['error'] == 0) {
+	if (isset($_FILES['timeslot_list']) && $_FILES['timeslot_list']['error'] == 0) {
 		$filename = $_FILES['timeslot_list']['name'];
 		$type = $_FILES['timeslot_list']['type'];
 		$tmp_name = $_FILES['timeslot_list']['tmp_name'];
@@ -79,21 +79,63 @@ if (isset($_POST['submit'])) {
 		if (($f = fopen($tmp_name, 'r')) != FALSE) {
 			// for the large csv file
 			set_time_limit(0);
-			$sql = "INSERT INTO `timeslots` (`begin`, `end`, `slice`, `occupied`) VALUES (:begin, :end, :slice, 0)";
+			$sql = "INSERT INTO `timeslots` (`date`, `begin_time`, `end_time`, `slice`, `occupied`) VALUES (:date, :begin_time, :end_time, :slice, 0)";
 			$stmt = $db->prepare($sql);
 
 			// read line by line in csv file
 			while (($data = fgetcsv($f)) != FALSE) {
 				// insert group info
-				$quota = $data[2];
+				$date = $data[0] == '' ? 'NULL' : $data[0];
+				$begin_time = $data[1] == '' ? 'NULL' : $data[1];
+				$end_time = $data[2] == '' ? 'NULL' : $data[2];
+				$quota = $data[3];
 
 				for ($i = 0; $i < $quota; ++$i) {
-					$stmt->execute(array(':begin' => $data[0], ':end' => $data[1], ':slice' => ($i + 1)));
+					$stmt->execute(array(':date' => $date, ':begin_time' => $begin_time, ':end_time' => $end_time, ':slice' => ($i + 1)));
 				}
 			}
 
 		}
+	}
+	else {
+		$rule_cnt = $_POST['rule-cnt'];
 
+		for ($i = 0; $i < $rule_cnt; ++$i) {
+			if (!isset($_POST['quota-' . $i])) {
+				continue;
+			}
+
+			$begin_date = $_POST['begin-date-' . $i] == '' ? 'NULL' : new DateTime($_POST['begin-date-' . $i]);
+			$begin_time = $_POST['begin-time-' . $i] == '' ? 'NULL' : new DateTime($_POST['begin-time-' . $i]);
+			$end_date = isset($_POST['end-date-' . $i]) && $_POST['end-date-' . $i] != '' ? new DateTime($_POST['end-date-' . $i]) : 'NULL';
+			$end_time = $_POST['end-time-' . $i] == '' ? 'NULL' : new DateTime($_POST['end-time-' . $i]);
+			$repeat_mode = $_POST['repeat-' .$i];
+			$quota = $_POST['quota-' .$i];
+
+			$sql = "INSERT INTO `timeslots` (`date`, `begin_time`, `end_time`, `slice`, `occupied`) VALUES (:date, :begin_time, :end_time, :slice, 0)";
+			$stmt = $db->prepare($sql);
+			$interval = 'P1D';
+
+			if ($repeat_mode == 'weekly') {
+				$interval = 'P7D';
+			}
+			else if ($repeat_mode == 'monthly') {
+				$interval = 'P1M';
+			}
+			else if ($repeat_mode == 'none') {
+				$end_date = clone $begin_date;
+			}
+
+			while ($begin_date <= $end_date) {
+
+				for ($j = 0; $j < $quota; ++$j) {
+					$stmt->execute(array(':date' => $begin_date->format('Y-m-d'), ':begin_time' => $begin_time, ':end_time' => $end_time, ':slice' => ($j + 1)));
+				}
+
+				$begin_date->add(new DateInterval($interval));
+			}
+
+		}
 	}
 	// mark setup process be ready to prevent setup again
 	$sql = "INSERT INTO `attributes` (`attr`, `value`) VALUES (:attr, :value)";
