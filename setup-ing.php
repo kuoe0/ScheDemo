@@ -99,9 +99,15 @@ if (isset($_POST['submit'])) {
 	$sql = "INSERT INTO `attributes` (`attr`, `value`) VALUES (:attr, :value)";
 	$stmt = $db->prepare($sql);
 	$stmt->execute(array(':attr' => 'setup', ':value' => 'yes'));
+
+	echo 'Setup successfully! Redirect after 5 sec...';
+}
+else {
+	echo 'Setup failed! Redirect after 5 sec...';
+	cleanup_db();
 }
 
-header("Location: " . $url);
+header("Refresh: 5; URL=" . $url);
 
 ?>
 
