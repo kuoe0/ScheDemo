@@ -53,6 +53,27 @@ if ($current < $begin_opening || $current > $end_opening) {
 	die;
 }
 
+$sql = "SELECT DISTINCT `registered` FROM `presenters` WHERE `group_id` = :group_id";
+$stmt = $db->prepare($sql);
+$stmt->execute(array(':group_id' => $group_id));
+
+if ($stmt->fetch()['registered'] == '1') {
+	echo '<h2>The presenters have registered. Please try again...</h2>';
+	echo '<p>Redirect after 5 sec...</p>';
+	header("Refresh: 5; URL=" . $url);
+	die;
+}
+
+$sql = "SELECT DISTINCT `occupied` FROM `timeslots` WHERE `time_id` = :time_id";
+$stmt = $db->prepare($sql);
+$stmt->execute(array(':time_id' => $time_id));
+
+if ($stmt->fetch()['occupied'] == '1') {
+	echo '<h2>The time has been occupied. Please try again...</h2>';
+	echo '<p>Redirect after 5 sec...</p>';
+	header("Refresh: 5; URL=" . $url);
+	die;
+}
 
 $sql = "INSERT INTO `presentations` (`title`, `group_id`, `time_id`, `reg_time`) VALUES (:title, :group_id, :time_id, datetime('now'))";
 $stmt = $db->prepare($sql);
