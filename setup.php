@@ -91,9 +91,9 @@ catch (PDOException $e) {
 						</div>
 						<span class="help-block">Setup time slots manually.</span>
 					</div>
-					<input type="hidden" name="submit" value="1" />
+					<input type="hidden" name="rule-cnt" />
 					<div class="form-group">
-						<button class="btn btn-success btn-lg" type="submit">Confirm</button>
+						<button class="btn btn-success btn-lg" type="submit" name="submit">Confirm</button>
 					</div>
 				</form>
 			</div>
@@ -105,19 +105,20 @@ catch (PDOException $e) {
 			var rule_cnt = 0;
 
 			function add_rule() {
-				datetime_rule = jQuery('<div class="datetime-rule" id="datetime-' + rule_cnt + '">From <input type="date" name="begin-date-' + rule_cnt + '" /><input type="time" name="begin-time-' + rule_cnt + '" /> To <input type="date" name="end-date-' + rule_cnt + '" /><input type="time" name="end-time-' + rule_cnt + '" /> Repeat <select name="repeat-' + rule_cnt + '"><option value="none">none</option><option value="daily">daily</option><option value="weekly">weekly</option><option value="monthly">monthly</option></select> <span class="glyphicon glyphicon-user"></span> <input type="number" name="quota-' + rule_cnt + '" min="1" value="1" />&nbsp;&nbsp;<span class="glyphicon glyphicon-remove" onclick="remove_rule(' + rule_cnt + ')"></span></div>');
+				datetime_rule = jQuery('<div class="datetime-rule" id="datetime-' + rule_cnt + '">From <input type="date" name="begin-date-' + rule_cnt + '" /><input type="time" name="begin-time-' + rule_cnt + '" /> To <input type="date" name="end-date-' + rule_cnt + '"/><input type="time" name="end-time-' + rule_cnt + '" /> Repeat <select name="repeat-' + rule_cnt + '" onchange="EndDateStatus(' + rule_cnt + ', this)" ><option value="none">none</option><option value="daily">daily</option><option value="weekly">weekly</option><option value="monthly">monthly</option></select> <span class="glyphicon glyphicon-user"></span> <input type="number" name="quota-' + rule_cnt + '" min="1" value="1" />&nbsp;&nbsp;<span class="glyphicon glyphicon-remove" onclick="remove_rule(' + rule_cnt + ')"></span></div>');
 
 				jQuery('#timeslot_rules').append(datetime_rule);
 				++rule_cnt;
+
+				$('input[name="rule-cnt"]').val(rule_cnt);
 			};
 
 			function remove_rule(id) {
 				jQuery('#datetime-' + id).remove();
 			}
+
+
 			
-			$(document).ready(function() {
-				add_rule();
-			});
 		</script>
 	</body>
 </html>
