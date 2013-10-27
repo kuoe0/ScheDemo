@@ -64,6 +64,15 @@ catch (PDOException $e) {
 						<input class="form-control" type="url" name="url" value=<?php echo '"' . dirname(getURL()) . '"'; ?> />
 						<span class="help-block">If you don't have some special reason, you don't need to modify this column.</span>
 					</div>
+					<div class="horizontal_input">
+						<label>Opening Time</label>
+						<div>
+							From <input type="date" name="begin-opening-date" />
+							<input type="time" name="begin-opening-time" />
+							To <input type="date" name="end-opening-date" />
+							<input type="time" name="end-opening-time" />
+						</div>
+					</div>
 					<legend>Admin Settings</legend>
 					<div class="form-group horizontal_input">
 						<label>Username</label>
