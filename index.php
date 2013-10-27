@@ -95,8 +95,8 @@ while (($data_row = $stmt->fetch()) != FALSE) {
 		$time .= ' ~ ' . $data_row['end_time'];
 	}
 	$order = $data_row['slice'];
-	$format = $date . ($time == '' ? '' : (' ' . $time)) . ' ' . $order;
-	echo '<option ' . ($data_row['occupied'] == '0' ? '' : 'disabled') . ' value=' . $id . '>' . $format . ' - No. ' . $order . '</option>';
+	$format = $date . ($time == '' ? '' : (' ' . $time)) . ' - No. ' . $order;
+	echo '<option ' . ($data_row['occupied'] == '0' ? '' : 'disabled') . ' value=' . $id . '>' . $format . '</option>';
 }
 
 ?>
