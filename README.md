@@ -45,6 +45,8 @@ Finally, restart the Apache web server.
 
 **Setup PHP5 with PDO-sqlite Driver**
 
+![PDO support](doc_img/phpinfo.png)
+
 Ubuntu 13.04:
 
 	apt-get install php php5-sqlite
