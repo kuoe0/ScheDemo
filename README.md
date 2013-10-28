@@ -102,9 +102,7 @@ Screenshot
 
 ![setup page](doc_img/screenshot-2.png)
 
-![setup page after setup](doc_img/screenshot-3.png)
-
-![homepage after setup](doc_img/screenshot-4.png)
+![homepage after setup](doc_img/screenshot-3.png)
 
 To-do
 -----
