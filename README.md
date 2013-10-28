@@ -37,7 +37,7 @@ Apache Web Server is built-in OS X. So, just type the command below to launch it
 
 And then, enable the rewrite module. Open the file `/etc/apache2/httpd.conf` and uncomment this line below.
 
-	$ LoadModule rewrite_module libexec/apache2/mod_rewrite.so
+	LoadModule rewrite_module libexec/apache2/mod_rewrite.so
 
 Finally, restart the Apache web server.
 
@@ -47,9 +47,41 @@ Finally, restart the Apache web server.
 
 Ubuntu 13.04:
 
-	apt-get install php5-sqlite
+	apt-get install php php5-sqlite
+
+Finally, restart the Apache web service.
+
+	$ service apache restart
+
+Let's check the PHP configuration, add a file in DocumentRoot.
+
+	$ echo '<?php phpinfo() ?>' > /var/www/info.php
+
+Open browser and go to this site `localhost/info.php`. Find `PDO` string to check the sqlite support.
 
 OS X 10.9:
+
+Enable PHP module for Apache. Open the file `/etc/apache2/httpd.conf` and uncomment this line below.
+
+	LoadModule php5_module libexec/apache2/libphp5.so
+
+And then, copy the default php settings file.
+
+	cp /etc/php.ini.default /etc/php.ini
+	
+To prevent some warning, enable output_buffering in `php.ini`.
+
+	output_buffering = On
+	
+Finally, restart the Apache web server.
+
+	$ sudo apachectl restart
+
+Let's check the PHP configuration, add a file in DocumentRoot.
+
+	$ echo '<?php phpinfo() ?>' > /Library/WebServer/Documents/info.php
+
+Open browser and go to this site `localhost/info.php`. Find `PDO` string to check the sqlite support.
 
 **Directory Permission**
 
