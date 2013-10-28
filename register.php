@@ -13,6 +13,7 @@
  */
 
 include_once 'db_con.php';
+include_once 'global.php';
 
 
 $group_id = $_POST['group_id'];

@@ -13,6 +13,7 @@
  */
 
 include_once 'db_con.php';
+include_once 'global.php';
 include_once 'function.php';
 
 try {
