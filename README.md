@@ -51,3 +51,10 @@ And then, set the group of this directory to `www-data` or the group of apache.
 	
 	chgrp www-data PresentReg
 
+To-do
+-----
+
+1. authorization for presenters, e.g. email, CAPTCHA
+2. minimize the register form to view entire table
+
+
