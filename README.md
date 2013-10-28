@@ -95,6 +95,17 @@ And then, set the group of this directory to `www-data` or the group of apache.
 	
 	chgrp www-data PresentReg
 
+Screenshot
+----------
+
+![initial page](doc_img/screenshot-1.png)
+
+![setup page](doc_img/screenshot-2.png)
+
+![setup page after setup](doc_img/screenshot-3.png)
+
+![homepage after setup](doc_img/screenshot-4.png)
+
 To-do
 -----
 
