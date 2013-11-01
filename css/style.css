@@ -62,12 +62,16 @@ input[type="number"] {
 	width: 75%;
 
 	position: fixed;
-	bottom: 100px;
+	bottom: 50px;
 	left: 50%;
 }
 
 form {
 	margin: 0;
+}
+
+.timeslot{
+	margin-bottom:151px;
 }
 
 .timeslot table th,
