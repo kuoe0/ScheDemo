@@ -107,7 +107,8 @@ Screenshot
 To-do
 -----
 
-1. authorization for presenters, e.g. email, CAPTCHA
+1. give a password after registered for authorization
 2. minimize the register form to view entire table
-
+3. login function
+4. register information modification
 
