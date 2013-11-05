@@ -25,6 +25,7 @@ try {
 		presenter_id TEXT PRIMARY KEY,
 		group_id INTEGER,
 		name TEXT,
+		password TEXT,
 		registered INTEGER)");
 
 	$db->exec("CREATE TABLE IF NOT EXISTS groups (
