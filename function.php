@@ -54,6 +54,11 @@ function get_quota($db, $date, $begin_time, $end_time) {
 	return $stmt->fetch()['COUNT(*)'];
 
 }
+
+function gen_random_password($len=8) {
+	$chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+	return substr(str_shuffle($chars), 0, $len);
+}
 	
 ?>
 
