@@ -47,8 +47,14 @@ $stmt = $db->prepare($sql);
 $stmt->execute();
 $url = $stmt->fetch()['value'];
 
-if ($current < $begin_opening || $current > $end_opening) {
+if ($current < $begin_opening) {
 	echo '<h2>The system will open at ' . $begin_opening->format('Y-m-d H:i') . ' ~ ' . $end_opening->format('Y-m-d H:i') . '.</h2>';
+	echo '<p>Redirect after 5 sec...</p>';
+	header("Refresh: 5; URL=" . $url);
+	die;
+}
+elseif ($current > $end_opening) {
+	echo '<h2>The system had been closed.';
 	echo '<p>Redirect after 5 sec...</p>';
 	header("Refresh: 5; URL=" . $url);
 	die;
