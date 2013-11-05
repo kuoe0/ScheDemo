@@ -122,3 +122,24 @@ form {
 .datetime-rule {
 	margin: 5px auto;
 }
+
+.form-signin {
+	max-width: 330px;
+	padding: 15px;
+	margin: 100px auto;
+
+	border-color: #eee;
+	border-style: solid;
+	border-width: 1px;
+	border-radius: 10px;
+
+	background-color: #DFF0D8;
+
+}
+
+.form-signin input,
+.form-signin select {
+	margin-top: 5px;
+	margin-bottom: 10px;
+}
+
