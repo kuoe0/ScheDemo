@@ -40,7 +40,7 @@ include_once 'function.php';
 						<input type="checkbox" name="rememberme" />
 					Remember me
 					</label>
-					<button class="btn btn-success btn-lg btn-block" type="submit" name="submit">Login</button>
+					<button class="btn btn-success btn-lg btn-block" type="submit" name="submit">Sign in</button>
 				</div>
 			</form>
 		</div>
