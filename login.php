@@ -28,11 +28,26 @@ include_once 'function.php';
 	<body>
 		<div class="container">
 			<form class="form-signin">
-				<legend>Please sign in...</legend>
 				<div class="form-group">
-					<label>ID</label>
+					<label id="ID">ID</label>
+					<br />
+					<label>
+						<input type="checkbox" name="loginasadmin" onchange="login_as_admin(this)"/>
+					Login as administrator
+					</label>
 					<select class="col-lg-12 input-lg" name="ID">
-						<option value=0>Admin</option>
+<?php
+$sql = "SELECT DISTINCT `group_id`, `registered` FROM `presenters` ORDER BY `group_id` ASC";
+$stmt = $db->prepare($sql);
+$stmt->execute();
+
+while (($data_row = $stmt->fetch()) != FALSE) {
+	$group_id = $data_row['group_id'];
+	$name_list = get_member_names($db, $group_id);
+	echo '<option value=' . $group_id . '>' . $group_id . '. ' . implode('；', $name_list) . '</option>';
+}
+
+?>
 					</select>
 					<label>Password</label>
 					<input class="col-lg-12 input-lg" type="password" name="password" placeholder="Password..."/>
@@ -46,6 +61,19 @@ include_once 'function.php';
 		</div>
 		<script src="http://code.jquery.com/jquery.js"></script>
 		<script src="bootstrap/js/bootstrap.min.js"></script>
+		<script>
+
+			function login_as_admin(chbox) {
+				if (chbox.checked) {
+					$('select[name="ID"]').attr('disabled', 'disabled');
+					$('<input class="col-lg-12 input-lg" type="text" name="adminid" placeholder="Admin ID" />').insertAfter('#ID');
+				}
+				else {
+					$('select[name="ID"]').removeAttr('disabled');
+					$('input[name="adminid"]').remove();
+				}
+			}
+		</script>
 	</body>
 </html>
 
