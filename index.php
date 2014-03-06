@@ -29,7 +29,7 @@ if (!$nodata) {
 	$title = $stmt->fetch()['value'];
 }
 else {
-	$title = 'PresentReg';
+	$title = 'ScheDemo';
 }
 
 ?>
@@ -39,18 +39,29 @@ else {
 		<title><?php echo $title ?></title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
-		<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
-		<link href="css/style.css" rel="stylesheet">
+		<link href="static/components/normalize-css/normalize.css" rel="stylesheet" />
+
+		<script src="static/components/jquery/dist/jquery.min.js"></script>
+
+		<link href="static/components/semantic/build/packaged/css/semantic.min.css" rel="stylesheet" />
+		<script src="static/components/semantic/build/packaged/javascript/semantic.min.js"></script>
+
+
+		<script src="static/js/main.js"></script>
+		<link href="static/css/style.css" rel="stylesheet" />
 	</head>
 	<body>
-		<div class="container">
-			<div class="jumbotron">
-				<h1><?php echo $title ?></h1>
+		<div id="content" class="ui one column page grid">
+			<div class="column">
 <?php
 
 if ($nodata) {
-	echo '<p>PresentReg is a service of scheduling. It can be used to arrange the order of presentations or demos.';
-	echo '<p><a class="btn btn-lg btn-success" href="setup.php">Setup & Use »</a></p>';
+	echo '<h1 id="title" class="ui center aligned header">' . $title . '</h1>';
+	echo '<h2 id="subtitle" class="ui center aligned header">An application for scheduling.</h2>';
+	echo '<div class="centerize-box">';
+	echo '<div id="btn-setup" class="ui green button">Start</div>';
+	echo '</div>';
+	echo '</div>';
 	echo '</div>';
 	echo '<!--';
 }
@@ -169,10 +180,10 @@ if ($nodata) {
 }
 ?>
 
-		<div id="footer" class="container">
-			<p class="muted">Powered by <a href="http://kuoe0.tw/">KuoE0</a>.</p>
+		<div id="footer" class="ui one column page grid">
+			<div class="column">
+				<p>Powered by <a href="http://kuoe0.tw/">KuoE0</a>.</p>
+			</div>
 		</div>
-		<script src="http://code.jquery.com/jquery.js"></script>
-		<script src="bootstrap/js/bootstrap.min.js"></script>
 	</body>
 </html>
