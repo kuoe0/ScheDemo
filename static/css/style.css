@@ -10,6 +10,64 @@ body {
 	color: black;
 }
 
+#title {
+	font-size: 4em;
+	font-weight: 100;
+}
+
+#subtitle {
+	font-size: 2em;
+	font-weight: 100;
+	color: #999;
+}
+
+#btn-setup {
+	margin: 2em auto;
+}
+
+.centerize-box {
+
+	/* Firefox */
+	display:-moz-box;
+    -moz-box-pack:center;
+    -moz-box-align:center;
+
+    /* Safari and Chrome */
+    display:-webkit-box;
+    -webkit-box-pack:center;
+    -webkit-box-align:center;
+
+    /* W3C */
+    display:box;
+    box-pack:center;
+    box-align:center;
+
+}
+
+#content {
+	padding-bottom: 2em;
+}
+
+#footer {
+	height: 2em;
+	position: relative;
+}
+
+#footer p {
+	text-align: center;
+	color: #AAA;
+}
+
+#footer p a,
+#footer p a:hover,
+#footer p a:visited {
+	color: #AAA;
+}
+
+.ui.header {
+	margin: 0;
+}
+
 input[type="text"],
 input[type="url"],
 input[type="password"],
@@ -103,17 +161,6 @@ form {
 	margin-bottom: 5px;
 }
 
-#footer {
-	background: #DFF0D8;
-	height: 50px;
-	text-align: center;
-	border-bottom-right-radius: 6px;
-	border-bottom-left-radius: 6px;
-}
-
-#footer p {
-	margin: 10px auto;
-}
 
 .jumbotron {
 	background: #DFF0D8;
