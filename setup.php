@@ -46,71 +46,212 @@ catch (PDOException $e) {
 <html>
 	<head>
 		<title>Setup for PresentReg</title>
-		<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
-		<link href="css/style.css" rel="stylesheet">
+		<link href="static/components/normalize-css/normalize.css" rel="stylesheet" />
+
+		<script src="static/components/jquery/dist/jquery.min.js"></script>
+
+		<link href="static/components/semantic/build/packaged/css/semantic.min.css" rel="stylesheet" />
+		<script src="static/components/semantic/build/packaged/javascript/semantic.min.js"></script>
+
+
+		<script src="static/js/main.js"></script>
+		<link href="static/css/style.css" rel="stylesheet" />
 	</head>
 	<body>
-		<div class="container">
-			<div class="row">
-				<h1>Setup</h1>
-				<form class="setup-form" action="setup-ing.php" method="POST" enctype="multipart/form-data">
+		<div id="content" class="ui one column page grid">
+			<div class="column">
+				<h1 id="title" class="ui center aligned header">Setup</h1>
+
+				<form class="ui form" action="setup-ing.php" method="POST" enctype="multipart/form-data">
 					<legend>Basic Info</legend>
-					<div class="form-group horizontal_input">
-						<label>Site Name</label>
-						<input class="form-control" type="text" name="title" placeholder="Type the title for this site..." />
-						<span class="help-block">The title of this site, e.g. the name of course.</span>
-					</div>
-					<div class="form-group horizontal_input">
-						<label>URL</label>
-						<input class="form-control" type="url" name="url" value=<?php echo '"' . dirname(getURL()) . '"'; ?> />
-						<span class="help-block">If you don't have some special reason, you don't need to modify this column.</span>
-					</div>
-					<div class="form-group horizontal_input">
-						<label>Opening Time</label>
-						<div>
-							From <input type="date" name="begin-opening-date" />
-							<input type="time" name="begin-opening-time" />
-							To <input type="date" name="end-opening-date" />
-							<input type="time" name="end-opening-time" />
+					<div class="two fields">
+						<div class="field">
+							<label>Site Name</label>
+							<div class="ui input">
+								<input type="text" name="title" placeholder="Type the title for this site..." />
+								<span class="help-block">The title of this site, e.g. the name of course.</span>
+							</div>
+						</div>
+
+						<div class="field">
+							<label>URL</label>
+							<div class="ui input">
+								<input type="url" name="url" value=<?php echo '"' . dirname(getURL()) . '"'; ?> />
+								<span class="help-block">If you don't have some special reason, you don't need to modify this column.</span>
+							</div>
 						</div>
 					</div>
-					<legend>Admin Settings</legend>
-					<div class="form-group horizontal_input">
-						<label>Username</label>
-						<input class="form-control" type="text" name="username" placeholder="username" />
-					</div>
-					<div class="form-group horizontal_input">
-					<label>Password</label>
-						<input class="form-control" type="password" name="password" placeholder="password" />
-					</div>
-					<legend>Data Importing</legend>
-					<div class="form-group horizontal_input">
-						<label>Presenter(s) List (CSV file)</label>
-						<input class="form-control" type="file" name="presenter_list" />
-						<span class="help-block">Upload file of presenters list.</span>
-					</div>
-					<div class="form-group horizontal_input">
-						<label>Time Slot List (CSV file)</label>
-						<input class="form-control" type="file" name="timeslot_list" />
-						<span class="help-block">Import the time slots by file.</span>
-					</div>
-					<div class="form-group">
-						<label>Time Slot Rule</label>&nbsp;&nbsp;
-						<button class="btn btn-primary btn-xs" type="button" onclick="add_rule()" href="#">add a rule</button>
-						<div id="timeslot_rules">
+					<legend>Opening Time</legend>
+					<div class="four fields">
+						<div class="field">
+							<label>From</label>
+							<input type="date" name="begin-opening-date" />
 						</div>
-						<span class="help-block">Setup time slots manually.<br />[Begin Date | End Date | Repeat Mode | Begin Time | End Time | Number of Presenters]</span>
+						<div class="parallel field">
+							<div class="ui input">
+								<input type="time" name="begin-opening-time" />
+							</div>
+						</div>
+						<div class="field">
+							<label>To</label>
+							<input type="date" name="end-opening-date" />
+						</div>
+						<div class="parallel field">
+							<div class="ui input">
+								<input type="time" name="end-opening-time" />
+							</div>
+						</div>
 					</div>
-					<input type="hidden" name="rule-cnt" />
-					<div class="form-group">
-						<button class="btn btn-success btn-lg" type="submit" name="submit">Confirm</button>
+
+					<legend>Administrator</legend>
+					<div class="two fields">
+						<div class="field">
+							<label>Username</label>
+							<input type="text" name="username" placeholder="username" />
+						</div>
+						<div class="field">
+							<label>Password</label>
+							<input type="password" name="password" placeholder="password" />
+						</div>
+					</div>
+
+					<legend>File Importing</legend>
+					<div class="four fields">
+						<div class="field">
+							<label>Presenter(s)</label>
+							<div class="ui icon input">
+								<input id="presenter-list-filename" type="text" placeholder="filename" disabled/>
+								<i class="delete basic icon"></i>
+							</div>
+							<span class="help-block">Upload file of presenters list.</span>
+						</div>
+						<div class="parallel field">
+							<div class="ui upload blue button">
+								upload
+								<input id="btn-presenter-list" type="file" name="presenter-list" />
+							</div>
+						</div>
+
+						<div class="field">
+							<label>Time</label>
+							<div class="ui icon input">
+								<input id="time-list-filename" type="text" placeholder="filename" disabled/>
+								<i class="delete basic icon"></i>
+							</div>
+							<span class="help-block">Upload file of time list.</span>
+						</div>
+						<div class="parallel field">
+							<div class="ui upload blue button">
+								upload
+								<input id="btn-time-list" type="file" name="time-list" />
+							</div>
+						</div>
+					</div>
+
+					<div id="time-rule-list">
+						<div class="ui mini right floated blue button">
+							Add Time
+						</div>
+						<legend>Manual Time Importing</legend>
+						<div class="ui two column grid">
+							<div class="column">
+								<div class="ui raised segment">
+									<div class="ui right red corner label">
+										<i class="delete basic icon"></i>
+									</div>
+									<div class="three fields">
+										<div class="field">
+											<label>Start Date</label>
+											<input type="date" name="start-date" />
+										</div>
+										<div class="field">
+											<label>End Date</label>
+											<input type="date" name="end-date" />
+										</div>
+										<div class="field">
+											<label>Repeat</label>
+											<select name="repeat-mode">
+												<option value="none">None</option>
+												<option value="daily">Daily</option>
+												<option value="weekly">Weekly</option>
+												<option value="monthly">Monthly</option>
+											</select>
+										</div>
+									</div>
+
+									<div class="three fields">
+										<div class="field">
+											<label>Start Time</label>
+											<div class="ui input">
+												<input type="time" name="start-time" />
+											</div>
+										</div>
+										<div class="field">
+											<label>End Time</label>
+											<div class="ui input">
+												<input type="time" name="end-time" />
+											</div>
+										</div>
+										<div class="field">
+											<label># of People</label>
+											<div class="ui input">
+												<input type="number" name="quota" />
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+
+					<div id="presenter-list">
+						<div class="ui mini right floated blue button">
+							Add Presenter
+						</div>
+						<legend>Manual Presenter(s) Importing</legend>
+						<div class="ui two column grid">
+							<div class="column">
+								<div class="ui raised segment">
+									<div class="ui right red corner label">
+										<i class="delete basic icon"></i>
+									</div>
+									<div class="three fields">
+										<div class="field">
+											<label>ID</label>
+											<input type="text" name="presenter-id" />
+										</div>
+										<div class="field">
+											<label>Name</label>
+											<input type="text" name="presenter-name" />
+										</div>
+										<div class="field">
+											<label>Group</label>
+											<input type="text" name="presenter-group" />
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<input type="hidden" name="time-rule-cnt" value=0/>
+					<input type="hidden" name="presenter-cnt" value=0/>
+
+					<div class="ui divider"></div>
+
+					<div class="ui green button">
+						Confirm
 					</div>
 				</form>
 			</div>
 		</div>
+		<div id="footer" class="ui one column page grid">
+			<div class="column">
+				<p>Powered by <a href="http://kuoe0.tw/">KuoE0</a>.</p>
+			</div>
+		</div>
 
-		<script src="http://code.jquery.com/jquery.js"></script>
-		<script src="bootstrap/js/bootstrap.min.js"></script>
 		<script>
 			var rule_cnt = 0;
 
