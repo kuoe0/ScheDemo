@@ -67,16 +67,18 @@ catch (PDOException $e) {
 					<div class="two fields">
 						<div class="field">
 							<label>Site Name</label>
-							<div class="ui input">
+							<div class="ui left icon input">
 								<input type="text" name="title" placeholder="Type the title for this site..." />
+								<i class="bookmark icon"></i>
 								<span class="help-block">The title of this site, e.g. the name of course.</span>
 							</div>
 						</div>
 
 						<div class="field">
 							<label>URL</label>
-							<div class="ui input">
+							<div class="ui left icon input">
 								<input type="url" name="url" value=<?php echo '"' . dirname(getURL()) . '"'; ?> />
+								<i class="url icon"></i>
 								<span class="help-block">If you don't have some special reason, you don't need to modify this column.</span>
 							</div>
 						</div>
@@ -85,20 +87,28 @@ catch (PDOException $e) {
 					<div class="four fields">
 						<div class="field">
 							<label>From</label>
-							<input type="date" name="begin-opening-date" />
+							<div class="ui left icon input">
+								<input type="date" name="begin-opening-date" />
+								<i class="calendar icon"></i>
+							</div>
 						</div>
 						<div class="parallel field">
-							<div class="ui input">
+							<div class="ui left icon input">
 								<input type="time" name="begin-opening-time" />
+								<i class="time icon"></i>
 							</div>
 						</div>
 						<div class="field">
 							<label>To</label>
-							<input type="date" name="end-opening-date" />
+							<div class="ui left icon input">
+								<input type="date" name="end-opening-date" />
+								<i class="calendar icon"></i>
+							</div>
 						</div>
 						<div class="parallel field">
-							<div class="ui input">
+							<div class="ui left icon input">
 								<input type="time" name="end-opening-time" />
+								<i class="time icon"></i>
 							</div>
 						</div>
 					</div>
@@ -107,11 +117,17 @@ catch (PDOException $e) {
 					<div class="two fields">
 						<div class="field">
 							<label>Username</label>
-							<input type="text" name="username" placeholder="username" />
+							<div class="ui left icon input">
+								<input type="text" name="username" placeholder="username" />
+								<i class="user icon"></i>
+							</div>
 						</div>
 						<div class="field">
 							<label>Password</label>
-							<input type="password" name="password" placeholder="password" />
+							<div class="ui left icon input">
+								<input type="password" name="password" placeholder="password" />
+								<i class="key icon"></i>
+							</div>
 						</div>
 					</div>
 
@@ -127,6 +143,7 @@ catch (PDOException $e) {
 						</div>
 						<div class="parallel field">
 							<div class="ui upload blue button">
+								<i class="upload basic icon"></i>
 								upload
 								<input id="btn-presenter-list" type="file" name="presenter-list" />
 							</div>
@@ -142,6 +159,7 @@ catch (PDOException $e) {
 						</div>
 						<div class="parallel field">
 							<div class="ui upload blue button">
+								<i class="upload basic icon"></i>
 								upload
 								<input id="btn-time-list" type="file" name="time-list" />
 							</div>
@@ -150,7 +168,8 @@ catch (PDOException $e) {
 
 					<div id="time-rule-list">
 						<div class="ui mini right floated blue button">
-							Add Time
+							<i class="add icon"></i>
+							Add
 						</div>
 						<legend>Manual Time Importing</legend>
 						<div class="ui two column grid">
@@ -159,14 +178,47 @@ catch (PDOException $e) {
 									<div class="ui right red corner label">
 										<i class="delete basic icon"></i>
 									</div>
-									<div class="three fields">
+									<div class="two fields">
 										<div class="field">
 											<label>Start Date</label>
-											<input type="date" name="start-date" />
+											<div class="ui left icon input">
+												<input type="date" name="start-date" />
+												<i class="calendar icon"></i>
+											</div>
 										</div>
 										<div class="field">
 											<label>End Date</label>
-											<input type="date" name="end-date" />
+											<div class="ui left icon input">
+												<input type="date" name="end-date" />
+												<i class="calendar icon"></i>
+											</div>
+										</div>
+									</div>
+
+									<div class="two fields">
+										<div class="field">
+											<label>Start Time</label>
+											<div class="ui left icon input">
+												<input type="time" name="start-time" />
+												<i class="time icon"></i>
+											</div>
+										</div>
+										<div class="field">
+											<label>End Time</label>
+											<div class="ui left icon input">
+												<input type="time" name="end-time" />
+												<i class="time icon"></i>
+											</div>
+										</div>
+									</div>
+
+									<div class="two fields">
+										<div class="field">
+											<label># of People</label>
+											<div class="ui left icon input">
+												<input type="number" name="quota" />
+												<i class="users icon"></i>
+											</div>
 										</div>
 										<div class="field">
 											<label>Repeat</label>
@@ -178,36 +230,15 @@ catch (PDOException $e) {
 											</select>
 										</div>
 									</div>
-
-									<div class="three fields">
-										<div class="field">
-											<label>Start Time</label>
-											<div class="ui input">
-												<input type="time" name="start-time" />
-											</div>
-										</div>
-										<div class="field">
-											<label>End Time</label>
-											<div class="ui input">
-												<input type="time" name="end-time" />
-											</div>
-										</div>
-										<div class="field">
-											<label># of People</label>
-											<div class="ui input">
-												<input type="number" name="quota" />
-											</div>
-										</div>
-									</div>
 								</div>
 							</div>
-
 						</div>
 					</div>
 
 					<div id="presenter-list">
 						<div class="ui mini right floated blue button">
-							Add Presenter
+							<i class="add icon"></i>
+							Add
 						</div>
 						<legend>Manual Presenter(s) Importing</legend>
 						<div class="ui two column grid">
