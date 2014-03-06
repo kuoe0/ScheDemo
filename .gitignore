@@ -1,3 +1,4 @@
 *.swp
 PresentReg.db
 test
+static/components
