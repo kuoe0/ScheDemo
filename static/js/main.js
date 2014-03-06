@@ -12,5 +12,12 @@ $(function() {
 		window.location.href="setup.php";
 	});
 
+	$('#btn-presenter-list').change(function () {
+		$('#presenter-list-filename').val(this.value.split('\\').pop());
+	});
+
+	$('#btn-time-list').change(function () {
+		$('#time-list-filename').val(this.value.split('\\').pop());
+	});
 });
 
