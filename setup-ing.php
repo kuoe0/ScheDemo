@@ -76,31 +76,37 @@ if (isset($_POST['submit'])) {
 		exit;
 	}
 
-
-	/*
 	// parse presenter list
-	if ($_FILES['presenter_list']['error'] == 0) {
-		$filename = $_FILES['presenter_list']['name'];
-		$type = $_FILES['presenter_list']['type'];
-		$tmp_name = $_FILES['presenter_list']['tmp_name'];
+	if ($_FILES['presenter-list']['error'] == 0) {
 
+		$filename = $_FILES['presenter-list']['name'];
+		$type = $_FILES['presenter-list']['type'];
+		$tmp_name = $_FILES['presenter-list']['tmp_name'];
 
 		if (($f = fopen($tmp_name, 'r')) != FALSE) {
 			// for the large csv file
 			set_time_limit(0);
-			$sql = "INSERT INTO `presenters` (`presenter_id`, `group_id`, `name`, `registered`) VALUES (:presenter_id, :group_id, :name, 0)";
-			$stmt = $db->prepare($sql);
 
-			// read line by line in csv file
-			while (($data_row = fgetcsv($f)) != FALSE) {
-				$n = count($data_row);
-				// insert presenter info
-				$data[':presenter_id'] = $data_row[0];
-				$data[':name'] = $data_row[1];
-				$data[':group_id'] = $n == 3 ? $data_row[2] : $data_row[0];
+			try {
+				$sql = "INSERT INTO `presenters` (`presenter_id`, `group_id`, `name`) VALUES (:presenter_id, :group_id, :name)";
+				$stmt = $db->prepare($sql);
 
-				$stmt->execute($data);
+				echo 'open file';
+				// read line by line in csv file
+				while (($data_row = fgetcsv($f)) != FALSE) {
 
+					// insert presenter info
+					$data[':presenter_id'] = $data_row[0];
+					$data[':name'] = $data_row[1];
+					$data[':group_id'] = get_group_id_by_name($db, $data_row[2]);
+
+					$stmt->execute($data);
+				}
+			}
+			catch (Exception $e) {
+				cleanup_db($db);
+				echo json_encode(array('status' => 'fail', 'errorMsg' => $e->getMessage()));
+				exit;
 			}
 
 		}
@@ -134,14 +140,12 @@ if (isset($_POST['submit'])) {
 
 		}
 	}
-	 */
 
 	// add time manually
 	$time_cnt = $_POST['time-cnt'];
 
-	$sql = "INSERT INTO `timeslots` (`date`, `start_time`, `end_time`, `time_order`, `occupied`) VALUES (:date, :start_time, :end_time, :time_order, 0)";
-
 	try {
+		$sql = "INSERT INTO `timeslots` (`date`, `start_time`, `end_time`, `time_order`, `occupied`) VALUES (:date, :start_time, :end_time, :time_order, 0)";
 		$stmt = $db->prepare($sql);
 	}
 	catch (Exception $e) {
@@ -155,7 +159,6 @@ if (isset($_POST['submit'])) {
 		if (!isset($_POST['quota-' . $i]) || $_POST['quota-' . $i] == 0) {
 			continue;
 		}
-
 
 		$start_date = $_POST['start-date-' . $i] == '' ? 'NULL' : new DateTime($_POST['start-date-' . $i]);
 		$end_date = $_POST['end-date-' . $i] == '' ? 'NULL' : new DateTime($_POST['end-date-' . $i]);
@@ -194,9 +197,16 @@ if (isset($_POST['submit'])) {
 
 	// add presenter manually
 	$presenter_cnt = $_POST['presenter-cnt'];
-	$insert_group_sql = "INSERT INTO `groups` (`group_name`, `registered`) VALUES (:group_name, 0)";
-	$select_group_sql = "SELECT `group_id` FROM `groups` WHERE `group_name` = :group_name";
-	$presenter_sql = "INSERT INTO `presenters` (`presenter_id`, `name`, `group_id`) VALUES (:presenter_id, :name, :group_id)";
+
+	try {
+		$presenter_sql = "INSERT INTO `presenters` (`presenter_id`, `name`, `group_id`) VALUES (:presenter_id, :name, :group_id)";
+		$stmt = $db->prepare($presenter_sql);
+	}
+	catch (Exception $e) {
+		cleanup_db($db);
+		echo json_encode(array('status' => 'fail', 'errorMsg' => $e->getMessage()));
+		exit;
+	}
 
 	for ($i = 0; $i < $presenter_cnt; ++$i) {
 
@@ -204,42 +214,11 @@ if (isset($_POST['submit'])) {
 			continue;
 		}
 
-		$presenter_id = $_POST['presenter-id-' . $i];
-		$name = $_POST['presenter-name-' . $i];
-		$group_name = $_POST['presenter-group-' . $i];
-
 		try {
-			$stmt = $db->prepare($select_group_sql);
-			$stmt->execute(array(':group_name' => $group_name));
-			$data_row = $stmt->fetch();
-		}
-		catch (Exception $e) {
-			cleanup_db($db);
-			echo json_encode(array('status' => 'fail', 'errorMsg' => $e->getMessage()));
-			exit;
-		}
-
-
-		if (!$data_row) {
-			try {
-				$stmt = $db->prepare($insert_group_sql);
-				$stmt->execute(array(':group_name' => $group_name));
-
-				$stmt = $db->prepare($select_group_sql);
-				$stmt->execute(array(':group_name' => $group_name));
-				$data_row = $stmt->fetch();
-			}
-			catch (Exception $e) {
-				cleanup_db($db);
-				echo json_encode(array('status' => 'fail', 'errorMsg' => $e->getMessage()));
-				exit;
-			}
-		}
-
-		$group_id = $data_row['group_id'];
-
-		try {
-			$stmt = $db->prepare($presenter_sql);
+			$presenter_id = $_POST['presenter-id-' . $i];
+			$name = $_POST['presenter-name-' . $i];
+			$group_name = $_POST['presenter-group-' . $i];
+			$group_id = get_group_id_by_name($group_name);
 			$stmt->execute(array(':presenter_id' => $presenter_id, ':name' => $name, ':group_id' => $group_id));
 		}
 		catch (Exception $e) {
@@ -257,7 +236,7 @@ if (isset($_POST['submit'])) {
 	echo json_encode(array('status' => 'success', 'url' => $url));
 }
 else {
-	header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
+	echo 'invalid';
 }
 
 
