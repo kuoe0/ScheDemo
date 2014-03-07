@@ -31,6 +31,38 @@ function cleanup_db($db) {
 	}
 }
 
+function add_new_group($db, $group_name) {
+	$insert_group_sql = "INSERT INTO `groups` (`group_name`, `registered`) VALUES (:group_name, 0)";
+	try {
+		$stmt = $db->prepare($insert_group_sql);
+		$stmt->execute(array(':group_name' => $group_name));
+	}
+	catch (Exception $e) {
+		echo $e->getMessage();
+	}
+}
+
+function get_group_id_by_name($db, $group_name) {
+
+	$select_group_sql = "SELECT `group_id` FROM `groups` WHERE `group_name` = :group_name";
+
+	try {
+		$stmt = $db->prepare($select_group_sql);
+		$stmt->execute(array(':group_name' => $group_name));
+		$data_row = $stmt->fetch();
+	}
+	catch (Exception $e) {
+		echo $e->getMessage();
+	}
+
+	if (!$data_row) {
+		add_new_group($db, $group_name);
+		return get_group_id_by_name($db, $group_name);
+	}
+
+	return $data_row['group_id'];
+}
+
 function get_member_names($db, $group_id) {
 	$sql = "SELECT `name` FROM `presenters` WHERE `group_id` = :group_id ORDER BY `presenter_id` ASC";
 	$stmt = $db->prepare($sql);
