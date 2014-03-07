@@ -76,6 +76,31 @@ if (isset($_POST['submit'])) {
 		exit;
 	}
 
+	// parse timeslots list
+	if ($_FILES['time-list']['error'] == 0) {
+
+		$filename = $_FILES['time-list']['name'];
+		$type = $_FILES['time-list']['type'];
+		$tmp_name = $_FILES['time-list']['tmp_name'];
+
+		if (($f = fopen($tmp_name, 'r')) != FALSE) {
+			// for the large csv file
+			set_time_limit(0);
+			// read line by line in csv file
+			while (($data_row = fgetcsv($f)) != FALSE) {
+				// insert group info
+				$rule = array();
+				$rule['start_date'] = new DateTime($data_row[0]);
+				$rule['end_date'] = new DateTime($data_row[1]);
+				$rule['start_time'] = new DateTime($data_row[2]);
+				$rule['end_time'] = new DateTime($data_row[3]);
+				$rule['repeat_mode'] = trim($data_row[4]);
+				$rule['quota'] = trim($data_row[5]);
+
+				add_timeslot_by_rule($db, $rule);
+			}
+		}
+	}
 	// parse presenter list
 	if ($_FILES['presenter-list']['error'] == 0) {
 
@@ -96,9 +121,9 @@ if (isset($_POST['submit'])) {
 				while (($data_row = fgetcsv($f)) != FALSE) {
 
 					// insert presenter info
-					$data[':presenter_id'] = $data_row[0];
-					$data[':name'] = $data_row[1];
-					$data[':group_id'] = get_group_id_by_name($db, $data_row[2]);
+					$data[':presenter_id'] = trim($data_row[0]);
+					$data[':name'] = trim($data_row[1]);
+					$data[':group_id'] = get_group_id_by_name($db, trim($data_row[2]));
 
 					$stmt->execute($data);
 				}
@@ -113,33 +138,6 @@ if (isset($_POST['submit'])) {
 
 	}
 
-	// parse timeslots list
-	if (isset($_FILES['timeslot_list']) && $_FILES['timeslot_list']['error'] == 0) {
-		$filename = $_FILES['timeslot_list']['name'];
-		$type = $_FILES['timeslot_list']['type'];
-		$tmp_name = $_FILES['timeslot_list']['tmp_name'];
-
-		if (($f = fopen($tmp_name, 'r')) != FALSE) {
-			// for the large csv file
-			set_time_limit(0);
-			$sql = "INSERT INTO `timeslots` (`date`, `begin_time`, `end_time`, `slice`, `occupied`) VALUES (:date, :begin_time, :end_time, :slice, 0)";
-			$stmt = $db->prepare($sql);
-
-			// read line by line in csv file
-			while (($data = fgetcsv($f)) != FALSE) {
-				// insert group info
-				$date = $data[0] == '' ? 'NULL' : $data[0];
-				$begin_time = $data[1] == '' ? 'NULL' : $data[1];
-				$end_time = $data[2] == '' ? 'NULL' : $data[2];
-				$quota = $data[3];
-
-				for ($i = 0; $i < $quota; ++$i) {
-					$stmt->execute(array(':date' => $date, ':begin_time' => $begin_time, ':end_time' => $end_time, ':slice' => ($i + 1)));
-				}
-			}
-
-		}
-	}
 
 	// add time manually
 	$time_cnt = $_POST['time-cnt'];
@@ -160,39 +158,16 @@ if (isset($_POST['submit'])) {
 			continue;
 		}
 
-		$start_date = $_POST['start-date-' . $i] == '' ? 'NULL' : new DateTime($_POST['start-date-' . $i]);
-		$end_date = $_POST['end-date-' . $i] == '' ? 'NULL' : new DateTime($_POST['end-date-' . $i]);
-		$start_time = $_POST['start-time-' . $i] == '' ? 'NULL' : new DateTime($_POST['start-time-' . $i]);
-		$end_time = $_POST['end-time-' . $i] == '' ? 'NULL' : new DateTime($_POST['end-time-' . $i]);
+		$rule = array();
+		$rule['start_date'] = $_POST['start-date-' . $i] == '' ? 'NULL' : new DateTime($_POST['start-date-' . $i]);
+		$rule['end_date'] = $_POST['end-date-' . $i] == '' ? 'NULL' : new DateTime($_POST['end-date-' . $i]);
+		$rule['start_time'] = $_POST['start-time-' . $i] == '' ? 'NULL' : new DateTime($_POST['start-time-' . $i]);
+		$rule['end_time'] = $_POST['end-time-' . $i] == '' ? 'NULL' : new DateTime($_POST['end-time-' . $i]);
 
-		$repeat_mode = $_POST['repeat-' . $i];
-		$quota = $_POST['quota-' . $i];
+		$rule['repeat_mode'] = $_POST['repeat-' . $i];
+		$rule['quota'] = $_POST['quota-' . $i];
 
-		$interval = 'P1D';
-
-		if ($repeat_mode == 'weekly') {
-			$interval = 'P7D';
-		}
-		else if ($repeat_mode == 'monthly') {
-			$interval = 'P1M';
-		}
-		else if ($repeat_mode == 'none') {
-			$end_date = clone $start_date;
-		}
-
-		for ($date_i = clone $start_date; $date_i <= $end_date; $date_i->add(new DateInterval($interval))) {
-			for ($j = 0; $j < $quota; ++$j) {
-				try {
-					$stmt->execute(array(':date' => $date_i->format('Y-m-d'), ':start_time' => $start_time->format('H:i'), ':end_time' => $end_time->format('H:i'), ':time_order' => ($j + 1)));
-				}
-				catch (Exception $e) {
-					cleanup_db($db);
-					echo json_encode(array('status' => 'fail', 'errorMsg' => $e->getMessage()));
-					exit;
-				}
-			}
-		}
-
+		add_timeslot_by_rule($db, $rule);
 	}
 
 	// add presenter manually
