@@ -61,7 +61,7 @@ catch (PDOException $e) {
 			<div class="column">
 				<h1 id="title" class="ui center aligned header">Setup</h1>
 
-				<form class="ui form" action="setup-ing.php" method="POST" enctype="multipart/form-data">
+				<form name="setup" class="ui form" enctype="multipart/form-data">
 					<legend>Basic Info</legend>
 					<div class="two fields">
 						<div class="field">
@@ -87,13 +87,13 @@ catch (PDOException $e) {
 						<div class="field">
 							<label>From</label>
 							<div class="ui left icon input">
-								<input type="date" name="begin-opening-date" />
+								<input type="date" name="start-opening-date" />
 								<i class="calendar icon"></i>
 							</div>
 						</div>
 						<div class="parallel field">
 							<div class="ui left icon input">
-								<input type="time" name="begin-opening-time" />
+								<input type="time" name="start-opening-time" />
 								<i class="time icon"></i>
 							</div>
 						</div>
@@ -187,10 +187,10 @@ catch (PDOException $e) {
 
 					<input type="hidden" name="time-cnt" value="0" />
 					<input type="hidden" name="presenter-cnt" value="0" />
-
+					<input type="hidden" name="submit" value="submit" />
 					<div class="ui divider"></div>
 
-					<div class="ui green button">
+					<div id="btn-setup-submit" class="ui green button">
 						Confirm
 					</div>
 				</form>
