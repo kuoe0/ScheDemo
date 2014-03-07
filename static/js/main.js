@@ -37,7 +37,7 @@ $(function() {
 
 
 	$('#btn-setup').click(function () {
-		window.location.href="setup.php";
+		window.location.href = "setup.php";
 	});
 
 	$('input[name="presenter-list"]').change(function () {
@@ -46,6 +46,10 @@ $(function() {
 
 	$('input[name="time-list"]').change(function () {
 		$('#time-list-filename').val($(this).val().split('\\').pop());
+	});
+
+	$('#btn-index').click(function () {
+		window.location.href = $('input[name="index"]').val();
 	});
 
 	$('#btn-add-time').click(add_time);
