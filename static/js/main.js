@@ -35,29 +35,21 @@ $(function() {
 
 	}
 
-	$('form[name="setup"]').submit(function () {
-		$.post('setup-ing.php', $(this).serialize(), function (data) {
-			console.log(data);
-		});
-	});
 
 	$('#btn-setup').click(function () {
 		window.location.href="setup.php";
 	});
 
-	$('#btn-presenter-list').change(function () {
-		$('#presenter-list-filename').val(this.value.split('\\').pop());
+	$('input[name="presenter-list"]').change(function () {
+		$('#presenter-list-filename').val($(this).val().split('\\').pop());
 	});
 
-	$('#btn-time-list').change(function () {
-		$('#time-list-filename').val(this.value.split('\\').pop());
+	$('input[name="time-list"]').change(function () {
+		$('#time-list-filename').val($(this).val().split('\\').pop());
 	});
 
 	$('#btn-add-time').click(add_time);
 	$('#btn-add-presenter').click(add_presenter);
-	$('#btn-setup-submit').click(function () {
-		$('form[name="setup"]').submit();
-	});
 
 
 
