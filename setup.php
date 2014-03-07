@@ -61,7 +61,7 @@ catch (PDOException $e) {
 			<div class="column">
 				<h1 id="title" class="ui center aligned header">Setup</h1>
 
-				<form name="setup" class="ui form" enctype="multipart/form-data">
+				<form name="setup" class="ui form" action="setup-ing.php" method="POST" enctype="multipart/form-data">
 					<legend>Basic Info</legend>
 					<div class="two fields">
 						<div class="field">
@@ -144,7 +144,7 @@ catch (PDOException $e) {
 							<div class="ui upload blue button">
 								<i class="upload basic icon"></i>
 								upload
-								<input id="btn-presenter-list" type="file" name="presenter-list" />
+								<input type="file" name="presenter-list" />
 							</div>
 						</div>
 
@@ -160,7 +160,7 @@ catch (PDOException $e) {
 							<div class="ui upload blue button">
 								<i class="upload basic icon"></i>
 								upload
-								<input id="btn-time-list" type="file" name="time-list" />
+								<input type="file" name="time-list" />
 							</div>
 						</div>
 					</div>
@@ -187,12 +187,9 @@ catch (PDOException $e) {
 
 					<input type="hidden" name="time-cnt" value="0" />
 					<input type="hidden" name="presenter-cnt" value="0" />
-					<input type="hidden" name="submit" value="submit" />
 					<div class="ui divider"></div>
 
-					<div id="btn-setup-submit" class="ui green button">
-						Confirm
-					</div>
+					<input class="ui green button" type="submit" name="submit" value="Confirm" />
 				</form>
 			</div>
 		</div>
