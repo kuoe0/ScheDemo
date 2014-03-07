@@ -27,8 +27,6 @@ $(function() {
 
 		var presenter_result = '<div id="column-presenter-' + presenter_cnt + '" class="column"> <div class="ui raised segment"> <div id="btn-delete-presenter-' + presenter_cnt + '" class="ui right red corner label"> <i class="delete basic icon"></i> </div> <div class="three fields"> <div class="field"> <label>ID</label> <input type="text" name="presenter-id-' + presenter_cnt + '" /> </div> <div class="field"> <label>Name</label> <input type="text" name="presenter-name-' + presenter_cnt + '" /> </div> <div class="field"> <label>Group</label> <input type="text" name="presenter-group-' + presenter_cnt + '" /> </div> </div> </div> </div>';
 
-		console.log(presenter_result);
-
 		$('#presenter-list').append(presenter_result);
 
 		$('#btn-delete-presenter-' + presenter_cnt).click(function () {
@@ -36,6 +34,12 @@ $(function() {
 		});
 
 	}
+
+	$('form[name="setup"]').submit(function () {
+		$.post('setup-ing.php', $(this).serialize(), function (data) {
+			console.log(data);
+		});
+	});
 
 	$('#btn-setup').click(function () {
 		window.location.href="setup.php";
@@ -51,6 +55,10 @@ $(function() {
 
 	$('#btn-add-time').click(add_time);
 	$('#btn-add-presenter').click(add_presenter);
+	$('#btn-setup-submit').click(function () {
+		$('form[name="setup"]').submit();
+	});
+
 
 
 });
