@@ -16,6 +16,8 @@ include_once 'db_con.php';
 include_once 'global.php';
 include_once 'function.php';
 
+$status = true;
+
 if (isset($_POST['submit'])) {
 
 	// get basic info
@@ -33,7 +35,6 @@ if (isset($_POST['submit'])) {
 	$start_opening = ($start_opening_date != '' ? $start_opening_date : '') . ($start_opening_time != '' ? (' ' . $start_opening_time) : '');
 	$end_opening = ($end_opening_date != '' ? $end_opening_date : '') . ($end_opening_time != '' ? (' ' . $end_opening_time) : '');
 
-
 	// if no setup attr, clean up database
 	try {
 		$sql = "SELECT * FROM `attributes` WHERE `attr` = 'setup'";
@@ -44,9 +45,8 @@ if (isset($_POST['submit'])) {
 		}
 	}
 	catch (Exception $e) {
-		cleanup_db($db);
-		echo json_encode(array('status' => 'fail', 'errorMsg' => $e->getMessage()));
-		exit;
+		echo $e->getMessage();
+		$status = false;
 	}
 
 	// attributes insertion
@@ -71,9 +71,8 @@ if (isset($_POST['submit'])) {
 		}
 	}
 	catch (Exception $e) {
-		cleanup_db($db);
-		echo json_encode(array('status' => 'fail', 'errorMsg' => $e->getMessage()));
-		exit;
+		echo $e->getMessage();
+		$status = false;
 	}
 
 	// parse timeslots list
@@ -97,7 +96,9 @@ if (isset($_POST['submit'])) {
 				$rule['repeat_mode'] = trim($data_row[4]);
 				$rule['quota'] = trim($data_row[5]);
 
-				add_timeslot_by_rule($db, $rule);
+				if (!add_timeslot_by_rule($db, $rule)) {
+					$status = false;
+				}
 			}
 		}
 	}
@@ -129,9 +130,8 @@ if (isset($_POST['submit'])) {
 				}
 			}
 			catch (Exception $e) {
-				cleanup_db($db);
-				echo json_encode(array('status' => 'fail', 'errorMsg' => $e->getMessage()));
-				exit;
+				echo $e->getMessage();
+				$status = false;
 			}
 
 		}
@@ -167,7 +167,9 @@ if (isset($_POST['submit'])) {
 		$rule['repeat_mode'] = $_POST['repeat-' . $i];
 		$rule['quota'] = $_POST['quota-' . $i];
 
-		add_timeslot_by_rule($db, $rule);
+		if (!add_timeslot_by_rule($db, $rule)) {
+			$status = false;
+		}
 	}
 
 	// add presenter manually
@@ -178,9 +180,8 @@ if (isset($_POST['submit'])) {
 		$stmt = $db->prepare($presenter_sql);
 	}
 	catch (Exception $e) {
-		cleanup_db($db);
-		echo json_encode(array('status' => 'fail', 'errorMsg' => $e->getMessage()));
-		exit;
+		echo $e->getMessage();
+		$status = false;
 	}
 
 	for ($i = 0; $i < $presenter_cnt; ++$i) {
@@ -197,24 +198,59 @@ if (isset($_POST['submit'])) {
 			$stmt->execute(array(':presenter_id' => $presenter_id, ':name' => $name, ':group_id' => $group_id));
 		}
 		catch (Exception $e) {
-			cleanup_db($db);
-			echo json_encode(array('status' => 'fail', 'errorMsg' => $e->getMessage()));
-			exit;
+			echo $e->getMessage();
+			$status = false;
 		}
 	}
 
-	// mark setup process be ready to prevent setup again
-	$sql = "INSERT INTO `attributes` (`attr`, `value`) VALUES (:attr, :value)";
-	$stmt = $db->prepare($sql);
-	$stmt->execute(array(':attr' => 'setup', ':value' => 'yes'));
-
-	echo json_encode(array('status' => 'success', 'url' => $url));
+	try {
+		// mark setup process be ready to prevent setup again
+		$sql = "INSERT INTO `attributes` (`attr`, `value`) VALUES (:attr, :value)";
+		$stmt = $db->prepare($sql);
+		$stmt->execute(array(':attr' => 'setup', ':value' => 'yes'));
+	}
+	catch (Exception $e) {
+		echo $e->getMessage();
+		$status = false;
+	}
 }
 else {
-	echo 'invalid';
+	$status = false;
 }
 
-
-
 ?>
+
+<html>
+	<head>
+		<title>Setup Result</title>
+		<link href="static/components/normalize-css/normalize.css" rel="stylesheet" />
+
+		<script src="static/components/jquery/dist/jquery.min.js"></script>
+
+		<link href="static/components/semantic/build/packaged/css/semantic.min.css" rel="stylesheet" />
+		<script src="static/components/semantic/build/packaged/javascript/semantic.min.js"></script>
+
+		<script src="static/js/main.js"></script>
+		<link href="static/css/style.css" rel="stylesheet" />
+	</head>
+	<body>
+		<div class="ui three column grid">
+			<div class="column">
+			</div>
+			<div class="column">
+				<div class="ui <?php echo $status ? 'green' : 'red';?> segment">
+					<h1 id="title" class="ui center aligned header"><?php echo $status ? 'Successed!' : 'Failed!';?></h1>
+					<input type="hidden" name="index" value="<?php echo $url;?>" />
+					<div class="centerize-box">
+						<div id="btn-index" class="ui <?php echo $status ? 'green' : 'red';?> button">
+							Go Back
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="column">
+			</div>
+		</div>
+	</body>
+</html>
 
