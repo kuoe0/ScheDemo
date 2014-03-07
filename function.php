@@ -19,10 +19,16 @@ function getURL() {
 }
 
 function cleanup_db($db) {
-	$db->exec("DELETE FROM `attributes`");
-	$db->exec("DELETE FROM `presenters`");
-	$db->exec("DELETE FROM `timeslots`");
-	$db->exec("DELETE FROM `presentations`");
+	try {
+		$db->exec("DELETE FROM `attributes`");
+		$db->exec("DELETE FROM `presenters`");
+		$db->exec("DELETE FROM `groups`");
+		$db->exec("DELETE FROM `timeslots`");
+		$db->exec("DELETE FROM `presentations`");
+	}
+	catch (Exception $e) {
+		echo $e->getMessage() . '\n';
+	}
 }
 
 function get_member_names($db, $group_id) {
