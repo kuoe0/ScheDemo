@@ -31,6 +31,36 @@ function cleanup_db($db) {
 	}
 }
 
+function add_timeslot_by_rule($db, $rule) {
+	// calculate interval
+	$interval = 'P1D';
+	if ($rule['repeat_mode'] == 'weekly') {
+		$interval = 'P7D';
+	}
+	else if ($rule['repeat_mode'] == 'monthly') {
+		$interval = 'P1M';
+	}
+	else if ($rule['repeat_mode'] == 'none') {
+		$rule['end_date'] = clone $rule['start_date'];
+	}
+
+	try {
+		$sql = "INSERT INTO `timeslots` (`date`, `start_time`, `end_time`, `time_order`, `occupied`) VALUES (:date, :start_time, :end_time, :time_order, 0)";
+		$stmt = $db->prepare($sql);
+
+		for ($itr_date = clone $rule['start_date']; $itr_date <= $rule['end_date']; $itr_date->add(new DateInterval($interval))) {
+
+			for ($j = 0; $j < $rule['quota']; ++$j) {
+				$stmt->execute(array(':date' => $itr_date->format('Y-m-d'), ':start_time' => $rule['start_time']->format('H:i'), ':end_time' => $rule['end_time']->format('H:i'), ':time_order' => ($j + 1)));
+			}
+		}
+	}
+	catch (Exception $e) {
+		echo $e->getMessage();
+	}
+
+}
+
 function add_new_group($db, $group_name) {
 	$insert_group_sql = "INSERT INTO `groups` (`group_name`, `registered`) VALUES (:group_name, 0)";
 	try {
