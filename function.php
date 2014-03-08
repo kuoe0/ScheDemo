@@ -169,10 +169,19 @@ function get_members_by_group_id($db, $group_id) {
 }
 
 function get_presentation_info_by_time_id($db, $time_id) {
-	$sql = "SELECT * FROM `presentations` WHERE `time_id` = :time_id";
-	$stmt = $db->prepare($sql);
-	$stmt->execute(array(':time_id' => $time_id));
-	return $stmt->fetch();
+	try {
+		$sql = "SELECT * FROM `presentations` WHERE `time_id` = :time_id";
+		$stmt = $db->prepare($sql);
+		$stmt->execute(array(':time_id' => $time_id));
+		$data_row = $stmt->fetch();
+
+		if ($data_row)
+			return $data_row;
+	}
+	catch (Exception $e) {
+		echo $e->getMessage();
+	}
+	return '';
 }
 
 function get_quota($db, $date, $begin_time, $end_time) {
