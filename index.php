@@ -16,12 +16,7 @@ include_once 'db_con.php';
 include_once 'global.php';
 include_once 'function.php';
 
-$sql = "SELECT `value` FROM `attributes` WHERE `attr` = 'setup'";
-$stmt = $db->prepare($sql);
-$stmt->execute();
-$nodata = !$stmt->fetch();
-
-if (!$nodata) {
+if (is_setup($db)) {
 	header("Location: register.php");
 }
 
