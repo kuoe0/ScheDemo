@@ -59,6 +59,15 @@
 	color: #AAA;
 }
 
+#register-form {
+	background-color: #EEE;
+	padding-top: 5rem;
+}
+
+#timetable {
+	text-align: center;
+}
+
 legend {
 	color: #AAA;
 	margin: 1em 0;
