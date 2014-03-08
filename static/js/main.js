@@ -55,6 +55,26 @@ $(function() {
 	$('#btn-add-time').click(add_time);
 	$('#btn-add-presenter').click(add_presenter);
 
+	$('[id^="btn-register-"').click(function () {
+
+		var time_id = $(this).attr('id').split('-').pop();
+
+		if ($('#register-form').sidebar('is open')) {
+			if ($('#register-form form input[name="time-id"]').val() != time_id) {
+				$('#register-form').sidebar('hide');
+			}
+		}
+
+		$('#register-form').sidebar('toggle');
+
+		if ($('#register-form').sidebar('is open')) {
+			$('#register-form form input[name="time-id"]').val(time_id);
+			$('#register-form form input[name="date"]').val($('#date-' + time_id).text());
+			$('#register-form form input[name="time"]').val($('#time-' + time_id).text());
+			$('#register-form form input[name="order"]').val($('#order-' + time_id).text());
+		}
+	});
+
 
 	$(window).resize(function () {
 		$('.vertical-centering').css({
