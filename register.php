@@ -40,7 +40,7 @@ $title = get_title($db);
 	<body>
 		<div id="register-form" class="ui thin sidebar">
 			<div class="ui basic segment">
-				<form class="ui form">
+				<form class="ui form" action="register-ing.php">
 					<input type="hidden" name="time-id" />
 					<div class="field">
 						<label>Date</label>
@@ -57,7 +57,7 @@ $title = get_title($db);
 					<div class="field">
 						<label>Presenter</label>
 						<div class="ui fluid selection dropdown">
-							<input type="hidden" />
+							<input type="hidden" name="group-id"/>
 							<div class="text">Choose</div>
 							<i class="dropdown icon"></i>
 							<div class="menu">
@@ -100,7 +100,7 @@ while (($data_row = $stmt->fetch()) != false) {
 							<th class="three wide">Date</th>
 							<th class="three wide">Time</th>
 							<th class="one wide">Order</th>
-							<th class="five wide">Presenter</th>
+							<th class="four wide">Presenter</th>
 							<th class="six wide">Title</th>
 							<th class="one wide">Register</th>
 						</tr>
@@ -123,7 +123,12 @@ while (($data_row = $stmt->fetch()) != false) {
 	$time_order = $data_row['time_order'];
 	$occupied = $data_row['occupied'];
 
-	echo sprintf($html_template, $time_id, $time_id, $date, $time_id, $start_time . ' ~ ' . $end_time, $time_id, $time_order, $time_id, '', $time_id, '', $time_id);
+	$presentation_info = get_presentation_info_by_time_id($db, $time_id);
+	$title = $presentation_info['title'];
+	$group_id = $presentation_info['group_id'];
+	$member_list = get_members_by_group_id($db, $presentation_info['group_id']);
+
+	echo sprintf($html_template, $time_id, $time_id, $date, $time_id, $start_time . ' ~ ' . $end_time, $time_id, $time_order, $time_id, implode('<br/>', $member_list), $time_id, $title, $time_id);
 }
 
 ?>
