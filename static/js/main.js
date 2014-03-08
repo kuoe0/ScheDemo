@@ -84,6 +84,7 @@ $(function() {
 	});
 
 	$(window).resize();
+	$('.ui.dropdown').dropdown();
 
 
 });
