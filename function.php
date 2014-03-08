@@ -57,7 +57,10 @@ function add_timeslot_by_rule($db, $rule) {
 	}
 	catch (Exception $e) {
 		echo $e->getMessage();
+		return false;
 	}
+
+	return true;
 
 }
 
@@ -92,6 +95,26 @@ function get_group_id_by_name($db, $group_name) {
 
 	return $data_row['group_id'];
 }
+
+function get_title($db) {
+	$sql = "SELECT `value` FROM `attributes` WHERE `attr` = 'title'";
+
+	try {
+		$stmt = $db->prepare($sql);
+		$stmt->execute();
+		$data_row = $stmt->fetch();
+
+		if ($data_row) {
+			return $data_row['value'];
+		}
+	}
+	catch (Exception $e) {
+		echo $e->getMessage();
+	}
+
+	return '';
+}
+
 
 function get_member_names($db, $group_id) {
 	$sql = "SELECT `name` FROM `presenters` WHERE `group_id` = :group_id ORDER BY `presenter_id` ASC";
