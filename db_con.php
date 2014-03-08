@@ -29,6 +29,7 @@ try {
 	$db->exec("CREATE TABLE IF NOT EXISTS groups (
 		group_id INTEGER PRIMARY KEY,
 		group_name TEXT,
+		password TEXT,
 		registered INTEGER)");
 
 	$db->exec("CREATE TABLE IF NOT EXISTS timeslots (
