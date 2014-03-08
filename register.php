@@ -52,19 +52,19 @@ $title = get_title($db);
 				<form class="ui form" action="register-ing.php">
 					<input type="hidden" name="time-id" />
 					<div class="field">
-						<label>Date</label>
+						<label><i class="date basic icon"></i>Date</label>
 						<input type="text" name="date" readonly />
 					</div>
 					<div class="field">
-						<label>Time</label>
+						<label><i class="time basic icon"></i>Time</label>
 						<input type="text" name="time" readonly />
 					</div>
 					<div class="field">
-						<label>Order</label>
+						<label><i class="ordered list icon"></i>Order</label>
 						<input type="text" name="order" readonly />
 					</div>
 					<div class="field">
-						<label>Presenter</label>
+						<label><i class="user basic icon"></i>Presenter</label>
 						<div class="ui fluid selection dropdown">
 							<input type="hidden" name="group-id"/>
 							<div class="text">Choose</div>
@@ -90,10 +90,11 @@ while (($data_row = $stmt->fetch()) != false) {
 						</div>
 					</div>
 					<div class="field">
-						<label>Title</label>
+						<label><i class="bookmark basic icon"></i>Title</label>
 						<input type="text" name="title" />
 					</div>
 					<div id="btn-register" class="ui mini green button">
+						<i class="pin basic icon"></i>
 						Register
 					</div>
 					
@@ -106,11 +107,11 @@ while (($data_row = $stmt->fetch()) != false) {
 				<table id="timetable" class="ui large padded orange table segment">
 					<thead>
 						<tr>
-							<th class="three wide">Date</th>
-							<th class="three wide">Time</th>
-							<th class="one wide">Order</th>
-							<th class="four wide">Presenter</th>
-							<th class="six wide">Title</th>
+							<th class="three wide"><i class="date basic icon"></i>Date</th>
+							<th class="three wide"><i class="time basic icon"></i>Time</th>
+							<th class="one wide"><i class="ordered list icon"></i></th>
+							<th class="four wide"><i class="user basic icon"></i>Presenter</th>
+							<th class="six wide"><i class="bookmark basic icon"></i>Title</th>
 							<th class="one wide"></th>
 						</tr>
 					</thead>
