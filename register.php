@@ -34,10 +34,19 @@ $title = get_title($db);
 		<link href="static/components/semantic/build/minified/modules/sidebar.min.css" rel="stylesheet" />
 		<script src="static/components/semantic/build/minified/modules/sidebar.min.js"></script>
 
+		<link href="static/components/semantic/build/minified/modules/modal.min.css" rel="stylesheet" />
+		<script src="static/components/semantic/build/minified/modules/modal.min.js"></script>
+
 		<script src="static/js/main.js"></script>
 		<link href="static/css/style.css" rel="stylesheet" />
 	</head>
 	<body>
+		<div id="register-result" class="ui basic modal">
+			<div class="header">
+			</div>
+			<div class="action">
+			</div>
+		</div>
 		<div id="register-form" class="ui thin sidebar">
 			<div class="ui basic segment">
 				<form class="ui form" action="register-ing.php">
@@ -94,7 +103,7 @@ while (($data_row = $stmt->fetch()) != false) {
 		<div id="content" class="ui one column page grid">
 			<div class="column">
 				<h1 id="title" class="ui center aligned header"><?php echo $title;?></h1>
-				<table id="timetable" class="ui eighteen column large padded table segment">
+				<table id="timetable" class="ui large padded orange table segment">
 					<thead>
 						<tr>
 							<th class="three wide">Date</th>
