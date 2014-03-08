@@ -75,6 +75,15 @@ $(function() {
 		}
 	});
 
+	$('#btn-register').click(function () {
+		var url = $('#register-form form').attr('action');
+		var form_data = $('#register-form form').serialize();
+
+		$.post(url, form_data, function (data) {
+			console.log(data);
+		});
+
+	});
 
 	$(window).resize(function () {
 		$('.vertical-centering').css({
