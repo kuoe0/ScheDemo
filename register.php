@@ -2,103 +2,87 @@
 /**
  * Short description for register.php
  *
- * Copyright (C) 2013 KuoE0 <kuoe0.tw@gmail.com>
+ * Copyright (C) 2014 KuoE0 <kuoe0.tw@gmail.com>
  *
  * Distributed under terms of the MIT license.
  *
  * @package register
  * @author KuoE0 <kuoe0.tw@gmail.com>
  * @version 0.1
- * @copyright (C) 2013 KuoE0 <kuoe0.tw@gmail.com>
+ * @copyright (C) 2014 KuoE0 <kuoe0.tw@gmail.com>
  */
 
 include_once 'db_con.php';
 include_once 'global.php';
 include_once 'function.php';
 
-$group_id = $_POST['group_id'];
-$time_id = $_POST['time_id'];
-$title = $_POST['title'];
-
-$current = new DateTime(date('Y-m-d H:i', time()));
-$begin_opening = new DateTime(date('Y-m-d H:i', time()));
-$end_opening = new DateTime(date('Y-m-d H:i', time()));
-
-$sql = "SELECT `value` FROM `attributes` WHERE `attr` = 'begin-opening'";
-$stmt = $db->prepare($sql);
-$stmt->execute();
-$data_row = $stmt->fetch();
-
-if ($data_row) {
-	$begin_opening = new DateTime($data_row['value']);
-}
-
-$sql = "SELECT `value` FROM `attributes` WHERE `attr` = 'end-opening'";
-$stmt = $db->prepare($sql);
-$stmt->execute();
-$data_row = $stmt->fetch();
-
-if ($data_row) {
-	$end_opening = new DateTime($data_row['value']);
-}
-
-$sql = "SELECT `value` FROM `attributes` WHERE `attr` = 'url'";
-$stmt = $db->prepare($sql);
-$stmt->execute();
-$url = $stmt->fetch()['value'];
-
-if ($current < $begin_opening) {
-	echo '<h2>The system will open at ' . $begin_opening->format('Y-m-d H:i') . ' ~ ' . $end_opening->format('Y-m-d H:i') . '.</h2>';
-	echo '<p>Redirect after 5 sec...</p>';
-	header("Refresh: 5; URL=" . $url);
-	die;
-}
-elseif ($current > $end_opening) {
-	echo '<h2>The system had been closed.</h2>';
-	echo '<p>Redirect after 5 sec...</p>';
-	header("Refresh: 5; URL=" . $url);
-	die;
-}
-
-$sql = "SELECT DISTINCT `registered` FROM `presenters` WHERE `group_id` = :group_id";
-$stmt = $db->prepare($sql);
-$stmt->execute(array(':group_id' => $group_id));
-
-if ($stmt->fetch()['registered'] == '1') {
-	echo '<h2>The presenters have registered. Please try again...</h2>';
-	echo '<p>Redirect after 5 sec...</p>';
-	header("Refresh: 5; URL=" . $url);
-	die;
-}
-
-$sql = "SELECT DISTINCT `occupied` FROM `timeslots` WHERE `time_id` = :time_id";
-$stmt = $db->prepare($sql);
-$stmt->execute(array(':time_id' => $time_id));
-
-if ($stmt->fetch()['occupied'] == '1') {
-	echo '<h2>The time has been occupied. Please try again...</h2>';
-	echo '<p>Redirect after 5 sec...</p>';
-	header("Refresh: 5; URL=" . $url);
-	die;
-}
-
-# generate random password
-$passwd = gen_random_password();
-echo "<h2>Your password: $passwd</h2>";
-echo "<p>Please remember it! Go back to view <a href='$url'>result</a>.</p>";
-
-
-$sql = "INSERT INTO `presentations` (`title`, `group_id`, `time_id`, `reg_time`) VALUES (:title, :group_id, :time_id, datetime('now'))";
-$stmt = $db->prepare($sql);
-$stmt->execute(array(':title' => $title, ':group_id' => $group_id, ':time_id' => $time_id));
-
-$sql = "UPDATE `timeslots` SET `occupied` = '1' WHERE `time_id` = :time_id";
-$stmt = $db->prepare($sql);
-$stmt->execute(array(':time_id' => $time_id));
-
-$sql = "UPDATE `presenters` SET `registered` = '1', `password` = :password WHERE `group_id` = :group_id";
-$stmt = $db->prepare($sql);
-$stmt->execute(array(':group_id' => $group_id, ':password' => sha1($passwd . $group_id)));
+$title = get_title($db);
 
 ?>
+<html>
+	<head>
+		<title><?php echo $title;?> - ScheDemo</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+		<link href="static/components/normalize-css/normalize.css" rel="stylesheet" />
+
+		<script src="static/components/jquery/dist/jquery.min.js"></script>
+
+		<link href="static/components/semantic/build/packaged/css/semantic.min.css" rel="stylesheet" />
+		<script src="static/components/semantic/build/packaged/javascript/semantic.min.js"></script>
+
+		<link href="static/components/semantic/build/minified/modules/sidebar.min.css" rel="stylesheet" />
+		<script src="static/components/semantic/build/minified/modules/sidebar.min.js"></script>
+
+		<script src="static/js/main.js"></script>
+		<link href="static/css/style.css" rel="stylesheet" />
+	</head>
+	<body>
+		<div id="content" class="ui one column page grid">
+			<div class="column">
+				<h1 id="title" class="ui center aligned header"><?php echo $title;?></h1>
+				<table id="timetable" class="ui fourteen column large padded table segment">
+					<thead>
+						<tr>
+							<th class="two wide">Date</th>
+							<th class="two wide">Time</th>
+							<th class="one wide">Order</th>
+							<th class="four wide">Presenter</th>
+							<th class="five wide">Title</th>
+							<th class="one wide">Register</th>
+						</tr>
+					</thead>
+					<tbody>
+<?php
+
+$sql = "SELECT * FROM `timeslots`";
+$stmt = $db->prepare($sql);
+$stmt->execute();
+
+$html_template = "<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td><i class='add icon'></i></td></tr>";
+
+while (($data_row = $stmt->fetch()) != false) {
+
+	$time_id = $data_row['time_id'];
+	$date = $data_row['date'];
+	$start_time = $data_row['start_time'];
+	$end_time = $data_row['end_time'];
+	$time_order = $data_row['time_order'];
+	$occupied = $data_row['occupied'];
+
+	echo sprintf($html_template, $date, $start_time . ' ~ ' . $end_time, $time_order, '', '');
+}
+
+?>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div id="footer" class="ui one column page grid">
+			<div class="column">
+				<p>Powered by <a href="http://github.com/KuoE0/ScheDemo/">ScheDemo</a>.</p>
+			</div>
+		</div>
+	</body>
+</html>
 
