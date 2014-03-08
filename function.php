@@ -18,6 +18,13 @@ function getURL() {
 	return $protocol . $_SERVER['SERVER_NAME'] . $port . $_SERVER['REQUEST_URI'];
 }
 
+function is_setup($db) {
+	if (get_attr($db, 'setup') == '') {
+		return false;
+	}
+	return true;
+}
+
 function cleanup_db($db) {
 	try {
 		$db->exec("DELETE FROM `attributes`");
