@@ -79,8 +79,29 @@ $(function() {
 		var url = $('#register-form form').attr('action');
 		var form_data = $('#register-form form').serialize();
 
+		$('#register-result .header').empty();
+		$('#register-result .action').empty();
+		$('#register-result').modal({
+			onHide: function () {}
+		});
+
 		$.post(url, form_data, function (data) {
+
 			console.log(data);
+			data = JSON.parse(data);
+			if (data.result) {
+				$('#register-result .header').append('Sucessed!');
+				$('#register-result').modal({
+					onHide: function () {
+						location.reload();
+					}
+				});
+			}
+			else {
+				$('#register-result .header').append('Failed!');
+			}
+
+			$('#register-result').modal('show');
 		});
 
 	});
@@ -93,6 +114,7 @@ $(function() {
 	});
 
 	$(window).resize();
+	$('.ui.modal').modal();
 	$('.ui.dropdown').dropdown();
 
 
