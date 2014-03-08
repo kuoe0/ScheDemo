@@ -56,13 +56,35 @@ $title = get_title($db);
 					</div>
 					<div class="field">
 						<label>Presenter</label>
-						<input type="text" />
+						<div class="ui fluid selection dropdown">
+							<input type="hidden" />
+							<div class="text">Choose</div>
+							<i class="dropdown icon"></i>
+							<div class="menu">
+<?php
+$select_group_sql = "SELECT * FROM `groups` WHERE `registered` = 0";
+$stmt = $db->prepare($select_group_sql);
+$stmt->execute();
+
+$html_template = '<div class="item" data-value="%d">%s</div>';
+
+while (($data_row = $stmt->fetch()) != false) {
+	$group_id = $data_row['group_id'];
+	$group_name = $data_row['group_name'];
+
+	echo sprintf($html_template, $group_id, $group_name);
+
+}
+
+?>
+							</div>
+						</div>
 					</div>
 					<div class="field">
 						<label>Title</label>
 						<input type="text" name="title" />
 					</div>
-					<div class="ui mini button">
+					<div id="btn-register" class="ui mini button">
 						Register
 					</div>
 					
