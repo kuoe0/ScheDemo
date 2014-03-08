@@ -43,8 +43,14 @@ if ($current_time > $end_opening) {
 $sql = "SELECT DISTINCT `occupied` FROM `timeslots` WHERE `time_id` = :time_id";
 $stmt = $db->prepare($sql);
 $stmt->execute(array(':time_id' => $time_id));
+$data_row = $stmt->fetch();
 
-if ($stmt->fetch()['occupied'] == '1') {
+if (!$data_row) {
+	echo json_encode(array('status' => false, 'msg' => 'Invalid time.'));
+	die;
+}
+
+if ($data_row['occupied'] == '1') {
 	echo json_encode(array('status' => false, 'msg' => 'This time has been chosen!'));
 	die;
 }
@@ -52,8 +58,14 @@ if ($stmt->fetch()['occupied'] == '1') {
 $sql = "SELECT DISTINCT `registered` FROM `groups` WHERE `group_id` = :group_id";
 $stmt = $db->prepare($sql);
 $stmt->execute(array(':group_id' => $group_id));
+$data_row = $stmt->fetch();
 
-if ($stmt->fetch()['registered'] == '1') {
+if (!$data_row) {
+	echo json_encode(array('status' => false, 'msg' => 'Invalid presenter.'));
+	die;
+}
+
+if ($data_row['registered'] == '1') {
 	echo json_encode(array('status' => false, 'msg' => 'This presenter has been registered!'));
 	die;
 }
