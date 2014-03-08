@@ -116,7 +116,7 @@ function get_title($db) {
 }
 
 
-function get_member_names($db, $group_id) {
+function get_members_by_group_id($db, $group_id) {
 	$sql = "SELECT `name` FROM `presenters` WHERE `group_id` = :group_id ORDER BY `presenter_id` ASC";
 	$stmt = $db->prepare($sql);
 	$stmt->execute(array(':group_id' => $group_id));
