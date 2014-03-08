@@ -56,6 +56,15 @@ $(function() {
 	$('#btn-add-presenter').click(add_presenter);
 
 
+	$(window).resize(function () {
+		$('.vertical-centering').css({
+			'position': 'absolute',
+			'top': ($(window).height() - $('.vertical-centering').outerHeight()) / 3
+		});
+	});
+
+	$(window).resize();
+
 
 });
 
