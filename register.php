@@ -16,6 +16,10 @@ include_once 'db_con.php';
 include_once 'global.php';
 include_once 'function.php';
 
+if (!is_setup($db)) {
+	header("Location: index.php");
+}
+
 $title = get_title($db);
 
 ?>
