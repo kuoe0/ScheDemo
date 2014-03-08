@@ -22,21 +22,14 @@ $stmt->execute();
 $nodata = !$stmt->fetch();
 
 if (!$nodata) {
-	$sql = "SELECT `value` FROM `attributes` WHERE `attr` = 'title'";
-	$stmt = $db->prepare($sql);
-	$stmt->execute();
-
-	$title = $stmt->fetch()['value'];
-}
-else {
-	$title = 'ScheDemo';
+	header("Location: register.php");
 }
 
 ?>
 
 <html>
 	<head>
-		<title><?php echo $title ?></title>
+		<title>ScheDemo</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
 		<link href="static/components/normalize-css/normalize.css" rel="stylesheet" />
@@ -53,20 +46,21 @@ else {
 	<body>
 		<div id="content" class="ui one column page grid">
 			<div class="column">
-<?php
+				<h1 id="title" class="ui center aligned header">ScheDemo</h1>
+				<h2 id="subtitle" class="ui center aligned header">An application for scheduling.</h2>
+				<div class="centerize-box">
+					<div id="btn-setup" class="ui green button">Start</div>
+				</div>
+			</div>
+		</div>
+		<div id="footer" class="ui one column page grid">
+			<div class="column">
+				<p>Powered by <a href="http://kuoe0.tw/">KuoE0</a>.</p>
+			</div>
+		</div>
+	</body>
+</html>
 
-if ($nodata) {
-	echo '<h1 id="title" class="ui center aligned header">' . $title . '</h1>';
-	echo '<h2 id="subtitle" class="ui center aligned header">An application for scheduling.</h2>';
-	echo '<div class="centerize-box">';
-	echo '<div id="btn-setup" class="ui green button">Start</div>';
-	echo '</div>';
-	echo '</div>';
-	echo '</div>';
-	echo '<!--';
-}
-
-?>
 			</div>
 			<div class="register">
 				<form action="register.php" method="POST">
@@ -180,10 +174,3 @@ if ($nodata) {
 }
 ?>
 
-		<div id="footer" class="ui one column page grid">
-			<div class="column">
-				<p>Powered by <a href="http://kuoe0.tw/">KuoE0</a>.</p>
-			</div>
-		</div>
-	</body>
-</html>
