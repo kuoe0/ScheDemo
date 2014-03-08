@@ -38,17 +38,48 @@ $title = get_title($db);
 		<link href="static/css/style.css" rel="stylesheet" />
 	</head>
 	<body>
+		<div id="register-form" class="ui thin sidebar">
+			<div class="ui basic segment">
+				<form class="ui form">
+					<input type="hidden" name="time-id" />
+					<div class="field">
+						<label>Date</label>
+						<input type="text" name="date" readonly />
+					</div>
+					<div class="field">
+						<label>Time</label>
+						<input type="text" name="time" readonly />
+					</div>
+					<div class="field">
+						<label>Order</label>
+						<input type="text" name="order" readonly />
+					</div>
+					<div class="field">
+						<label>Presenter</label>
+						<input type="text" />
+					</div>
+					<div class="field">
+						<label>Title</label>
+						<input type="text" name="title" />
+					</div>
+					<div class="ui mini button">
+						Register
+					</div>
+					
+				</form>
+			</div>
+		</div>
 		<div id="content" class="ui one column page grid">
 			<div class="column">
 				<h1 id="title" class="ui center aligned header"><?php echo $title;?></h1>
-				<table id="timetable" class="ui fourteen column large padded table segment">
+				<table id="timetable" class="ui eighteen column large padded table segment">
 					<thead>
 						<tr>
-							<th class="two wide">Date</th>
-							<th class="two wide">Time</th>
+							<th class="three wide">Date</th>
+							<th class="three wide">Time</th>
 							<th class="one wide">Order</th>
-							<th class="four wide">Presenter</th>
-							<th class="five wide">Title</th>
+							<th class="five wide">Presenter</th>
+							<th class="six wide">Title</th>
 							<th class="one wide">Register</th>
 						</tr>
 					</thead>
@@ -59,7 +90,7 @@ $sql = "SELECT * FROM `timeslots`";
 $stmt = $db->prepare($sql);
 $stmt->execute();
 
-$html_template = "<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td><i class='add icon'></i></td></tr>";
+$html_template = "<tr id='timeslot-%d'><td id='date-%d'>%s</td><td id='time-%d'>%s</td><td id='order-%d'>%s</td><td id='presenter-%d'>%s</td><td id='title-%d'>%s</td><td><div id='btn-register-%d' class='circular ui mini icon basic button'><i class='pin basic icon'></i></div></td></tr>";
 
 while (($data_row = $stmt->fetch()) != false) {
 
@@ -70,7 +101,7 @@ while (($data_row = $stmt->fetch()) != false) {
 	$time_order = $data_row['time_order'];
 	$occupied = $data_row['occupied'];
 
-	echo sprintf($html_template, $date, $start_time . ' ~ ' . $end_time, $time_order, '', '');
+	echo sprintf($html_template, $time_id, $time_id, $date, $time_id, $start_time . ' ~ ' . $end_time, $time_id, $time_order, $time_id, '', $time_id, '', $time_id);
 }
 
 ?>
