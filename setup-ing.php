@@ -117,7 +117,6 @@ if (isset($_POST['submit'])) {
 				$sql = "INSERT INTO `presenters` (`presenter_id`, `group_id`, `name`) VALUES (:presenter_id, :group_id, :name)";
 				$stmt = $db->prepare($sql);
 
-				echo 'open file';
 				// read line by line in csv file
 				while (($data_row = fgetcsv($f)) != FALSE) {
 
@@ -218,6 +217,10 @@ else {
 	$status = false;
 }
 
+if (!$status) {
+	cleanup_db($db);
+}
+
 ?>
 
 <html>
@@ -237,7 +240,7 @@ else {
 		<div class="ui three column grid">
 			<div class="column">
 			</div>
-			<div class="column">
+			<div class="column vertical-centering">
 				<div class="ui <?php echo $status ? 'green' : 'red';?> segment">
 					<h1 id="title" class="ui center aligned header"><?php echo $status ? 'Successed!' : 'Failed!';?></h1>
 					<input type="hidden" name="index" value="<?php echo $url;?>" />
