@@ -84,7 +84,7 @@ while (($data_row = $stmt->fetch()) != false) {
 						<label>Title</label>
 						<input type="text" name="title" />
 					</div>
-					<div id="btn-register" class="ui mini button">
+					<div id="btn-register" class="ui mini green button">
 						Register
 					</div>
 					
@@ -102,7 +102,7 @@ while (($data_row = $stmt->fetch()) != false) {
 							<th class="one wide">Order</th>
 							<th class="four wide">Presenter</th>
 							<th class="six wide">Title</th>
-							<th class="one wide">Register</th>
+							<th class="one wide"></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -112,7 +112,8 @@ $sql = "SELECT * FROM `timeslots`";
 $stmt = $db->prepare($sql);
 $stmt->execute();
 
-$html_template = "<tr id='timeslot-%d'><td id='date-%d'>%s</td><td id='time-%d'>%s</td><td id='order-%d'>%s</td><td id='presenter-%d'>%s</td><td id='title-%d'>%s</td><td><div id='btn-register-%d' class='circular ui mini icon basic button'><i class='pin basic icon'></i></div></td></tr>";
+$html_template_unoccupied = "<tr id='timeslot-%d'><td id='date-%d'>%s</td><td id='time-%d'>%s</td><td id='order-%d'>%s</td><td id='presenter-%d'>%s</td><td id='title-%d'>%s</td><td><div id='btn-register-%d' class='circular ui mini icon basic button'><i class='pin basic icon'></i></div></td></tr>";
+$html_template_occupied = "<tr id='timeslot-%d'><td id='date-%d'>%s</td><td id='time-%d'>%s</td><td id='order-%d'>%s</td><td id='presenter-%d'>%s</td><td id='title-%d'>%s</td><td><div class='circular ui mini icon basic disabled button'><i class='block basic icon'></i></div></td></tr>";
 
 while (($data_row = $stmt->fetch()) != false) {
 
@@ -128,7 +129,7 @@ while (($data_row = $stmt->fetch()) != false) {
 	$group_id = $presentation_info['group_id'];
 	$member_list = get_members_by_group_id($db, $presentation_info['group_id']);
 
-	echo sprintf($html_template, $time_id, $time_id, $date, $time_id, $start_time . ' ~ ' . $end_time, $time_id, $time_order, $time_id, implode('<br/>', $member_list), $time_id, $title, $time_id);
+	echo sprintf($occupied ? $html_template_occupied : $html_template_unoccupied, $time_id, $time_id, $date, $time_id, $start_time . ' ~ ' . $end_time, $time_id, $time_order, $time_id, implode('<br/>', $member_list), $time_id, $title, $time_id);
 }
 
 ?>
