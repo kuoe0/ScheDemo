@@ -31,6 +31,45 @@ function cleanup_db($db) {
 	}
 }
 
+function get_attr($db, $attr) {
+	try {
+		$sql = "SELECT `value` FROM `attributes` WHERE `attr` = :attr";
+		$stmt = $db->prepare($sql);
+		$stmt->execute(array(':attr' => $attr));
+		$data_row = $stmt->fetch();
+
+		return $data_row ? $data_row['value'] : '';
+	}
+	catch (Exception $e) {
+		echo $e->getMessage();
+	}
+	return '';
+}
+
+function add_presentation($db, $title, $time_id, $group_id, $passwd) {
+
+	try {
+
+		$sql = "INSERT INTO `presentations` (`title`, `group_id`, `time_id`, `reg_time`) VALUES (:title, :group_id, :time_id, datetime('now'))";
+		$stmt = $db->prepare($sql);
+		$stmt->execute(array(':title' => $title, ':group_id' => $group_id, ':time_id' => $time_id));
+
+		$sql = "UPDATE `timeslots` SET `occupied` = '1' WHERE `time_id` = :time_id";
+		$stmt = $db->prepare($sql);
+		$stmt->execute(array(':time_id' => $time_id));
+
+		$sql = "UPDATE `groups` SET `registered` = '1', `password` = :password WHERE `group_id` = :group_id";
+		$stmt = $db->prepare($sql);
+		$stmt->execute(array(':group_id' => $group_id, ':password' => sha1($passwd . $group_id)));
+	}
+	catch (Exception $e) {
+		echo $e->getMessage();
+		return false;
+	}
+
+	return true;
+}
+
 function add_timeslot_by_rule($db, $rule) {
 	// calculate interval
 	$interval = 'P1D';
@@ -133,7 +172,6 @@ function get_presentation_info_by_time_id($db, $time_id) {
 	$sql = "SELECT * FROM `presentations` WHERE `time_id` = :time_id";
 	$stmt = $db->prepare($sql);
 	$stmt->execute(array(':time_id' => $time_id));
-
 	return $stmt->fetch();
 }
 
