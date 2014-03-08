@@ -87,9 +87,8 @@ $(function() {
 
 		$.post(url, form_data, function (data) {
 
-			console.log(data);
 			data = JSON.parse(data);
-			if (data.result) {
+			if (data.status) {
 				$('#register-result .header').append('Sucessed!');
 				$('#register-result').modal({
 					onHide: function () {
