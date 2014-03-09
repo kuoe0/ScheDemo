@@ -81,6 +81,16 @@ legend {
 	color: #BBB;
 }
 
+.ui.selection.dropdown {
+	padding-top: 0.85em;
+	padding-bottom: 0.85em;
+	line-height: normal;
+}
+
+.ui.selection.dropdown .text {
+	font-size: 0.875em;
+}
+
 .ui.sidebar {
 	background-color: #EEE;
 	padding-top: 5rem;
