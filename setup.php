@@ -46,99 +46,164 @@ catch (PDOException $e) {
 <html>
 	<head>
 		<title>Setup for PresentReg</title>
-		<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
-		<link href="css/style.css" rel="stylesheet">
+		<link href="static/components/normalize-css/normalize.css" rel="stylesheet" />
+
+		<script src="static/components/jquery/dist/jquery.min.js"></script>
+
+		<link href="static/components/semantic/build/packaged/css/semantic.min.css" rel="stylesheet" />
+		<script src="static/components/semantic/build/packaged/javascript/semantic.min.js"></script>
+
+		<script src="static/js/main.js"></script>
+		<link href="static/css/style.css" rel="stylesheet" />
 	</head>
 	<body>
-		<div class="container">
-			<div class="row">
-				<h1>Setup</h1>
-				<form class="setup-form" action="setup-ing.php" method="POST" enctype="multipart/form-data">
-					<legend>Basic Info</legend>
-					<div class="form-group horizontal_input">
-						<label>Site Name</label>
-						<input class="form-control" type="text" name="title" placeholder="Type the title for this site..." />
-						<span class="help-block">The title of this site, e.g. the name of course.</span>
+		<div class="wrap">
+			<div class="content">
+				<div class="ui one column page grid">
+					<div class="column">
+						<h1 id="title" class="ui center aligned header">Setup</h1>
+
+						<form name="setup" class="ui form" action="setup-ing.php" method="POST" enctype="multipart/form-data">
+							<legend>Basic Info</legend>
+							<div class="two fields">
+								<div class="field">
+									<label>Site Name</label>
+									<div class="ui left icon input">
+										<input type="text" name="title" placeholder="Type the title for this site..." />
+										<i class="bookmark icon"></i>
+										<span class="help-block">The title of this site, e.g. the name of course.</span>
+									</div>
+								</div>
+
+								<div class="field">
+									<label>URL</label>
+									<div class="ui left icon input">
+										<input type="url" name="url" value=<?php echo '"' . dirname(getURL()) . '"'; ?> />
+										<i class="url icon"></i>
+										<span class="help-block">If you don't have some special reason, you don't need to modify this column.</span>
+									</div>
+								</div>
+							</div>
+							<legend>Opening Time</legend>
+							<div class="four fields">
+								<div class="field">
+									<label>From</label>
+									<div class="ui left icon input">
+										<input type="date" name="start-opening-date" />
+										<i class="calendar icon"></i>
+									</div>
+								</div>
+								<div class="parallel field">
+									<div class="ui left icon input">
+										<input type="time" name="start-opening-time" />
+										<i class="time icon"></i>
+									</div>
+								</div>
+								<div class="field">
+									<label>To</label>
+									<div class="ui left icon input">
+										<input type="date" name="end-opening-date" />
+										<i class="calendar icon"></i>
+									</div>
+								</div>
+								<div class="parallel field">
+									<div class="ui left icon input">
+										<input type="time" name="end-opening-time" />
+										<i class="time icon"></i>
+									</div>
+								</div>
+							</div>
+
+							<legend>Administrator</legend>
+							<div class="two fields">
+								<div class="field">
+									<label>Username</label>
+									<div class="ui left icon input">
+										<input type="text" name="username" placeholder="username" />
+										<i class="user icon"></i>
+									</div>
+								</div>
+								<div class="field">
+									<label>Password</label>
+									<div class="ui left icon input">
+										<input type="password" name="password" placeholder="password" />
+										<i class="key icon"></i>
+									</div>
+								</div>
+							</div>
+
+							<legend>File Importing</legend>
+							<div class="four fields">
+								<div class="field">
+									<label>Presenter(s)</label>
+									<div class="ui icon input">
+										<input id="presenter-list-filename" type="text" placeholder="filename" disabled/>
+										<i class="delete basic icon"></i>
+									</div>
+									<span class="help-block">Upload file of presenters list.</span>
+								</div>
+								<div class="parallel field">
+									<div class="ui upload blue button">
+										<i class="upload basic icon"></i>
+										upload
+										<input type="file" name="presenter-list" />
+									</div>
+								</div>
+
+								<div class="field">
+									<label>Time</label>
+									<div class="ui icon input">
+										<input id="time-list-filename" type="text" placeholder="filename" disabled/>
+										<i class="delete basic icon"></i>
+									</div>
+									<span class="help-block">Upload file of time list.</span>
+								</div>
+								<div class="parallel field">
+									<div class="ui upload blue button">
+										<i class="upload basic icon"></i>
+										upload
+										<input type="file" name="time-list" />
+									</div>
+								</div>
+							</div>
+
+							<div>
+								<div id="btn-add-time" class="ui mini right floated blue button">
+									<i class="add icon"></i>
+									Time
+								</div>
+								<legend>Manual Time Importing</legend>
+								<div id="time-list" class="ui two column grid">
+								</div>
+							</div>
+
+							<divid="presenter-list">
+								<div id="btn-add-presenter" class="ui mini right floated blue button">
+									<i class="add icon"></i>
+									Presenter
+								</div>
+								<legend>Manual Presenter(s) Importing</legend>
+								<div id="presenter-list" class="ui two column grid">
+								</div>
+							</div>
+
+							<input type="hidden" name="time-cnt" value="0" />
+							<input type="hidden" name="presenter-cnt" value="0" />
+							<div class="ui divider"></div>
+
+							<input class="ui green button" type="submit" name="submit" value="Confirm" />
+						</form>
 					</div>
-					<div class="form-group horizontal_input">
-						<label>URL</label>
-						<input class="form-control" type="url" name="url" value=<?php echo '"' . dirname(getURL()) . '"'; ?> />
-						<span class="help-block">If you don't have some special reason, you don't need to modify this column.</span>
-					</div>
-					<div class="form-group horizontal_input">
-						<label>Opening Time</label>
-						<div>
-							From <input type="date" name="begin-opening-date" />
-							<input type="time" name="begin-opening-time" />
-							To <input type="date" name="end-opening-date" />
-							<input type="time" name="end-opening-time" />
-						</div>
-					</div>
-					<legend>Admin Settings</legend>
-					<div class="form-group horizontal_input">
-						<label>Username</label>
-						<input class="form-control" type="text" name="username" placeholder="username" />
-					</div>
-					<div class="form-group horizontal_input">
-					<label>Password</label>
-						<input class="form-control" type="password" name="password" placeholder="password" />
-					</div>
-					<legend>Data Importing</legend>
-					<div class="form-group horizontal_input">
-						<label>Presenter(s) List (CSV file)</label>
-						<input class="form-control" type="file" name="presenter_list" />
-						<span class="help-block">Upload file of presenters list.</span>
-					</div>
-					<div class="form-group horizontal_input">
-						<label>Time Slot List (CSV file)</label>
-						<input class="form-control" type="file" name="timeslot_list" />
-						<span class="help-block">Import the time slots by file.</span>
-					</div>
-					<div class="form-group">
-						<label>Time Slot Rule</label>&nbsp;&nbsp;
-						<button class="btn btn-primary btn-xs" type="button" onclick="add_rule()" href="#">add a rule</button>
-						<div id="timeslot_rules">
-						</div>
-						<span class="help-block">Setup time slots manually.<br />[Begin Date | End Date | Repeat Mode | Begin Time | End Time | Number of Presenters]</span>
-					</div>
-					<input type="hidden" name="rule-cnt" />
-					<div class="form-group">
-						<button class="btn btn-success btn-lg" type="submit" name="submit">Confirm</button>
-					</div>
-				</form>
+				</div>
 			</div>
 		</div>
-
-		<script src="http://code.jquery.com/jquery.js"></script>
-		<script src="bootstrap/js/bootstrap.min.js"></script>
-		<script>
-			var rule_cnt = 0;
-
-			function add_rule() {
-
-				datetime_rule = jQuery('<div class="datetime-rule" id="datetime-' + rule_cnt + '"><span class="glyphicon glyphicon-calendar"></span>&nbsp;&nbsp;<input type="date" name="begin-date-' + rule_cnt + '" /> ~ <input type="date" name="end-date-' + rule_cnt + '" disabled /><span class="glyphicon glyphicon-refresh"></span>&nbsp;&nbsp;<select name="repeat-' + rule_cnt + '" onchange="EndDateStatus(' + rule_cnt + ', this)" ><option value="none">none</option><option value="daily">daily</option><option value="weekly">weekly</option><option value="monthly">monthly</option></select><span class="glyphicon glyphicon-time"></span> <input type="time" name="begin-time-' + rule_cnt + '" /> ~ <input type="time" name="end-time-' + rule_cnt + '" /> <span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;<input type="number" name="quota-' + rule_cnt + '" min="1" value="1" />&nbsp;&nbsp;<span class="glyphicon glyphicon-trash" onclick="remove_rule(' + rule_cnt + ')"></span></div>');
-
-				jQuery('#timeslot_rules').append(datetime_rule);
-				++rule_cnt;
-
-				$('input[name="rule-cnt"]').val(rule_cnt);
-			};
-
-			function remove_rule(id) {
-				jQuery('#datetime-' + id).remove();
-			}
-
-			function EndDateStatus(id, sel) {
-				if (sel.value == 'none') {
-					$('input[name="end-date-' + id + '"]').attr('disabled', 'disabled');
-				}
-				else {
-					$('input[name="end-date-' + id + '"]').removeAttr('disabled');
-				}
-			}
-
-			
-		</script>
+		<div class="footer">
+			<div class="ui one column page grid">
+				<div class="column">
+					<p>Powered by <a href="http://github.com/KuoE0/ScheDemo/">ScheDemo</a>.</p>
+				</div>
+			</div>
+		</div>
 	</body>
 </html>
 

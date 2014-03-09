@@ -1,3 +1,4 @@
 *.swp
-PresentReg.db
+ScheDemo.db
 test
+static/components
