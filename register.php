@@ -128,7 +128,7 @@ $sql = "SELECT * FROM `timeslots`";
 $stmt = $db->prepare($sql);
 $stmt->execute();
 
-$html_template_unoccupied = "<tr id='timeslot-%d'><td id='date-%d'>%s</td><td id='time-%d'>%s</td><td id='order-%d'>%s</td><td id='presenter-%d'>%s</td><td id='title-%d'>%s</td><td><div id='btn-register-%d' class='circular ui mini icon basic button'><i class='pin basic icon'></i></div></td></tr>";
+$html_template_unoccupied = "<tr id='timeslot-%d'><td id='date-%d'>%s</td><td id='time-%d'>%s</td><td id='order-%d'>%s</td><td id='presenter-%d'>%s</td><td id='title-%d'>%s</td><td><div id='register-%d' class='register circular ui mini icon basic button'><i class='pin basic icon'></i></div></td></tr>";
 $html_template_occupied = "<tr id='timeslot-%d'><td id='date-%d'>%s</td><td id='time-%d'>%s</td><td id='order-%d'>%s</td><td id='presenter-%d'>%s</td><td id='title-%d'>%s</td><td><div class='circular ui mini icon basic disabled button'><i class='block basic icon'></i></div></td></tr>";
 
 while (($data_row = $stmt->fetch()) != false) {

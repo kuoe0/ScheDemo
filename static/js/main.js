@@ -55,7 +55,7 @@ $(function() {
 	$('#btn-add-time').click(add_time);
 	$('#btn-add-presenter').click(add_presenter);
 
-	$('[id^="btn-register-"').click(function () {
+	$('.ui.register.button').click(function () {
 
 		var time_id = $(this).attr('id').split('-').pop();
 
