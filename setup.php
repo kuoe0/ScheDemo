@@ -45,7 +45,7 @@ catch (PDOException $e) {
 
 <html>
 	<head>
-		<title>Setup for PresentReg</title>
+		<title>Setup for ScheDemo</title>
 		<link href="static/components/normalize-css/normalize.css" rel="stylesheet" />
 
 		<script src="static/components/jquery/dist/jquery.min.js"></script>
@@ -64,6 +64,7 @@ catch (PDOException $e) {
 						<h1 id="title" class="ui center aligned header">Setup</h1>
 
 						<form name="setup" class="ui form" action="setup-ing.php" method="POST" enctype="multipart/form-data">
+
 							<legend>Basic Info</legend>
 							<div class="two fields">
 								<div class="field">
@@ -177,7 +178,7 @@ catch (PDOException $e) {
 								</div>
 							</div>
 
-							<divid="presenter-list">
+							<div>
 								<div id="btn-add-presenter" class="ui mini right floated blue button">
 									<i class="add icon"></i>
 									Presenter
