@@ -50,7 +50,7 @@ if (is_setup($db)) {
 		</div>
 		<div id="footer" class="ui one column page grid">
 			<div class="column">
-				<p>Powered by <a href="http://kuoe0.tw/">KuoE0</a>.</p>
+				<p>Powered by <a href="http://github.com/KuoE0/ScheDemo/">ScheDemo</a>.</p>
 			</div>
 		</div>
 	</body>
