@@ -77,6 +77,57 @@ function add_presentation($db, $title, $time_id, $group_id, $passwd) {
 	return true;
 }
 
+function delete_presentation($db, $presentation_id) {
+	try {
+		$sql = "SELECT * FROM `presentations` WHERE `id` = :presentation_id";
+		$stmt = $db->prepare($sql);
+		$stmt->execute(array(":presentation_id" => $presentation_id));
+
+		$data_row = $stmt->fetch();
+
+		$group_id = $data_row['group_id'];
+		$time_id = $data_row['time_id'];
+
+		$sql = "DELETE FROM `presentations` WHERE `id` = :presentation_id";
+		$stmt = $db->prepare($sql);
+		$stmt->execute(array(":presentation_id" => $presentation_id));
+
+		$sql = "UPDATE `groups` SET `registered` = '0', `password` = '' WHERE `group_id` = :group_id";
+		$stmt = $db->prepare($sql);
+		$stmt->execute(array(":group_id" => $group_id));
+
+		$sql = "UPDATE `timeslots` SET `occupied` = '0' WHERE `time_id` = :time_id";
+		$stmt = $db->prepare($sql);
+		$stmt->execute(array(":time_id" => $time_id));
+
+	}
+	catch (Exception $e) {
+		echo $e->getMessage();
+		return false;
+	}
+
+	return true;
+}
+
+function password_check($db, $group_id, $passwd) {
+	try {
+		$hash_passwd = sha1($passwd . $group_id);
+
+		$sql = "SELECT `password` FROM `groups` WHERE `group_id` = :group_id";
+		$stmt = $db->prepare($sql);
+		$stmt->execute(array(':group_id' => $group_id));
+		$data_row = $stmt->fetch();
+
+		if ($data_row['password'] == $hash_passwd) {
+			return true;
+		}
+	}
+	catch (Exception $e) {
+		echo $e->getMessage();
+	}
+	return false;
+}
+
 function add_timeslot_by_rule($db, $rule) {
 	// calculate interval
 	$interval = 'P1D';

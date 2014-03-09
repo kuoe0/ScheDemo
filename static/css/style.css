@@ -69,11 +69,6 @@ html, body {
 	color: #AAA;
 }
 
-#register-form {
-	background-color: #EEE;
-	padding-top: 5rem;
-}
-
 legend {
 	color: #AAA;
 	margin: 1em 0;
@@ -84,6 +79,11 @@ legend {
 	font-size: 0.9em;
 	font-weight: 100;
 	color: #BBB;
+}
+
+.ui.sidebar {
+	background-color: #EEE;
+	padding-top: 5rem;
 }
 
 .ui.form .column {
@@ -109,6 +109,13 @@ legend {
 }
 
 
+.ui.thin-font {
+	font-weight: 100;
+}
+
+.ui.white {
+	color: white !important;
+}
 
 .ui.header {
 	margin: 0;

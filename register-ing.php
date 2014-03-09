@@ -74,7 +74,7 @@ if ($data_row['registered'] == '1') {
 $passwd = gen_random_password();
 
 if (add_presentation($db, $title, $time_id, $group_id, $passwd)) {
-	echo json_encode(array('status' => true, 'password' => $passwd));
+	echo json_encode(array('status' => true, 'msg' => 'Please remeber this password: ' . $passwd));
 	die;
 }
 

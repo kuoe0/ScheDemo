@@ -45,10 +45,32 @@ $title = get_title($db);
 		<link href="static/css/style.css" rel="stylesheet" />
 	</head>
 	<body>
-		<div id="register-result" class="ui basic modal">
+		<div id="result-modal" class="ui basic modal">
 			<div class="header">
 			</div>
-			<div class="action">
+			<div class="content">
+			</div>
+		</div>
+		<div id="cancel-form" class="ui thin sidebar">
+			<div class="ui basic segment">
+				<form class="ui form" action="cancel-register.php">
+					<input type="hidden" name="time-id" />
+					<div class="field">
+						<label><i class="key icon"></i>Password</label>
+						<input type="password" name="password" placeholder="password you got after register..." />
+					</div>
+					<div class="ui two mini fluid buttons">
+						<div id="btn-cancel-register-exit" class="ui negative button">
+							<i class="remove icon"></i>
+							No
+						</div>
+						<div id="btn-cancel-register" class="ui positive right button">
+							<i class="checkmark icon"></i>
+							Yes
+						</div>
+					</div>
+					
+				</form>
 			</div>
 		</div>
 		<div id="register-form" class="ui thin sidebar">
@@ -97,11 +119,18 @@ while (($data_row = $stmt->fetch()) != false) {
 						<label><i class="bookmark basic icon"></i>Title</label>
 						<input type="text" name="title" />
 					</div>
-					<div id="btn-register" class="ui mini green button">
-						<i class="pin basic icon"></i>
-						Register
+
+					<div class="ui two mini fluid buttons">
+						<div id="btn-register-exit" class="ui negative button">
+							<i class="remove icon"></i>
+							No
+						</div>
+						<div id="btn-register" class="ui positive right button">
+							<i class="checkmark icon"></i>
+							Yes
+						</div>
 					</div>
-					
+
 				</form>
 			</div>
 		</div>
@@ -129,7 +158,7 @@ $stmt = $db->prepare($sql);
 $stmt->execute();
 
 $html_template_unoccupied = "<tr id='timeslot-%d'><td id='date-%d'>%s</td><td id='time-%d'>%s</td><td id='order-%d'>%s</td><td id='presenter-%d'>%s</td><td id='title-%d'>%s</td><td><div id='register-%d' class='register circular ui mini icon basic button'><i class='pin basic icon'></i></div></td></tr>";
-$html_template_occupied = "<tr id='timeslot-%d'><td id='date-%d'>%s</td><td id='time-%d'>%s</td><td id='order-%d'>%s</td><td id='presenter-%d'>%s</td><td id='title-%d'>%s</td><td><div class='circular ui mini icon basic disabled button'><i class='block basic icon'></i></div></td></tr>";
+$html_template_occupied = "<tr id='timeslot-%d'><td id='date-%d'>%s</td><td id='time-%d'>%s</td><td id='order-%d'>%s</td><td id='presenter-%d'>%s</td><td id='title-%d'>%s</td><td><div id='cancel-%d' class='cancel-register circular ui mini icon basic disabled button'><i class='block basic icon'></i></div></td></tr>";
 
 while (($data_row = $stmt->fetch()) != false) {
 
