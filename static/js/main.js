@@ -35,6 +35,43 @@ $(function() {
 
 	}
 
+	function result_modal_after_submit(data) {
+
+		console.log(data);
+		data = JSON.parse(data);
+
+
+		$('#result-modal .header').empty();
+		$('#result-modal .content').empty();
+
+		if (data.status) {
+			$('#result-modal .header').append('Sucessed!');
+
+			if (typeof(data.msg) != 'undefined') {
+				$('#result-modal .content').append(data.msg);
+			}
+
+			$('#result-modal').modal({
+				onHide: function () {
+					location.reload();
+				}
+			});
+		}
+		else {
+			$('#result-modal .header').append('Failed!');
+
+			if (typeof(data.msg) != 'undefined') {
+				$('#result-modal .content').append(data.msg);
+			}
+
+			$('#result-modal').modal({
+				onHide: function () {}
+			});
+		}
+
+		$('#result-modal').modal('show');
+	}
+
 
 	$('#btn-setup').click(function () {
 		window.location.href = "setup.php";
@@ -75,34 +112,39 @@ $(function() {
 		}
 	});
 
+	$('.ui.cancel-register.button').click(function () {
+		var time_id = $(this).attr('id').split('-').pop();
+
+		if ($('#cancel-form').sidebar('is open')) {
+			if ($('#cancel-form form input[name="time-id"]').val() != time_id) {
+				$('#cancel-form').sidebar('hide');
+			}
+		}
+
+		$('#cancel-form').sidebar('toggle');
+
+		if ($('#cancel-form').sidebar('is open')) {
+			$('#cancel-form form input[name="time-id"]').val(time_id);
+		}
+	});
+
+
 	$('#btn-register').click(function () {
 		var url = $('#register-form form').attr('action');
 		var form_data = $('#register-form form').serialize();
+		console.log(url);
+		$.post(url, form_data, result_modal_after_submit);
+	});
 
-		$('#register-result .header').empty();
-		$('#register-result .action').empty();
-		$('#register-result').modal({
-			onHide: function () {}
-		});
+	$('#btn-cancel-register').click(function () {
+		var url = $('#cancel-form form').attr('action');
+		var form_data = $('#cancel-form form').serialize();
+		console.log(url);
+		$.post(url, form_data, result_modal_after_submit);
+	});
 
-		$.post(url, form_data, function (data) {
-
-			data = JSON.parse(data);
-			if (data.status) {
-				$('#register-result .header').append('Sucessed!');
-				$('#register-result').modal({
-					onHide: function () {
-						location.reload();
-					}
-				});
-			}
-			else {
-				$('#register-result .header').append('Failed!');
-			}
-
-			$('#register-result').modal('show');
-		});
-
+	$('#btn-cancel-register-exit').click(function () {
+		$('#cancel-form').sidebar('hide');
 	});
 
 	$(window).resize(function () {
