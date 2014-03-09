@@ -51,7 +51,7 @@ $title = get_title($db);
 			<div class="content">
 			</div>
 		</div>
-		<div id="cancel-form" class="ui wide sidebar">
+		<div id="cancel-form" class="ui thin sidebar">
 			<div class="ui basic segment">
 				<form class="ui form" action="cancel-register.php">
 					<input type="hidden" name="time-id" />
@@ -60,20 +60,20 @@ $title = get_title($db);
 						<input type="password" name="password" placeholder="password you got after register..." />
 					</div>
 					<div class="ui two mini fluid buttons">
-						<div id="btn-cancel-register-exit" class="ui negative labeled icon button">
+						<div id="btn-cancel-register-exit" class="ui negative button">
 							<i class="remove icon"></i>
 							No
 						</div>
-						<div id="btn-cancel-register" class="ui positive right labeled icon button">
-							Yes
+						<div id="btn-cancel-register" class="ui positive right button">
 							<i class="checkmark icon"></i>
+							Yes
 						</div>
 					</div>
 					
 				</form>
 			</div>
 		</div>
-		<div id="register-form" class="ui wide sidebar">
+		<div id="register-form" class="ui thin sidebar">
 			<div class="ui basic segment">
 				<form class="ui form" action="register-ing.php">
 					<input type="hidden" name="time-id" />
