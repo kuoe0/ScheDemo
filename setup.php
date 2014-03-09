@@ -139,7 +139,7 @@ catch (PDOException $e) {
 									<label>Presenter(s)</label>
 									<div class="ui icon input">
 										<input id="presenter-list-filename" type="text" placeholder="filename" disabled/>
-										<i class="delete basic icon"></i>
+										<i id="remove-presenter-list" class="delete basic icon"></i>
 									</div>
 									<span class="help-block">Upload file of presenters list.</span>
 								</div>
@@ -155,7 +155,7 @@ catch (PDOException $e) {
 									<label>Time</label>
 									<div class="ui icon input">
 										<input id="time-list-filename" type="text" placeholder="filename" disabled/>
-										<i class="delete basic icon"></i>
+										<i id="remove-time-list" class="delete basic icon"></i>
 									</div>
 									<span class="help-block">Upload file of time list.</span>
 								</div>
