@@ -5,6 +5,10 @@
  * Distributed under terms of the MIT license.
  */
 
+html, body {
+	height: 100%;
+}
+
 #title {
 	font-size: 4em;
 	font-weight: 100;
@@ -39,23 +43,29 @@
 
 }
 
-#content {
-	padding-bottom: 2em;
+.wrap {
+	min-height: 100%;
+	height: auto;
 }
 
-#footer {
-	height: 2em;
+.content {
+	padding-bottom: 5rem;
+}
+
+.footer {
+	height: 5rem;
 	position: relative;
+	margin-top: -5rem;
 }
 
-#footer p {
+.footer p {
 	text-align: center;
 	color: #AAA;
 }
 
-#footer p a,
-#footer p a:hover,
-#footer p a:visited {
+.footer p a,
+.footer p a:hover,
+.footer p a:visited {
 	color: #AAA;
 }
 

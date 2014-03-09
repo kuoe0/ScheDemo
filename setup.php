@@ -57,145 +57,151 @@ catch (PDOException $e) {
 		<link href="static/css/style.css" rel="stylesheet" />
 	</head>
 	<body>
-		<div id="content" class="ui one column page grid">
-			<div class="column">
-				<h1 id="title" class="ui center aligned header">Setup</h1>
+		<div class="wrap">
+			<div class="content">
+				<div class="ui one column page grid">
+					<div class="column">
+						<h1 id="title" class="ui center aligned header">Setup</h1>
 
-				<form name="setup" class="ui form" action="setup-ing.php" method="POST" enctype="multipart/form-data">
-					<legend>Basic Info</legend>
-					<div class="two fields">
-						<div class="field">
-							<label>Site Name</label>
-							<div class="ui left icon input">
-								<input type="text" name="title" placeholder="Type the title for this site..." />
-								<i class="bookmark icon"></i>
-								<span class="help-block">The title of this site, e.g. the name of course.</span>
-							</div>
-						</div>
+						<form name="setup" class="ui form" action="setup-ing.php" method="POST" enctype="multipart/form-data">
+							<legend>Basic Info</legend>
+							<div class="two fields">
+								<div class="field">
+									<label>Site Name</label>
+									<div class="ui left icon input">
+										<input type="text" name="title" placeholder="Type the title for this site..." />
+										<i class="bookmark icon"></i>
+										<span class="help-block">The title of this site, e.g. the name of course.</span>
+									</div>
+								</div>
 
-						<div class="field">
-							<label>URL</label>
-							<div class="ui left icon input">
-								<input type="url" name="url" value=<?php echo '"' . dirname(getURL()) . '"'; ?> />
-								<i class="url icon"></i>
-								<span class="help-block">If you don't have some special reason, you don't need to modify this column.</span>
+								<div class="field">
+									<label>URL</label>
+									<div class="ui left icon input">
+										<input type="url" name="url" value=<?php echo '"' . dirname(getURL()) . '"'; ?> />
+										<i class="url icon"></i>
+										<span class="help-block">If you don't have some special reason, you don't need to modify this column.</span>
+									</div>
+								</div>
 							</div>
-						</div>
+							<legend>Opening Time</legend>
+							<div class="four fields">
+								<div class="field">
+									<label>From</label>
+									<div class="ui left icon input">
+										<input type="date" name="start-opening-date" />
+										<i class="calendar icon"></i>
+									</div>
+								</div>
+								<div class="parallel field">
+									<div class="ui left icon input">
+										<input type="time" name="start-opening-time" />
+										<i class="time icon"></i>
+									</div>
+								</div>
+								<div class="field">
+									<label>To</label>
+									<div class="ui left icon input">
+										<input type="date" name="end-opening-date" />
+										<i class="calendar icon"></i>
+									</div>
+								</div>
+								<div class="parallel field">
+									<div class="ui left icon input">
+										<input type="time" name="end-opening-time" />
+										<i class="time icon"></i>
+									</div>
+								</div>
+							</div>
+
+							<legend>Administrator</legend>
+							<div class="two fields">
+								<div class="field">
+									<label>Username</label>
+									<div class="ui left icon input">
+										<input type="text" name="username" placeholder="username" />
+										<i class="user icon"></i>
+									</div>
+								</div>
+								<div class="field">
+									<label>Password</label>
+									<div class="ui left icon input">
+										<input type="password" name="password" placeholder="password" />
+										<i class="key icon"></i>
+									</div>
+								</div>
+							</div>
+
+							<legend>File Importing</legend>
+							<div class="four fields">
+								<div class="field">
+									<label>Presenter(s)</label>
+									<div class="ui icon input">
+										<input id="presenter-list-filename" type="text" placeholder="filename" disabled/>
+										<i class="delete basic icon"></i>
+									</div>
+									<span class="help-block">Upload file of presenters list.</span>
+								</div>
+								<div class="parallel field">
+									<div class="ui upload blue button">
+										<i class="upload basic icon"></i>
+										upload
+										<input type="file" name="presenter-list" />
+									</div>
+								</div>
+
+								<div class="field">
+									<label>Time</label>
+									<div class="ui icon input">
+										<input id="time-list-filename" type="text" placeholder="filename" disabled/>
+										<i class="delete basic icon"></i>
+									</div>
+									<span class="help-block">Upload file of time list.</span>
+								</div>
+								<div class="parallel field">
+									<div class="ui upload blue button">
+										<i class="upload basic icon"></i>
+										upload
+										<input type="file" name="time-list" />
+									</div>
+								</div>
+							</div>
+
+							<div>
+								<div id="btn-add-time" class="ui mini right floated blue button">
+									<i class="add icon"></i>
+									Time
+								</div>
+								<legend>Manual Time Importing</legend>
+								<div id="time-list" class="ui two column grid">
+								</div>
+							</div>
+
+							<divid="presenter-list">
+								<div id="btn-add-presenter" class="ui mini right floated blue button">
+									<i class="add icon"></i>
+									Presenter
+								</div>
+								<legend>Manual Presenter(s) Importing</legend>
+								<div id="presenter-list" class="ui two column grid">
+								</div>
+							</div>
+
+							<input type="hidden" name="time-cnt" value="0" />
+							<input type="hidden" name="presenter-cnt" value="0" />
+							<div class="ui divider"></div>
+
+							<input class="ui green button" type="submit" name="submit" value="Confirm" />
+						</form>
 					</div>
-					<legend>Opening Time</legend>
-					<div class="four fields">
-						<div class="field">
-							<label>From</label>
-							<div class="ui left icon input">
-								<input type="date" name="start-opening-date" />
-								<i class="calendar icon"></i>
-							</div>
-						</div>
-						<div class="parallel field">
-							<div class="ui left icon input">
-								<input type="time" name="start-opening-time" />
-								<i class="time icon"></i>
-							</div>
-						</div>
-						<div class="field">
-							<label>To</label>
-							<div class="ui left icon input">
-								<input type="date" name="end-opening-date" />
-								<i class="calendar icon"></i>
-							</div>
-						</div>
-						<div class="parallel field">
-							<div class="ui left icon input">
-								<input type="time" name="end-opening-time" />
-								<i class="time icon"></i>
-							</div>
-						</div>
-					</div>
-
-					<legend>Administrator</legend>
-					<div class="two fields">
-						<div class="field">
-							<label>Username</label>
-							<div class="ui left icon input">
-								<input type="text" name="username" placeholder="username" />
-								<i class="user icon"></i>
-							</div>
-						</div>
-						<div class="field">
-							<label>Password</label>
-							<div class="ui left icon input">
-								<input type="password" name="password" placeholder="password" />
-								<i class="key icon"></i>
-							</div>
-						</div>
-					</div>
-
-					<legend>File Importing</legend>
-					<div class="four fields">
-						<div class="field">
-							<label>Presenter(s)</label>
-							<div class="ui icon input">
-								<input id="presenter-list-filename" type="text" placeholder="filename" disabled/>
-								<i class="delete basic icon"></i>
-							</div>
-							<span class="help-block">Upload file of presenters list.</span>
-						</div>
-						<div class="parallel field">
-							<div class="ui upload blue button">
-								<i class="upload basic icon"></i>
-								upload
-								<input type="file" name="presenter-list" />
-							</div>
-						</div>
-
-						<div class="field">
-							<label>Time</label>
-							<div class="ui icon input">
-								<input id="time-list-filename" type="text" placeholder="filename" disabled/>
-								<i class="delete basic icon"></i>
-							</div>
-							<span class="help-block">Upload file of time list.</span>
-						</div>
-						<div class="parallel field">
-							<div class="ui upload blue button">
-								<i class="upload basic icon"></i>
-								upload
-								<input type="file" name="time-list" />
-							</div>
-						</div>
-					</div>
-
-					<div>
-						<div id="btn-add-time" class="ui mini right floated blue button">
-							<i class="add icon"></i>
-							Time
-						</div>
-						<legend>Manual Time Importing</legend>
-						<div id="time-list" class="ui two column grid">
-						</div>
-					</div>
-
-					<divid="presenter-list">
-						<div id="btn-add-presenter" class="ui mini right floated blue button">
-							<i class="add icon"></i>
-							Presenter
-						</div>
-						<legend>Manual Presenter(s) Importing</legend>
-						<div id="presenter-list" class="ui two column grid">
-						</div>
-					</div>
-
-					<input type="hidden" name="time-cnt" value="0" />
-					<input type="hidden" name="presenter-cnt" value="0" />
-					<div class="ui divider"></div>
-
-					<input class="ui green button" type="submit" name="submit" value="Confirm" />
-				</form>
+				</div>
 			</div>
 		</div>
-		<div id="footer" class="ui one column page grid">
-			<div class="column">
-				<p>Powered by <a href="http://github.com/KuoE0/ScheDemo/">ScheDemo</a>.</p>
+		<div class="footer">
+			<div class="ui one column page grid">
+				<div class="column">
+					<p>Powered by <a href="http://github.com/KuoE0/ScheDemo/">ScheDemo</a>.</p>
+				</div>
 			</div>
 		</div>
 	</body>

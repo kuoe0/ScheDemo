@@ -105,21 +105,23 @@ while (($data_row = $stmt->fetch()) != false) {
 				</form>
 			</div>
 		</div>
-		<div id="content" class="ui one column page grid">
-			<div class="column">
-				<h1 id="title" class="ui center aligned header"><?php echo $title;?></h1>
-				<table id="timetable" class="ui large padded orange table segment">
-					<thead>
-						<tr>
-							<th class="three wide"><i class="date basic icon"></i>Date</th>
-							<th class="three wide"><i class="time basic icon"></i>Time</th>
-							<th class="one wide"><i class="ordered list icon"></i></th>
-							<th class="four wide"><i class="user basic icon"></i>Presenter</th>
-							<th class="six wide"><i class="bookmark basic icon"></i>Title</th>
-							<th class="one wide"></th>
-						</tr>
-					</thead>
-					<tbody>
+		<div class="wrap">
+			<div class="content">
+				<div class="ui one column page grid">
+					<div class="column">
+						<h1 id="title" class="ui center aligned header"><?php echo $title;?></h1>
+						<table id="timetable" class="ui large padded orange table segment">
+							<thead>
+								<tr>
+									<th class="three wide"><i class="date basic icon"></i>Date</th>
+									<th class="three wide"><i class="time basic icon"></i>Time</th>
+									<th class="one wide"><i class="ordered list icon"></i></th>
+									<th class="four wide"><i class="user basic icon"></i>Presenter</th>
+									<th class="six wide"><i class="bookmark basic icon"></i>Title</th>
+									<th class="one wide"></th>
+								</tr>
+							</thead>
+							<tbody>
 <?php
 
 $sql = "SELECT * FROM `timeslots`";
@@ -147,13 +149,17 @@ while (($data_row = $stmt->fetch()) != false) {
 }
 
 ?>
-					</tbody>
-				</table>
+							</tbody>
+						</table>
+					</div>
+				</div>
 			</div>
 		</div>
-		<div id="footer" class="ui one column page grid">
-			<div class="column">
-				<p>Powered by <a href="http://github.com/KuoE0/ScheDemo/">ScheDemo</a>.</p>
+		<div class="footer">
+			<div class="ui one column page grid">
+				<div class="column">
+					<p>Powered by <a href="http://github.com/KuoE0/ScheDemo/">ScheDemo</a>.</p>
+				</div>
 			</div>
 		</div>
 	</body>

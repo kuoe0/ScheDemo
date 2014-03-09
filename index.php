@@ -39,18 +39,24 @@ if (is_setup($db)) {
 		<link href="static/css/style.css" rel="stylesheet" />
 	</head>
 	<body>
-		<div id="content" class="ui one column page grid">
-			<div class="column">
-				<h1 id="title" class="ui center aligned header">ScheDemo</h1>
-				<h2 id="subtitle" class="ui center aligned header">An application for scheduling.</h2>
-				<div class="centerize-box">
-					<div id="btn-setup" class="ui green button">Start</div>
+		<div class="wrap">
+			<div class="content">
+				<div class="ui one column page grid">
+					<div class="column">
+						<h1 id="title" class="ui center aligned header">ScheDemo</h1>
+						<h2 id="subtitle" class="ui center aligned header">An application for scheduling.</h2>
+						<div class="centerize-box">
+							<div id="btn-setup" class="ui green button">Start</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
-		<div id="footer" class="ui one column page grid">
-			<div class="column">
-				<p>Powered by <a href="http://github.com/KuoE0/ScheDemo/">ScheDemo</a>.</p>
+		<div class="footer">
+			<div class="ui one column page grid">
+				<div class="column">
+					<p>Powered by <a href="http://github.com/KuoE0/ScheDemo/">ScheDemo</a>.</p>
+				</div>
 			</div>
 		</div>
 	</body>
