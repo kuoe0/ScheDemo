@@ -1,7 +1,9 @@
-PresentReg
+ScheDemo
 ==========
 
-PresentReg is a web-based application for presentation scheduling.
+Version: v1.0.0
+
+ScheDemo is a web-based application for scheduling.
 
 Requirement
 -----------
@@ -89,26 +91,25 @@ Open browser and go to this site `localhost/info.php`. Find `PDO` string to chec
 
 First, download the source code.
 	
-	git clone http://github.com/KuoE0/PresentReg
+	git clone http://github.com/KuoE0/ScheDemo
 
 And then, set the group of this directory to `www-data` or the group of apache.
 	
-	chgrp www-data PresentReg
+	chgrp www-data ScheDemo
 
 Screenshot
 ----------
 
-![initial page](doc_img/screenshot-1.png)
+![index page](doc_img/screenshot-1.png)
 
 ![setup page](doc_img/screenshot-2.png)
 
-![homepage after setup](doc_img/screenshot-3.png)
+![register page](doc_img/screenshot-3.png)
 
 To-do
 -----
 
-1. give a password after registered for authorization
-2. minimize the register form to view entire table
-3. login function
-4. register information modification
+1. admin login function
+2. ajax timetable update
+3. ajax setup
 
