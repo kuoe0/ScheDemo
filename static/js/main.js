@@ -136,6 +136,10 @@ $(function() {
 		$.post(url, form_data, result_modal_after_submit);
 	});
 
+	$('#btn-register-exit').click(function () {
+		$('#register-form').sidebar('hide');
+	});
+
 	$('#btn-cancel-register').click(function () {
 		var url = $('#cancel-form form').attr('action');
 		var form_data = $('#cancel-form form').serialize();

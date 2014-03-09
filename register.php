@@ -73,7 +73,7 @@ $title = get_title($db);
 				</form>
 			</div>
 		</div>
-		<div id="register-form" class="ui thin sidebar">
+		<div id="register-form" class="ui wide sidebar">
 			<div class="ui basic segment">
 				<form class="ui form" action="register-ing.php">
 					<input type="hidden" name="time-id" />
@@ -119,11 +119,18 @@ while (($data_row = $stmt->fetch()) != false) {
 						<label><i class="bookmark basic icon"></i>Title</label>
 						<input type="text" name="title" />
 					</div>
-					<div id="btn-register" class="ui mini green button">
-						<i class="pin basic icon"></i>
-						Register
+
+					<div class="ui two mini fluid buttons">
+						<div id="btn-register-exit" class="ui negative button">
+							<i class="remove icon"></i>
+							No
+						</div>
+						<div id="btn-register" class="ui positive right button">
+							<i class="checkmark icon"></i>
+							Yes
+						</div>
 					</div>
-					
+
 				</form>
 			</div>
 		</div>
