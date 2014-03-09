@@ -31,6 +31,8 @@ if (is_setup($db)) {
 
 		<script src="static/components/jquery/dist/jquery.min.js"></script>
 
+		<link href="static/components/github-fork-ribbon-css/gh-fork-ribbon.css" rel="stylesheet" />
+
 		<link href="static/components/semantic/build/packaged/css/semantic.min.css" rel="stylesheet" />
 		<script src="static/components/semantic/build/packaged/javascript/semantic.min.js"></script>
 
@@ -41,6 +43,11 @@ if (is_setup($db)) {
 	<body>
 		<div class="wrap">
 			<div class="content">
+				<div class="github-fork-ribbon-wrapper right">
+					<div class="github-fork-ribbon">
+						<a href="https://github.com/KuoE0/ScheDemo">Fork me on GitHub</a>
+					</div>
+				</div>
 				<div class="ui one column page grid">
 					<div class="column">
 						<h1 id="title" class="ui center aligned header">ScheDemo</h1>
