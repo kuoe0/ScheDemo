@@ -82,8 +82,19 @@ $(function() {
 		$('#presenter-list-filename').val($(this).val().split('\\').pop());
 	});
 
+	$('#remove-presenter-list').click(function () {
+		$('input[name="presenter-list"]').val('');
+		$('#presenter-list-filename').val('');
+	});
+
+
 	$('input[name="time-list"]').change(function () {
 		$('#time-list-filename').val($(this).val().split('\\').pop());
+	});
+
+	$('#remove-time-list').click(function () {
+		$('input[name="time-list"]').val('');
+		$('#time-list-filename').val('');
 	});
 
 	$('#btn-index').click(function () {
