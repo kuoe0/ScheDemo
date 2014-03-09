@@ -8,16 +8,14 @@ ScheDemo is a web-based application for scheduling.
 Requirement
 -----------
 
-- A Computer as Server
 - Apache Web Server with Rewrite Module Enabled
 - PHP5 with PDO-sqlite Driver
+- [bower](http://bower.io/)
 
-Server Settings
----------------
+Web Server Settings
+-------------------
 
-**Setup Apache Web Server**
-
-Ubuntu 13.04:
+**Ubuntu 13.04**
 
 First, install apache web server.
 
@@ -31,7 +29,7 @@ Finally, restart the Apache web service.
 
 	$ service apache restart
 
-OS X 10.9:
+**OS X 10.9**
 
 Apache Web Server is built-in OS X. So, just type the command below to launch it.
 
@@ -45,13 +43,14 @@ Finally, restart the Apache web server.
 
 	$ sudo apachectl restart
 
-**Setup PHP5 with PDO-sqlite Driver**
+PHP Settings
+------------
 
 ![PDO support](doc_img/phpinfo.png)
 
-Ubuntu 13.04:
+**Ubuntu 13.04**
 
-	apt-get install php php5-sqlite
+	$ apt-get install php php5-sqlite
 
 Finally, restart the Apache web service.
 
@@ -63,7 +62,7 @@ Let's check the PHP configuration, add a file in DocumentRoot.
 
 Open browser and go to this site `localhost/info.php`. Find `PDO` string to check the sqlite support.
 
-OS X 10.9:
+**OS X 10.9**
 
 Enable PHP module for Apache. Open the file `/etc/apache2/httpd.conf` and uncomment this line below.
 
@@ -71,7 +70,7 @@ Enable PHP module for Apache. Open the file `/etc/apache2/httpd.conf` and uncomm
 
 And then, copy the default php settings file.
 
-	cp /etc/php.ini.default /etc/php.ini
+	$ cp /etc/php.ini.default /etc/php.ini
 	
 To prevent some warning, enable output_buffering in `php.ini`.
 
@@ -87,15 +86,32 @@ Let's check the PHP configuration, add a file in DocumentRoot.
 
 Open browser and go to this site `localhost/info.php`. Find `PDO` string to check the sqlite support.
 
+Application Settings
+--------------------
+
 **Directory Permission**
 
 First, download the source code.
 	
-	git clone http://github.com/KuoE0/ScheDemo
+	$ git clone http://github.com/KuoE0/ScheDemo
 
-And then, set the group of this directory to `www-data` or the group of apache.
+And then, set the group of this directory to `www-data` (`_www` in OS X) or the group of apache.
 	
-	chgrp www-data ScheDemo
+	$ chgrp www-data ScheDemo
+
+Finally, add the writable permission to group.
+
+	$ chmod g+w ScheDemo
+
+**3-party Packages Installation**
+
+First, go to the directory of the application.
+
+	$ cd ScheDemo
+
+And then, type the command below to install the 3-party packages.
+
+	$ bower install
 
 Screenshot
 ----------
