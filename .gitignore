@@ -1,3 +1,5 @@
 *.swp
-PresentReg.db
+.DS_Store
+ScheDemo.db
 test
+static/components

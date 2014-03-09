@@ -14,7 +14,7 @@
 
 
 try {
-	$db = new PDO('sqlite:PresentReg.db');
+	$db = new PDO('sqlite:ScheDemo.db');
 	$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 	$db->exec("CREATE TABLE IF NOT EXISTS attributes (
@@ -24,21 +24,20 @@ try {
 	$db->exec("CREATE TABLE IF NOT EXISTS presenters (
 		presenter_id TEXT PRIMARY KEY,
 		group_id INTEGER,
-		name TEXT,
-		password TEXT,
-		registered INTEGER)");
+		name TEXT)");
 
 	$db->exec("CREATE TABLE IF NOT EXISTS groups (
-		group_id TEXT,
-		members TEXT,
+		group_id INTEGER PRIMARY KEY,
+		group_name TEXT,
+		password TEXT,
 		registered INTEGER)");
 
 	$db->exec("CREATE TABLE IF NOT EXISTS timeslots (
 		time_id INTEGER PRIMARY KEY,
 		date TEXT,
-		begin_time TEXT,
+		start_time TEXT,
 		end_time TEXT,
-		slice INTEGER,
+		time_order INTEGER,
 		occupied INTEGER)");
 
 	$db->exec("CREATE TABLE IF NOT EXISTS presentations (
@@ -50,7 +49,7 @@ try {
 
 }
 catch (PDOException $e) {
-	echo $e->getMessage();
+	echo $e->getMessage() . '\n';
 }
 
 ?>
