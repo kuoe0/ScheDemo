@@ -170,9 +170,9 @@ while (($data_row = $stmt->fetch()) != false) {
 	$occupied = $data_row['occupied'];
 
 	$presentation_info = get_presentation_info_by_time_id($db, $time_id);
-	$title = $presentation_info['title'];
-	$group_id = $presentation_info['group_id'];
-	$member_list = get_members_by_group_id($db, $presentation_info['group_id']);
+	$title = $presentation_info == '' ? '' : $presentation_info['title'];
+	$group_id = $presentation_info == '' ? '' : $presentation_info['group_id'];
+	$member_list = $presentation_info == '' ? array() : get_members_by_group_id($db, $presentation_info['group_id']);
 
 	echo sprintf($occupied ? $html_template_occupied : $html_template_unoccupied, $time_id, $time_id, $date, $time_id, $start_time . ' ~ ' . $end_time, $time_id, $time_order, $time_id, implode('<br/>', $member_list), $time_id, $title, $time_id);
 }
