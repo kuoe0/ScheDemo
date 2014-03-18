@@ -62,8 +62,8 @@ if (isset($_POST['submit'])) {
 		// insert password
 		$stmt->execute(array(':attr' => 'password', ':value' => $passwd));
 
-		if ($begin_opening != '') {
-			$stmt->execute(array(':attr' => 'begin-opening', ':value' => $begin_opening));
+		if ($start_opening != '') {
+			$stmt->execute(array(':attr' => 'start-opening', ':value' => $start_opening));
 		}
 
 		if ($end_opening != '') {
