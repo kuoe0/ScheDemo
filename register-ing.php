@@ -21,22 +21,30 @@ $time_id = $_POST['time-id'];
 $title = $_POST['title'];
 
 $current_time = new DateTime(date('Y-m-d H:i', time()));
-$start_opening = get_attr($db, 'start_opening');
+$start_opening = get_attr($db, 'start-opening');
+
 if ($start_opening == '') {
 	$start_opening = new DateTime(date('Y-m-d H:i', time()));
 }
-$end_opening = get_attr($db, 'end_opening');
+else {
+	$start_opening = new DateTime($start_opening);
+}
+
+$end_opening = get_attr($db, 'end-opening');
 if ($end_opening == '') {
 	$end_opening = new DateTime(date('Y-m-d H:i', time()));
 }
+else {
+	$end_opening = new DateTime($end_opening);
+}
 
 if ($current_time < $start_opening) {
-	echo json_encode(array('status' => false, 'msg' => 'System will start at ' . $start_opening . '.'));
+	echo json_encode(array('status' => false, 'msg' => 'System will start at ' . $start_opening->format('Y-m-d H:i:s') . '.'));
 	die;
 }
 
-if ($current_time > $end_opening) {
-	echo json_encode(array('status' => false, 'msg' => 'System has been closed at ' . $end_opening . '.'));
+if ($current_time >= $end_opening) {
+	echo json_encode(array('status' => false, 'msg' => 'System has been closed at ' . $end_opening->format('Y-m-d H:i:s') . '.'));
 	die;
 }
 
