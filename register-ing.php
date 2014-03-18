@@ -30,7 +30,7 @@ if ($end_opening == '') {
 	$end_opening = new DateTime(date('Y-m-d H:i', time()));
 }
 
-if ($current_time < $begin_opening) {
+if ($current_time < $start_opening) {
 	echo json_encode(array('status' => false, 'msg' => 'System will start at ' . $start_opening . '.'));
 	die;
 }
